@@ -1,0 +1,110 @@
+// 右侧数据列表
+.overview-dataList {
+    position: fixed;
+    top: 10%;
+    right: 20px;
+    width: 400px;
+    height: calc(80% + 70px);
+    .overview-ordernum {
+        width: 100%;
+        height: 130px;
+        background: rgba(0,0,0,.4);
+        padding: 25px 45px 25px 25px;
+        box-sizing: border-box;
+        .overview-ordernum-item {
+            width: 100%;
+            .ordernum-title {
+                width: 100px;
+            }
+        }
+        .total-ordernum {
+            margin-bottom: 20px;
+        }
+    }
+    .total-ordernum {
+        .ordernum-title span,
+        .ordernum-text {
+            color: #ffeb0d;
+        }
+    }
+    .ordernum-title span {
+        display: block;
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        color: #fff;
+        border-radius: 30px;
+        background: rgba(204,204,204,.6);
+    }
+    .ordernum-text {
+        height: 30px;
+        line-height: 30px;
+        color: #fff;
+        font-size: 1.8em;
+        text-align: right;
+    }
+    .el-card {
+        height: calc(100% - 130px);
+        border-radius: 0;
+        border: none;
+        background: none;
+        .el-card__body {
+            padding: 0;
+            height: 100%;
+        }
+        .text.item {
+            width: 100%;
+            height: 20%;
+        }
+        .text.item:nth-child(2n) {
+            background: rgba(0,0,0,.4);
+        }
+        .text.item:nth-child(2n+1) {
+            background: rgba(20,20,20,.4);
+        }
+    }
+    .list-left {
+        position: relative;
+        width: 110px;
+        img {
+            width: 63px;
+        }
+    }
+    .list-left img,
+    .list-right .list-right-box {
+        position: absolute;
+        height: 64px;
+        top: 50%;
+        right: 0;
+        margin-top: -32px;
+    }
+    .list-right {
+        position: relative;
+        color: #fff;
+        .el-carousel {
+            height: 100%;
+        }
+        .el-carousel__arrow {
+            font-size: 15px;
+        }
+        .el-carousel__arrow--right {
+            right: 3px;
+        }
+        .list-right-box {
+            padding-right: 45px;
+            box-sizing: border-box;
+            text-align: right;
+        }
+    }
+    .list-right-box {
+        .list-value {
+            font-size: 1.5em;
+            line-height: 34px;
+        }
+        .list-name {
+            font-size: 0.85em;
+            line-height: 30px;
+        }
+    }
+}

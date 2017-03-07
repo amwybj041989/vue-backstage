@@ -1,0 +1,16 @@
+#usermentdetail {
+    .el-tabs--border-card {
+        box-shadow: none;
+        // border-width: 1px 0 0 0;
+        & > .el-tabs__content {
+            padding: 0;
+        }
+    }
+    .el-pagination {
+        text-align: right;
+        margin-top: 25px;
+    }
+    .el-tabs__item.is-active {
+        background: #fff;
+    }
+}

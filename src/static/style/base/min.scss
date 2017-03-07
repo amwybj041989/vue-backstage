@@ -1,0 +1,24 @@
+// 基础font-size
+$font: 14;
+// 主色
+$bgPicton: #f9696c;
+
+$clWhite: #fff;
+$bgWhite: #fff;
+$clSupernova: #FBB83C;
+$bgSupernova: #FBB83C;
+$clJunebud: #B9D963;
+$bgJunebud: #B9D963;
+$bgPicton: #4EAFFC;
+$clDove: #747474;
+
+$clColor: #56667d;
+
+$borderColor: #d1dbe5;
+
+.border-bottom {
+    border-bottom: 1px solid $borderColor;
+}
+.border-right {
+    border-right: 1px solid $borderColor;
+}

@@ -1,0 +1,20 @@
+.integral {
+    & > .el-table {
+        border: 0;
+        .el-table__body tr:last-child td {
+            border-bottom: 0;
+        }
+    }
+    & > .el-table::before {
+        height: 0;
+    }
+    & > .el-table::after {
+        width: 0;
+    }
+    .el-table th {
+        background-color: #fff;
+        & >.cell {
+            background-color: #fff;
+        }
+    }
+}

@@ -1,0 +1,49 @@
+#login {
+    width: 1000px;
+    height: 100%;
+    margin: 0 auto;
+    & > * {
+        height: 100%;
+    }
+    .login-left {
+        position: relative;
+        height: 100%;
+        background: #353535;
+        .login-left-up {
+            text-align: center;
+            margin-top: 90px;
+            img {
+                width: 53%;
+            }
+        }
+    }
+    .login-left-down {
+        position: absolute;
+        width: 78%;
+        bottom: 10%;
+        left: 0;
+    }
+    .login-right {
+        position: relative;
+        height: 100%;
+        .login-right-wrap {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 50%;
+            margin-top: -127.5px;
+            h2 {
+                font-weight: 400;
+                font-size: 1.2em;
+            }
+            h1 {
+                font-weight: 400;
+                font-size: 2.3em;
+            }
+            .login-login {
+                width: 100%;
+                margin-top: 20px;
+            }
+        }
+    }
+}

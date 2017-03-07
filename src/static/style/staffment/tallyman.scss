@@ -1,0 +1,49 @@
+.stafftallyman {
+    .el-col {
+        margin-bottom: 10px;
+    }
+    .el-card {
+        border-width: 0;
+        box-shadow: none;
+    }
+    .tallyman-wrap {
+        width: 80%;
+        margin: 0 auto;
+    }
+    .tallyman-status {
+        text-align: center;
+        color: #B9D963;
+        font-size: .9em;
+        line-height: 45px;
+    }
+    .tallyman-head img {
+        width: 80px;
+        height: 80px;
+        border-radius: 100%;
+    }
+    .el-progress-bar__outer {
+        border-radius: 4px;
+    }
+    .el-progress.is-success .el-progress-bar__inner {
+        background: #B9D963;
+    }
+    .el-progress-bar__inner {
+        border-radius: 0;
+    }
+    .tallyman-linedata {
+        width: 100%;
+        & > div {
+            width: 50%;
+            font-size: .9em;
+            line-height: 2.4em;
+        }
+    }
+    .tallyman-editor {
+        display: block;
+        width: 100%;
+        color: #fff;
+        line-height: 2.5em;
+        text-align: center;
+        margin-top: 7px;
+    }
+}

@@ -1,0 +1,302 @@
+@import "min";
+
+/**
+ * 一些共用的基础样式
+ * 使用原则：
+ * --不需要/不想起/element的组件的，样式名
+ * --颜色，方便以后统一管理
+ */
+
+html,body {
+	height: 100%;
+	font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+li {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+    color: inherit;
+}
+a:hover {
+	text-decoration: none;
+}
+img {
+	max-width: 100%;
+}
+h1.theme-h1 {
+    font-size: 50px;
+    font-weight: 300;
+    color: #56667d;
+}
+h2.theme-h2 {
+	font-size: 35px;
+	font-weight: 300;
+	color: #56667d;
+}
+p.theme-p {
+	font-size: 14px;
+	color: #56667d;
+}
+
+/* 元素/标签 大小相关 */
+.w-100 {
+	width: 100%;
+}
+
+/* 元素/标签 位置相关 */
+.fl {
+	float: left;
+}
+.fr {
+	float: right;
+}
+.mc {
+	margin: 0 auto;
+}
+
+/* 元素/标签 边距相关 */
+.mt-5 {
+	margin-top: 5px;
+}
+.mt-10 {
+	margin-top: 10px;
+}
+.mt-15 {
+	margin-top: 15px;
+}
+.mt-20 {
+	margin-top: 20px;
+}
+.mr-15 {
+	margin-right: 15px;
+}
+.mb-10 {
+	margin-bottom: 10px;
+}
+.mb-15 {
+	margin-bottom: 15px;
+}
+.pa-10 {
+	padding: 10px;
+}
+.pa-20 {
+	padding: 20px;
+}
+.pb-10 {
+	padding-bottom: 10px;
+}
+
+/* 文本相关 */
+.fs-s9em{
+	font-size: .9em;
+}
+.fs-s5em{
+	font-size: .5em;
+}
+.fs-s4em{
+	font-size: .4em;
+}
+.fs-s35em{
+	font-size: .35em;
+}
+.fs-1s2em {
+	font-size: 1.2em;
+}
+.fw-600 {
+	font-weight: 600;
+}
+.lh-1s8em {
+	line-height: 1.8em;
+}
+
+/* 文本/块级元素 位置 */
+.tl {
+	text-align: left;
+}
+.tr {
+	text-align: right;
+}
+.tc {
+	text-align: center;
+}
+.tn {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.vh {
+	visibility: hidden;
+}
+
+/* 颜色相关 */
+.cl-white {
+	color: #fff!important;
+}
+.bg-white {
+	background: #fff!important;
+}
+.cl-supernova {
+	color: #FBB83C!important;
+}
+.bg-supernova {
+	background: #FBB83C!important;
+}
+.cl-junebud {
+	color: #B9D963!important;
+}
+.bg-junebud {
+	background: #B9D963!important;
+}
+.bg-picton {
+	background: #20a0ff!important;
+}
+.cl-dove {
+	color: #747474!important;
+}
+
+/* other */
+.display-table {
+	display: table;
+	table-layout: fixed;
+    & > * {
+        display: table-cell;
+    	vertical-align: top;
+    }
+}
+
+.development {
+	width: 100%;
+	line-height: 100px;
+	text-align: center;
+	color: $clColor;
+}
+
+.clear-float:after {
+	display: table;
+	content: "";
+	clear: both;
+}
+
+.content {
+	width: 100%;
+	min-height: 100%;
+	padding-top: 70px;
+    background: #F3F3F3;
+    box-sizing: border-box;
+    .right-content {
+        padding: 20px 30px 20px 195px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+#elmenu {
+	position: fixed;
+	top: 70px;
+	left: 0;
+	z-index: 1;
+	width: 165px;
+	height: 100%;
+}
+
+.el-item {
+	background: $bgWhite;
+	border-radius: 5px;
+}
+
+.top-toolbar {
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	.toolbar-path {
+		line-height: 35px;
+		padding-left: 8px;
+	}
+}
+
+.top-toolbar-complex {
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	.toolbar-path {
+		width: 155px;
+		line-height: 35px;
+		padding-left: 8px;
+	}
+	.toolbar-function {
+		.el-form-item {
+			margin-bottom: 0;
+			margin-right: 0;
+			.el-input__icon+.el-input__inner {
+				padding-right: 0;
+			}
+			.el-input__inner {
+				height: 35px;
+			}
+			.el-select .el-input__inner {
+				width: 110px;
+			}
+		}
+		.el-form-item:last-child {
+			margin-right: 0;
+		}
+		.el-select .el-input__inner {
+			width: 110px;
+			height: 35px;
+		}
+		.el-button {
+			height: 35px;
+		}
+		.function-search.el-input {
+			width: 200px;
+		}
+	}
+}
+
+.inline-datalist {
+    width: 100%;
+    padding: 30px 0;
+	ul {
+		display: -webkit-box;
+		display: -moz-box;
+		display: box;
+		li {
+			-webkit-box-flex: 1;
+			-moz-box-flex: 1;
+			box-flex: 1;
+	        box-sizing: border-box;
+	        border-left: 1px solid #DDDDDD;
+	        &:first-child {
+	            border-left: none;
+	        }
+		}
+	}
+}
+
+.editor-form {
+	width: 100%;
+	padding: 25px 20px;
+	.form-left {
+		width: 400px;
+	}
+	.form-right {
+		padding-left: 80px;
+	}
+	.el-select {
+		width: 100%;
+	}
+}
+
+.el-pagination {
+	text-align: right;
+	margin-top: 25px;
+}
+
+.el-table .cell {
+	white-space: nowrap!important;
+}

@@ -1,0 +1,47 @@
+{
+  "name": "league",
+  "description": "缤果盒子加盟商系统",
+  "version": "0.0.1",
+  "author": "董宏锋 <602029096@qq.com>",
+  "private": false,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --open",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+  },
+  "dependencies": {
+    "echarts": "^3.4.0",
+    "element-ui": "^1.2.3",
+    "react-cookie": "^1.0.4",
+    "vue": "^2.1.0",
+    "vuex": "^2.2.1",
+    "vue-amap": "^0.1.4",
+    "vue-resource": "^1.0.3",
+    "vue-router": "^2.1.1",
+    "axios": "^0.15.3",
+    "vue-server-renderer": "^2.1.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.0.0",
+    "babel-helpers": "^6.16.0",
+    "babel-loader": "^6.0.0",
+    "babel-preset-es2015": "^6.0.0",
+    "compression": "^1.6.2",
+    "connect-history-api-fallback": "^1.3.0",
+    "cross-env": "^3.0.0",
+    "css-loader": "^0.25.0",
+    "express": "^4.14.0",
+    "file-loader": "^0.9.0",
+    "http-proxy-middleware": "^0.17.3",
+    "node-sass": "^4.5.0",
+    "sass-loader": "^4.0.2",
+    "opn": "^4.0.2",
+    "serve-index": "^1.8.0",
+    "sockjs": "^0.3.18",
+    "spdy": "^3.4.4",
+    "vue-loader": "^10.3.0",
+    "vue-template-compiler": "^2.1.0",
+    "webpack": "^2.1.0-beta.25",
+    "webpack-dev-middleware": "^1.9.0",
+    "webpack-dev-server": "^2.1.0-beta.9"
+  }
+}

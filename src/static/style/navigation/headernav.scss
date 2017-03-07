@@ -1,0 +1,45 @@
+#toolbar {
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+    .el-menu {
+        border-radius: 0;
+    }
+    .el-menu--dark {
+        background-color: #32373A;
+    }
+    .el-menu--horizontal .el-menu-item {
+        height: 70px;
+        line-height: 70px;
+        &.is-active {
+            color: #fff;
+            background: #009EFE;
+        }
+    }
+    .toolbar-nav {
+        position: relative;
+        .toolbar-features {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            .el-dropdown-link {
+                height: 70px;
+                line-height: 70px;
+                color: #fff;
+                .features-name {
+                    display: inline-block;
+                    width: 70px;
+                    padding-left: 7px;
+                }
+                .icon-user {
+                    font-size: 1.5em;
+                    line-height: 0;
+                }
+                .icon-menu {
+                    font-size: 2em;
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
+}
