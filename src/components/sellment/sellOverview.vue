@@ -91,6 +91,7 @@ export default {
     data() {
         return {
             date: getNowTime()
+            // date: new Date().format("yyyy-MM-dd")
         }
     },
     created() {

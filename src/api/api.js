@@ -4,7 +4,7 @@
 import Vue from 'vue'
 import { MessageBox } from 'element-ui'
 import axios from 'axios'
-import { API_HOST, API_HOST_TEST } from '../config/config'
+import { API_HOST } from '../config/config'
 import querystring from 'querystring'
 // import store from '../store/store'
 
@@ -17,7 +17,7 @@ export default {
      * 用户登录
      */
     onLogin(userinfo, callback) {
-        axios.post(API_HOST_TEST + '/Login/login', querystring.stringify(userinfo))
+        axios.post(API_HOST + '/Login/login', querystring.stringify(userinfo))
             .then(function(response) {
                 if (response.status === 200) {
                     callback(response)
@@ -34,12 +34,20 @@ export default {
      * 地图概览
      */
     getOverviewData(callback) {
-        axios.post(API_HOST + '/Sales/getDashboardData')
+        var params = {
+            token: this.token()
+        }
+        axios.post(API_HOST + '/Sales/getDashboardData', querystring.stringify(params))
             .then(function(response) {
-                callback(response)
+                if (response.status === 200) {
+                    callback(response)
+                } else {
+                    MessageBox.alert('登录失败，请检查用户名或密码重新填写登录或者联系管理员', '系统通知', { confirmButtonText: '确定' })
+                }
             })
             .catch(function(error) {
                 console.log(error)
+                MessageBox.alert('登录失败，接口出错，请联系管理员', '系统通知', { confirmButtonText: '确定' })
             })
     },
     /**
@@ -49,7 +57,7 @@ export default {
         var params = {
             token: this.token()
         }
-        axios.post(API_HOST_TEST + '/Sales/getDashboardData', querystring.stringify(params))
+        axios.post(API_HOST + '/Sales/SalesData', querystring.stringify(params))
             .then(function(response) {
                 if (response.status === 200) {
                     callback(response)
@@ -75,7 +83,7 @@ export default {
             token: this.token()
         }
         var params = Object.assign(token, param)
-        axios.post(API_HOST_TEST + '/User/getUserList', querystring.stringify(params))
+        axios.post(API_HOST + '/User/getUserList', querystring.stringify(params))
             .then(function(response) {
                 if (response.status === 200) {
                     callback(response)
@@ -95,7 +103,7 @@ export default {
             token: this.token()
         }
         var params = Object.assign(token, param)
-        axios.post(API_HOST_TEST + '/User/getUserInfo', querystring.stringify(params))
+        axios.post(API_HOST + '/User/getUserInfo', querystring.stringify(params))
             .then(function(response) {
                 if (response.status === 200) {
                     callback(response)
@@ -115,10 +123,50 @@ export default {
             token: this.token()
         }
         var params = Object.assign(token, param)
-        axios.post(API_HOST_TEST + '/User/getBuyRecord', querystring.stringify(params))
+        axios.post(API_HOST + '/User/getBuyRecord', querystring.stringify(params))
             .then(function(response) {
                 if (response.status === 200) {
                     callback(response)
+                } else {
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定' })
+                }
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
+    },
+    /**
+     * 订单数据查询
+     */
+    getOrderList(param, callback) {
+        var token = {
+            token: this.token()
+        }
+        var params = Object.assign(token, param)
+        axios.post(API_HOST + '/Order/OrderList', querystring.stringify(params))
+            .then(function(response) {
+                if (response.status === 200) {
+                    callback(response)
+                } else {
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定' })
+                }
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
+    },
+    /**
+     * 导出订单数据escel
+     */
+    getOrderExcel(param) {
+        var token = {
+            token: this.token()
+        }
+        var params = Object.assign(token, param)
+        axios.get(API_HOST + '/Order/getExcel?token=' + this.token())
+            .then(function(response) {
+                if (response.status === 200) {
+
                 } else {
                     MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定' })
                 }
@@ -135,7 +183,7 @@ export default {
             token: this.token()
         }
         var params = Object.assign(token, {})
-        axios.post(API_HOST_TEST + '/Sales/getTimeData', querystring.stringify(params))
+        axios.post(API_HOST + '/Sales/getTimeData', querystring.stringify(params))
             .then(function(response) {
                 if (response.status === 200) {
                     callback(response)
@@ -155,7 +203,26 @@ export default {
             token: this.token()
         }
         var params = Object.assign(token, param)
-        axios.post(API_HOST_TEST + '/Sales/getSalesAmount', querystring.stringify(params))
+        axios.post(API_HOST + '/Sales/getSalesAmount', querystring.stringify(params))
+            .then(function(response) {
+                if (response.status === 200) {
+                    callback(response)
+                } else {
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定' })
+                }
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
+    },
+    /**
+     * 所有盒子列表
+     */
+    getBoxList(callback) {
+        var params = {
+            token: this.token()
+        }
+        axios.post(API_HOST + '/Box/BoxList', querystring.stringify(params))
             .then(function(response) {
                 if (response.status === 200) {
                     callback(response)

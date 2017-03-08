@@ -3,6 +3,6 @@
  */
 
 // 接口
-export const API_HOST = "http://box.bingofresh.com/api.php?s="
-// export const API_HOST_TEST = "http://t-box.bingofresh.com/api.php?s="
-export const API_HOST_TEST = "http://t-box.bingofresh.com/Api"
+export const API_HOST = (process.env.NODE_ENV === 'production') ?
+    'http://box.bingofresh.com/api.php?s=' :
+    'http://t-box.bingofresh.com/Api'

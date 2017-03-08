@@ -5,11 +5,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import navmenu from './modules/navmenu'
 import overview from './modules/overview'
-import login from './modules/login'
 import selloverview from './modules/selloverview'
+import orderstatistics from './modules/orderStatistics'
 import userlist from './modules/userlist'
 import userdata from './modules/userdata'
 import common from './modules/common'
+import login from './modules/login'
 
 Vue.use(Vuex)
 
@@ -18,6 +19,7 @@ const store = new Vuex.Store({
         navmenu,
         overview,
         selloverview,
+        orderstatistics,
         userlist,
         userdata,
         login,
