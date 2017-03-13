@@ -205,6 +205,7 @@ p.theme-p {
 }
 
 .el-item {
+	position: relative;
 	background: $bgWhite;
 	border-radius: 5px;
 }
@@ -224,7 +225,7 @@ p.theme-p {
 	padding: 10px;
 	box-sizing: border-box;
 	.toolbar-path {
-		width: 155px;
+		width: 175px;
 		line-height: 35px;
 		padding-left: 8px;
 	}

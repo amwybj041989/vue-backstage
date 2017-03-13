@@ -4,7 +4,7 @@
         <el-col :span="24" class="el-item display-table top-toolbar-complex">
             <div class="toolbar-path tn">缤果盒子列表</div>
             <div class="toolbar-function tr">
-                <el-button type="primary" @click="editor('new')">新增盒子</el-button>
+                <el-button type="primary" @click="routerPush('new')">新增盒子</el-button>
                 <el-select v-model="progress" disabled placeholder="广东省"></el-select>
                 <el-select v-model="city" placeholder="选择城市">
                     <el-option label="中山市" value="zhongshang"></el-option>
@@ -28,7 +28,7 @@
                 <el-table-column prop="status" label="状态" width="100"></el-table-column>
                 <el-table-column label="操作" width="80">
                     <template scope="scope">
-                        <el-button type="primary" size="small" @click="editor(scope.row.id)">编辑</el-button>
+                        <el-button type="primary" size="small" @click="routerPush(scope.row.id)">编辑</el-button>
 					</template>
 			  	</el-table-column>
 			</el-table>
@@ -108,7 +108,7 @@ export default {
         }
     },
     methods: {
-        editor(id) {
+        routerPush(id) {
             console.log(id)
             this.$router.push({ name: 'boxedior', params: { id: id } })
         },

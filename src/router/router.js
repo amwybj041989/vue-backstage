@@ -121,6 +121,54 @@ const routes = [
         ]
     },
     {
+        name: 'datament',
+        path: '/datament',
+        redirect: '/datament/dealerment',
+        component: require('../components/datament/index.vue'),
+        children: [
+            {
+                name: 'dealerment',
+                path: 'dealerment',
+                component: require('../components/datament/supplierList.vue')
+            },
+            {
+                name: 'supplierEdior',
+                path: 'supplierEdior/:id',
+                component: require('../components/datament/supplierEdior.vue')
+            },
+            {
+                name: 'bigclass',
+                path: 'bigclass',
+                component: require('../components/datament/bigclass.vue')
+            },
+            {
+                name: 'mediumclass',
+                path: 'mediumclass',
+                component: require('../components/datament/mediumclass.vue')
+            },
+            {
+                name: 'smallclass',
+                path: 'smallclass',
+                component: require('../components/datament/smallclass.vue')
+            },
+            {
+                name: 'classeditor',
+                path: 'classeditor/:id/:type',
+                component: require('../components/datament/classEditor.vue')
+            },
+            {
+                name: 'pdictionary',
+                path: 'pdictionary',
+                component: require('../components/datament/pdictionary.vue')
+            },
+            {
+                name: 'pdictionaryeditor',
+                path: 'pdictionaryeditor/:id',
+                component: require('../components/datament/pdictionaryEditor.vue')
+            }
+        ]
+    },
+    {
         name: 'notfound',
         path: '/404',
         component: require('../components/common/notfound.vue')

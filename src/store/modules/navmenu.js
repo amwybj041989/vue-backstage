@@ -14,6 +14,7 @@ const getters = {
     elmenu: state => state.elmenu
 }
 
+// 销售管理左侧导航
 const sellmentdata = [
     {
         name: '销售数据概览',
@@ -39,7 +40,7 @@ const sellmentdata = [
             url: '/sellment/ordersearch'
         }]
     }
-];
+]
 // 盒子管理左侧导航
 const boxmentdata = [
     {
@@ -58,33 +59,76 @@ const boxmentdata = [
             url: '/boxment/community'
         }]
     }
-];
+]
 // 用户管理左侧导航
 const usermentdata = [
     {
-    name: '用户管理',
-    url: '/userment',
-    child: [{
-            name: '注册用户列表',
-            url: '/userment/userlist'
-        }
-        // {
-        //     name: '用户统计分析',
-        //     url: '/userment/statistics'
-        // }
-    ]
-}];
+        name: '用户管理',
+        url: '/userment',
+        child: [{
+                name: '注册用户列表',
+                url: '/userment/userlist'
+            }
+            // {
+            //     name: '用户统计分析',
+            //     url: '/userment/statistics'
+            // }
+        ]
+    }
+]
 
 // 员工管理左侧导航
 const staffmentdata = [
     {
-    name: '理货员管理',
-    url: '/staffment',
-    child: [{
         name: '理货员管理',
-        url: '/staffment/tallymanlist'
-    }]
-}]
+        url: '/staffment',
+        child: [{
+            name: '理货员管理',
+            url: '/staffment/tallymanlist'
+        }]
+    }
+]
+
+// 资料管理左侧导航
+const datamentdata = [
+    {
+        name: '供货商管理',
+        url: '/dealerment',
+        child: [{
+            name: '供货商管理',
+            url: '/datament/dealerment'
+        }]
+    },
+    {
+        name: '商品分类管理',
+        url: '/productclass',
+        child: [
+            {
+                name: '商品大类管理',
+                url: '/datament/bigclass'
+            },
+            {
+                name: '商品中类管理',
+                url: '/datament/mediumclass'
+            },
+            {
+                name: '商品小类管理',
+                url: '/datament/smallclass'
+            }
+        ]
+    },
+    {
+        name: '商品字典管理',
+        url: '／prodyctdictionary',
+        child: [
+            {
+                name: '商品字典管理',
+                url: '/datament/pdictionary'
+            }
+        ]
+    }
+]
+
 
 const actions = {
     /**
@@ -115,6 +159,11 @@ const actions = {
                 name: '员工管理',
                 url: '/staffment',
                 type: 'staffment'
+            },
+            {
+                name: '资料管理',
+                url: '/datament',
+                type: 'datament'
             }
         ]
         commit(types.HEADERNAV_SWITCH, { data })
@@ -139,6 +188,10 @@ const actions = {
             case 'staffment':
                 // 员工管理
                 data = staffmentdata
+                break;
+            case 'datament':
+                // 资料管理
+                data = datamentdata
                 break;
         }
         commit(types.ELMENU_SWITCH, { data })

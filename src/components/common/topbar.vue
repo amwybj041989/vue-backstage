@@ -7,8 +7,7 @@
 </template>
 
 <script type="text/javascript">
-// 订单数据查询页
-import '../../static/style/sellment/orderSearch.scss'
+// 简单的页内顶部导航
 
 export default {
     props: ['bone', 'btwo', 'bthree'],

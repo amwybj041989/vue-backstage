@@ -5,9 +5,9 @@
 			<template v-if="item.child">
 				<el-submenu :index="item.url">
 					<template slot="title"><i class="el-icon-menu"></i>{{ item.name }}</template>
-					<el-menu-item-group v-for="childitem in item.child">
-						<el-menu-item :index="childitem.url">{{ childitem.name }}</el-menu-item>
-					</el-menu-item-group>
+                    <template v-for="childitem in item.child">
+                        <el-menu-item :index="childitem.url" >{{ childitem.name }}</el-menu-item>
+                    </template>
 				</el-submenu>
 			</template>
 			<template v-else>
@@ -15,7 +15,6 @@
 			</template>
 		</template>
 	</el-menu>
-</div>
 </template>
 
 <script>

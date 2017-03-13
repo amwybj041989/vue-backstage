@@ -1,0 +1,21 @@
+.payee-datawrap {
+    border: 1px solid #d1dbe5;
+    li {
+        display: table;
+        table-layout: fixed;
+        width: 100%;
+        & > div {
+            display: table-cell;
+            vertical-align: top;
+            font-size: 1.2em;
+            line-height: 40px;
+            &:first-child {
+                width: 100px;
+                padding-left: 12px;
+            }
+        }
+        &:nth-child(2n+1) {
+            background: #F3F3F3;
+        }
+    }
+}

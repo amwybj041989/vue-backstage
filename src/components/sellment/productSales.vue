@@ -2,7 +2,7 @@
 <div id="sellproductsales" class="right-content">
     <el-row class="mb-10">
         <el-col :span="24" class="el-item display-table top-toolbar-complex">
-            <div class="toolbar-path tn">订单数据统计</div>
+            <div class="toolbar-path tn">商品数据统计</div>
             <div class="toolbar-function">
                 <el-form :inline="true" :model="toolbarFrom" class="tr">
                     <el-form-item>

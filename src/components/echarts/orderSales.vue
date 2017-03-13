@@ -2,6 +2,14 @@
 <el-row>
     <el-col :span="24" class="el-item">
         <div id="orderSales" class="echarts-wrap"></div>
+        <div class="echarts-bar">
+            <el-button-group>
+                <el-button :type="groupStatus.today" size="small" @click="switchData(1)">今天</el-button>
+                <el-button :type="groupStatus.seven" size="small" @click="switchData(7)">7天</el-button>
+                <el-button :type="groupStatus.thirty" size="small" @click="switchData(30)">30天</el-button>
+                <el-button :type="groupStatus.ninety" size="small" @click="switchData(90)">90天</el-button>
+            </el-button-group>
+        </div>
     </el-col>
 </el-row>
 </template>
@@ -17,6 +25,13 @@ import '../../static/style/common/echarts.scss'
 export default {
     data() {
         return {
+            groupStatus: {
+                now: 7,
+                today: '',
+                seven: 'primary',
+                thirty: '',
+                ninety: ''
+            },
             setOption: {
                 title: {
                     text: '销售额／订单量曲线图'
@@ -147,31 +162,61 @@ export default {
         }
     },
     mounted() {
-        let that = this,
-            param = {
-                days: '7'
-            }
-        api.getSalesAmount(param, function (response) {
-            let _data = response.data.data,
-                _xAxis = [],
-                _sales = [],
-                _order = []
-            for (let index of _data.sales.keys()) {
-                _xAxis.push(_data.sales[index].time)
-                _sales.push(_data.sales[index].todaySales)
-            }
-            for (let index of _data.order.keys()) {
-                _order.push(_data.order[index].todayOrder)
-            }
-            that.setOption.xAxis.data = _xAxis
-            that.setOption.series[0].data = _order
-            that.setOption.series[1].data = _sales
-            let myChart = echarts.init(document.getElementById('orderSales'))
-            myChart.setOption(that.setOption)
-        })
+        this.getSalesAmount(7)
     },
     methods: {
-
+        switchData(val) {
+            if(val === this.groupStatus.now){
+                return false
+            }
+            let _data = {
+                now: val,
+                today: '',
+                seven: '',
+                thirty: '',
+                ninety: ''
+            }
+            switch(val){
+                case 1:
+                    _data.today = 'primary'
+                    break;
+                case 7:
+                    _data.seven = 'primary'
+                    break;
+                case 30:
+                    _data.thirty = 'primary'
+                    break;
+                case 90:
+                    _data.ninety = 'primary'
+                    break;
+            }
+            this.groupStatus = _data
+            this.getSalesAmount(val)
+        },
+        getSalesAmount(day) {
+            let that = this,
+                param = {
+                    days: day
+                }
+            api.getSalesAmount(param, function (response) {
+                let _data = response.data.data,
+                    _xAxis = [],
+                    _sales = [],
+                    _order = []
+                for (let index of _data.sales.keys()) {
+                    _xAxis.push(_data.sales[index].time)
+                    _sales.push(_data.sales[index].todaySales)
+                }
+                for (let index of _data.order.keys()) {
+                    _order.push(_data.order[index].todayOrder)
+                }
+                that.setOption.xAxis.data = _xAxis
+                that.setOption.series[0].data = _order
+                that.setOption.series[1].data = _sales
+                let myChart = echarts.init(document.getElementById('orderSales'))
+                myChart.setOption(that.setOption)
+            })
+        }
     }
 }
 </script>

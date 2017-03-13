@@ -156,26 +156,6 @@ export default {
             })
     },
     /**
-     * 导出订单数据escel
-     */
-    getOrderExcel(param) {
-        var token = {
-            token: this.token()
-        }
-        var params = Object.assign(token, param)
-        axios.get(API_HOST + '/Order/getExcel?token=' + this.token())
-            .then(function(response) {
-                if (response.status === 200) {
-
-                } else {
-                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定' })
-                }
-            })
-            .catch(function(error) {
-                console.log(error)
-            })
-    },
-    /**
      * 销售时间段分析
      */
     getSalesTime(callback) {

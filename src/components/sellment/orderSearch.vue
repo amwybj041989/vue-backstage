@@ -27,7 +27,7 @@
                         <el-button type="primary" @click="searchToolbar(1)">查询</el-button>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="success" @click="exportEscel">导出ESCEL</el-button>
+                        <el-button type="success" @click="exportExcel">导出ESCEL</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -86,7 +86,7 @@
                         <el-button v-popover:popover class="" size="mini">详情</el-button>
                     </template>
                 </el-table-column>
-                <el-table-column prop="vouchers" label="使用代金券" width="110"></el-table-column>
+                <el-table-column prop="vouchers" label="使用代金券" width="130"></el-table-column>
                 <el-table-column prop="integral" label="使用积分" width="95"></el-table-column>
                 <el-table-column prop="money" label="实付金额" width="95"></el-table-column>
                 <el-table-column prop="payType" label="支付方式" width="95"></el-table-column>
@@ -102,6 +102,7 @@
 <script type="text/javascript">
 // 订单数据查询页
 import api from '../../api/api.js'
+import { API_HOST } from '../../config/config.js'
 import '../../static/style/sellment/orderSearch.scss'
 
 export default {
@@ -191,21 +192,22 @@ export default {
             }
             this.$store.dispatch('getOrderList', param)
         },
-        exportEscel() {
-            // 导出escel
-            if(this.toolbarFrom.provinces === '' && this.toolbarFrom.city === '' && this.toolbarFrom.area === '' && this.toolbarFrom.time === ''){
-                this.getOrderList()
-                return false
-            }
-            let param = {}
+        exportExcel() {
+            // 导出excel
+            // let token = this.$store.getters.getToken
+            console.log(this.$store.getters.getToken)
+            let token = 'test',
+                url = API_HOST + '/Order/getExcel.html?token=' + token
+
             if(this.toolbarFrom.box !== '') {
-                param.box_no = this.toolbarFrom.box
+                url += '&box_no=' + this.toolbarFrom.box
             }
             if(this.toolbarFrom.time !== '') {
-                param.start_time = new Date(this.toolbarFrom.time[0]).format("yyyy-MM-dd")
-                param.end_time = new Date(this.toolbarFrom.time[1]).format("yyyy-MM-dd")
+                url += '&start_time=' + new Date(this.toolbarFrom.time[0]).format("yyyy-MM-dd")
+                url += '&end_time=' + new Date(this.toolbarFrom.time[1]).format("yyyy-MM-dd")
             }
-            api.getOrderExcel(param)
+            window.open(url)
+
         }
     }
 }
