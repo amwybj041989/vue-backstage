@@ -10,8 +10,8 @@
      * 地图概览页主框架
      */
 
-    import headernav from '../navigation/headernav.vue'
-    import elmenu from '../menu/elmenu.vue'
+    import headernav from '../navmenu/headernav.vue'
+    import elmenu from '../navmenu/elmenu.vue'
     import overviewcontent from './content.vue'
     import '../../static/style/overview/index.scss'
 

@@ -25,7 +25,6 @@ AMap.initAMapApiLoader({
 // 注册导航全局钩子，检查是否已登录
 router.beforeEach((to, from, next) => {
     let token = store.getters.getToken
-    console.log(token)
     if (token != null && to.path == '/login') {
         // 已登录不能进入登录页
         next('/overview')
@@ -39,9 +38,9 @@ router.beforeEach((to, from, next) => {
 })
 
 // 注册全局过滤器
-// Vue.filter('hahaha', function (value) {
-//     return value === '2' ? '男': '女'
-// })
+Vue.filter('enableStatus', function (value) {
+    return value === '1' ? '启用中' : '已禁用'
+})
 
 new Vue({
     el: '#league',

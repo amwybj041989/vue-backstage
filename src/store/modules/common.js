@@ -17,8 +17,8 @@ const getters = {
     /**
      * 获取盒子列表
      */
-    getBoxList ({ commit }) {
-        api.getBoxList(function (response) {
+    getBoxList ({ commit }, param) {
+        api.getBoxList(param, function (response) {
             commit(types.GET_BOXLIST_SUCCESS, { response })
         })
     }
@@ -26,7 +26,7 @@ const getters = {
 
 const mutations = {
     [types.GET_BOXLIST_SUCCESS] (state, { response }) {
-        state.boxList = response.data.data
+        state.boxList = response.data.data.list
     }
 }
 

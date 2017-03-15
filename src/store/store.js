@@ -9,6 +9,7 @@ import selloverview from './modules/selloverview'
 import orderstatistics from './modules/orderStatistics'
 import userlist from './modules/userlist'
 import userdata from './modules/userdata'
+import productclass from './modules/productClass'
 import common from './modules/common'
 import login from './modules/login'
 
@@ -22,6 +23,7 @@ const store = new Vuex.Store({
         orderstatistics,
         userlist,
         userdata,
+        productclass,
         login,
         common
     },

@@ -23,7 +23,8 @@
                 <el-table-column prop="phone" label="手机号码" width="130"></el-table-column>
                 <el-table-column prop="bingoopenid" label="BinGoOpenID" width="200"></el-table-column>
                 <el-table-column prop="formBox" label="来源盒子"></el-table-column>
-                <el-table-column prop="buy" label="购买次数" width="110"></el-table-column>
+                <el-table-column prop="buy" label="购买次数" width="100"></el-table-column>
+                <el-table-column prop="consumption" label="累计消费" width="100"></el-table-column>
                 <el-table-column prop="name" label="实名认证" width="110"></el-table-column>
                 <el-table-column prop="sex" label="性别" width="70">
                     <template scope="scope">

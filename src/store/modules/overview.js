@@ -23,7 +23,7 @@ const getters = {
     overviewdata: state => state.overview
 }
 
- const actions = {
+const actions = {
      /*
      * 获取地图概览数据
      * */

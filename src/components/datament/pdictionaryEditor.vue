@@ -5,7 +5,7 @@
 </template>
 
 <script>
-// 编辑供货商
+// 编辑商品字典
 
 export default {
     data() {

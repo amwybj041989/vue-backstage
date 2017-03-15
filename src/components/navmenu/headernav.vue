@@ -9,7 +9,7 @@
 		<div class="toolbar-features">
 			<el-dropdown trigger="click" @command="handleCommand">
 				<div class="el-dropdown-link">
-					<i class="iconfont icon-user"></i><span class="features-name">管理员</span><i class="iconfont icon-menu"></i>
+					<i class="iconfont icon-user"></i><span class="features-name">{{ account }}</span><i class="iconfont icon-menu"></i>
 				</div>
 				<el-dropdown-menu slot="dropdown">
 					<el-dropdown-item disabled>账号管理</el-dropdown-item>
@@ -39,7 +39,8 @@ export default {
         this.$store.dispatch('headernavSwitch')
     },
     computed: {
-        headernav() { return this.$store.getters.headernav }
+        headernav() { return this.$store.getters.headernav },
+        account() { return this.$store.getters.getAccount }
     },
     methods: {
         handleSelect(key, keyPath) {

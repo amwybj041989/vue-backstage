@@ -156,6 +156,46 @@ export default {
             })
     },
     /**
+     * 获取商品分类列表
+     */
+    getProductClassList(param, callback) {
+        var token = {
+            token: this.token()
+        }
+        var params = Object.assign(token, param)
+        axios.post(API_HOST + '/Material/ProductClassList', querystring.stringify(params))
+            .then(function(response) {
+                if (response.status === 200) {
+                    callback(response)
+                } else {
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定' })
+                }
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
+    },
+    /**
+     * 新建商品分类
+     */
+    createProductClass(param, callback) {
+        var token = {
+            token: this.token()
+        }
+        var params = Object.assign(token, param)
+        axios.post(API_HOST + '/Material/CreateProductClass', querystring.stringify(params))
+            .then(function(response) {
+                if (response.status === 200) {
+                    callback(response)
+                } else {
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定' })
+                }
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
+    },
+    /**
      * 销售时间段分析
      */
     getSalesTime(callback) {
@@ -198,10 +238,11 @@ export default {
     /**
      * 所有盒子列表
      */
-    getBoxList(callback) {
-        var params = {
+    getBoxList(param, callback) {
+        var token = {
             token: this.token()
         }
+        var params = Object.assign(token, param)
         axios.post(API_HOST + '/Box/BoxList', querystring.stringify(params))
             .then(function(response) {
                 if (response.status === 200) {

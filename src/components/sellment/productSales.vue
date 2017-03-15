@@ -54,7 +54,7 @@
     <el-row class="mb-10">
         <el-col :span="24" class="el-item pa-10">
             <div class="tableTopbar"><span>查询时间内商品销售情况</span>
-                <el-button type="success">导出ESCEL</el-button>
+                <el-button type="success">导出EXCEL</el-button>
             </div>
             <el-table :data="tableData" :stripe="true" style="width: 100%">
                 <el-table-column prop="id" label="商品ID" width="110"></el-table-column>

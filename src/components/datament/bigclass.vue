@@ -21,10 +21,14 @@
 
     <el-row class="mb-15">
         <el-col :span="24" class="el-item pa-10">
-            <el-table :data="tableData" :stripe="true" class="w-100">
-                <el-table-column prop="id" label="编号" width="100"></el-table-column>
-                <el-table-column prop="level" label="一级类目"></el-table-column>
-                <el-table-column prop="status" label="状态" width="100"></el-table-column>
+            <el-table :data="productClassList.list" :stripe="true" class="w-100">
+                <el-table-column prop="number" label="编号" width="100"></el-table-column>
+                <el-table-column prop="bigclass" label="一级类目"></el-table-column>
+                <el-table-column prop="status" label="状态" width="100">
+                    <template scope="scope">
+                        <span class="f-success">{{ scope.row.status | enableStatus}}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column label="操作" width="140">
                     <template scope="scope">
                         <el-button type="primary" size="small" @click="routerPush(scope.row.id)">编辑</el-button>
@@ -33,7 +37,7 @@
 			  	</el-table-column>
 			</el-table>
 
-			<el-pagination @current-change="handleCurrentChange" :page-size="20" :current-page="1" layout="total, prev, pager, next, jumper" :total="tableData.length">
+			<el-pagination @current-change="handleCurrentChange" :page-size="20" :current-page="1" layout="total, prev, pager, next, jumper" :total="productClassList.count">
             </el-pagination>
 		</el-col>
 	</el-row>
@@ -54,13 +58,18 @@ export default {
             toolbarFrom: {
                 searchkey: ''
             },
-            tableData: [{
-                id: '06',
-                level: '便利食品',
-                status: '启用中',
-            }],
             dialogVisible: false
         }
+    },
+    created() {
+        let param = {
+            type: 1,
+            page: 1
+        }
+        this.$store.dispatch('getProductClassList', param)
+    },
+    computed: {
+        productClassList() { return this.$store.getters.bigclassdata }
     },
     methods: {
         routerPush(id) {

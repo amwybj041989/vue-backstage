@@ -9,8 +9,8 @@
 </template>
 
 <script type="text/javascript">
-    import headernav from '../navigation/headernav.vue'
-    import elmenu from '../menu/elmenu.vue'
+    import headernav from '../navmenu/headernav.vue'
+    import elmenu from '../navmenu/elmenu.vue'
 
     export default {
         data () {

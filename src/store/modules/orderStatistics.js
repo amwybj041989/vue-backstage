@@ -15,7 +15,7 @@ const getters = {
 
  const actions = {
     /**
-     * 获取盒子列表
+     * 获取订单列表
      */
     getOrderList ({ commit }, param) {
         api.getOrderList(param, function (response) {

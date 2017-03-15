@@ -27,7 +27,7 @@
                         <el-button type="primary" @click="searchToolbar(1)">查询</el-button>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="success" @click="exportExcel">导出ESCEL</el-button>
+                        <el-button type="success" @click="exportExcel">导出EXCEL</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -65,8 +65,9 @@
         <el-col :span="24" class="el-item pa-10">
             <el-table :data="orderList.order" :stripe="true" style="width: 100%">
                 <el-table-column prop="box" label="来源盒子" width="110"></el-table-column>
-                <el-table-column prop="time" label="付款时间" width="125"></el-table-column>
+                <el-table-column prop="time" label="付款时间" width="170"></el-table-column>
                 <el-table-column prop="order_no" label="订单号"></el-table-column>
+                <el-table-column prop="phone" label="联系方式" width="130"></el-table-column>
                 <el-table-column label="购买商品" width="130">
                     <template scope="scope">
                         {{ scope.row.product.length }}份 {{ scope.row.productMoney }}元
@@ -149,10 +150,22 @@ export default {
     },
     created() {
         this.getOrderList()
-        this.$store.dispatch('getBoxList')
+        let param = {
+            page: 0
+        }
+        this.$store.dispatch('getBoxList', param)
     },
     computed: {
-        boxlist() { return this.$store.getters.boxList },
+        boxlist() {
+            let _data = this.$store.getters.boxList,
+                _boxList = []
+            for (let elem of _data.values()) {
+                if(elem.status === '1'){
+                    _boxList.push(elem)
+                }
+            }
+            return _boxList
+         },
         orderList() { return this.$store.getters.orderList }
     },
     methods: {
