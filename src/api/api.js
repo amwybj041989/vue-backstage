@@ -176,6 +176,9 @@ export default {
             })
     },
     /**
+     * 获取所有商品分类(新建/编辑时候用)
+     */
+    /**
      * 新建商品分类
      */
     createProductClass(param, callback) {

@@ -46,5 +46,7 @@ new Vue({
     el: '#league',
     router,
     store,
+    // template: '<league/>',
+    // components: { league }
     render: h => h(league)
 })

@@ -16,7 +16,7 @@
                     </el-form-item> -->
                     <el-form-item>
                         <el-select v-model="toolbarFrom.box" clearable placeholder="选择盒子" no-data-text="没有盒子">
-                            <el-option v-for="item in boxlist" :label="item.box_name" :value="item.box_no"></el-option>
+                            <el-option v-for="item in boxlist" :label="item.box_name" :value="item.box_no" :key="item.id"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item>

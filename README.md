@@ -1,6 +1,6 @@
 # vue-backstage
 
-一个基于vue2.0的后台demo,功能超级多,还在不停更新优化中
+一个基于vue2.0的后台demo
 
 技术栈
 > * vue: "^2.1.0"

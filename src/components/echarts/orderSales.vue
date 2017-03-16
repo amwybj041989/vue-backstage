@@ -63,7 +63,8 @@ export default {
                     type: 'category',
                     data: []
                 },
-                yAxis: [{
+                yAxis: [
+                    {
                         splitLine: {
                             show: false,
                             lineStyle: {
@@ -109,7 +110,8 @@ export default {
                         type: 'value'
                     }
                 ],
-                series: [{
+                series: [
+                    {
                         showAllSymbol: true,
                         name: '订单数',
                         type: 'line',

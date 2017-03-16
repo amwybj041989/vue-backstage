@@ -21,7 +21,7 @@
                         <el-select v-model="toolbarFrom.area" placeholder="选择区/镇" no-data-text="请先选择城市"></el-select>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="searchToolbar">查询</el-buttontoolbarFrom.>
+                        <el-button type="primary" @click="searchToolbar">查询</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -49,7 +49,6 @@
 
 		</el-col>
 	</el-row>
-
 </div>
 </template>
 

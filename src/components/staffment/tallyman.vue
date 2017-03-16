@@ -1,6 +1,6 @@
 <template>
 <el-row :gutter="20" class="stafftallyman">
-    <el-col :span="6" v-for="(o, index) in 8">
+    <el-col :span="6">
         <el-card :body-style="{ padding: '0px' }">
             <div class="tallyman-wrap">
                 <p class="tallyman-status"><i class="el-icon-circle-check"></i>&nbsp;启用中</p>
