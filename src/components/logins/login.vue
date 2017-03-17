@@ -16,7 +16,7 @@
 						</el-input>
 					</el-form-item>
 					<el-form-item prop="password">
-						<el-input placeholder="请输入密码" v-model="form.password" class="mt-20" size="large">
+						<el-input type="password" placeholder="请输入密码" v-model="form.password" class="mt-20" size="large">
 						    <template slot="prepend">密码</template>
 						</el-input>
 					</el-form-item>

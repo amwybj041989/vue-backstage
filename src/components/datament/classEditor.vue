@@ -133,23 +133,7 @@ export default {
         submit(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    if(this.id === 'new'){
-                        // 新建类
-                        let param = this.form
-                        param.status = param.status ? 1 : 0
-
-                        api.createProductClass(param, function (response) {
-                            console.log("创建成功！")
-                            this.$message({
-                                message: '新建成功！',
-                                type: 'success'
-                            })
-                            // 创建成功，后退一步记录
-                            this.$router.go(-1)
-                        })
-                    } else {
-                        // 修改类
-                    }
+                    // 修改类
                 } else {
                     this.$alert('必填的字段不能为空，请检查填写后重新提交', '系统通知', { confirmButtonText: '确定' })
                 }

@@ -152,6 +152,11 @@ const routes = [
                 component: require('../components/datament/smallclass.vue')
             },
             {
+                name: 'classnew',
+                path: 'classnew/:type',
+                component: require('../components/datament/classNew.vue')
+            },
+            {
                 name: 'classeditor',
                 path: 'classeditor/:id/:type',
                 component: require('../components/datament/classEditor.vue')

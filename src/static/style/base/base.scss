@@ -299,6 +299,11 @@ p.theme-p {
 	margin-top: 25px;
 }
 
-.el-table .cell {
-	white-space: nowrap!important;
+.el-table {
+	.row-disabled {
+		color: #c3c3c3;
+	}
+	.cell {
+	   white-space: nowrap!important;
+   	}
 }

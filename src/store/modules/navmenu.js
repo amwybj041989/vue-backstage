@@ -24,14 +24,14 @@ const sellmentdata = [
             url: '/sellment/selloverview',
         }]
     },
-    {
-        name: '在售商品管理',
-        url: '/product',
-        child: [{
-            name: '商品销售统计',
-            url: '/sellment/productsales'
-        }]
-    },
+    // {
+    //     name: '在售商品管理',
+    //     url: '/product',
+    //     child: [{
+    //         name: '商品销售统计',
+    //         url: '/sellment/productsales'
+    //     }]
+    // },
     {
         name: '订单数据统计',
         url: '/order',
@@ -51,14 +51,14 @@ const boxmentdata = [
             url: '/boxment/boxlist'
         }]
     },
-    {
-        name: '城市小区管理',
-        url: '/community',
-        child: [{
-            name: '城市小区管理',
-            url: '/boxment/community'
-        }]
-    }
+    // {
+    //     name: '城市小区管理',
+    //     url: '/community',
+    //     child: [{
+    //         name: '城市小区管理',
+    //         url: '/boxment/community'
+    //     }]
+    // }
 ]
 // 用户管理左侧导航
 const usermentdata = [

@@ -22,12 +22,12 @@ export default {
                 if (response.status === 200) {
                     callback(response)
                 } else {
-                    MessageBox.alert('登录失败，请检查用户名或密码重新填写登录或者联系管理员', '系统通知', { confirmButtonText: '确定' })
+                    MessageBox.alert('登录失败，请检查用户名或密码重新填写登录或者联系管理员', '系统通知', { confirmButtonText: '确定', type: 'error' })
                 }
             })
             .catch(function(error) {
                 console.log(error)
-                MessageBox.alert('登录失败，接口出错，请联系管理员', '系统通知', { confirmButtonText: '确定' })
+                MessageBox.alert('登录失败，接口出错，请联系管理员', '系统通知', { confirmButtonText: '确定', type: 'error' })
             })
     },
     /**
@@ -42,12 +42,12 @@ export default {
                 if (response.status === 200) {
                     callback(response)
                 } else {
-                    MessageBox.alert('登录失败，请检查用户名或密码重新填写登录或者联系管理员', '系统通知', { confirmButtonText: '确定' })
+                    MessageBox.alert('登录失败，请检查用户名或密码重新填写登录或者联系管理员', '系统通知', { confirmButtonText: '确定', type: 'error' })
                 }
             })
             .catch(function(error) {
                 console.log(error)
-                MessageBox.alert('登录失败，接口出错，请联系管理员', '系统通知', { confirmButtonText: '确定' })
+                MessageBox.alert('登录失败，接口出错，请联系管理员', '系统通知', { confirmButtonText: '确定', type: 'error' })
             })
     },
     /**
@@ -62,7 +62,7 @@ export default {
                 if (response.status === 200) {
                     callback(response)
                 } else {
-                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定' })
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
                 }
             })
             .catch(function(error) {
@@ -72,8 +72,22 @@ export default {
     /**
      * 理货员列表
      */
-    getStafftalist(callback) {
-
+    getStafftalist(param, callback) {
+        var token = {
+            token: this.token()
+        }
+        var params = Object.assign(token, param)
+        axios.post(API_HOST + '/Tallyman/TallymanList', querystring.stringify(params))
+            .then(function(response) {
+                if (response.status === 200) {
+                    callback(response)
+                } else {
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                }
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
     },
     /**
      * 注册用户列表
@@ -88,7 +102,7 @@ export default {
                 if (response.status === 200) {
                     callback(response)
                 } else {
-                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定' })
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
                 }
             })
             .catch(function(error) {
@@ -108,7 +122,7 @@ export default {
                 if (response.status === 200) {
                     callback(response)
                 } else {
-                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定' })
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
                 }
             })
             .catch(function(error) {
@@ -128,7 +142,7 @@ export default {
                 if (response.status === 200) {
                     callback(response)
                 } else {
-                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定' })
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
                 }
             })
             .catch(function(error) {
@@ -148,7 +162,7 @@ export default {
                 if (response.status === 200) {
                     callback(response)
                 } else {
-                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定' })
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
                 }
             })
             .catch(function(error) {
@@ -168,7 +182,7 @@ export default {
                 if (response.status === 200) {
                     callback(response)
                 } else {
-                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定' })
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
                 }
             })
             .catch(function(error) {
@@ -176,8 +190,65 @@ export default {
             })
     },
     /**
-     * 获取所有商品分类(新建/编辑时候用)
+     * 获取所有商品分类(新建/编辑商品分类时候用)
      */
+    getClass(param, callback) {
+        var token = {
+            token: this.token()
+        }
+        var params = Object.assign(token, param)
+        axios.post(API_HOST + '/Material/getClass', querystring.stringify(params))
+            .then(function(response) {
+                if (response.status === 200) {
+                    callback(response)
+                } else {
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                }
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
+    },
+    /**
+     * 删除商品分类
+     */
+    deleteProductClass(param, callback) {
+        var token = {
+            token: this.token()
+        }
+        var params = Object.assign(token, param)
+        axios.post(API_HOST + '/Material/deleteProductClass', querystring.stringify(params))
+            .then(function(response) {
+                if (response.status === 200) {
+                    callback(response)
+                } else {
+                    MessageBox.alert('服务器通讯失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                }
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
+    },
+    /**
+     * 更新商品分类数据
+     */
+    updateProductClass(param, callback) {
+        var token = {
+            token: this.token()
+        }
+        var params = Object.assign(token, param)
+        axios.post(API_HOST + '/Material/UpdateProductClass', querystring.stringify(params))
+            .then(function(response) {
+                if (response.status === 200) {
+                    callback(response)
+                } else {
+                    MessageBox.alert('保存失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                }
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
+    },
     /**
      * 新建商品分类
      */
@@ -191,7 +262,7 @@ export default {
                 if (response.status === 200) {
                     callback(response)
                 } else {
-                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定' })
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
                 }
             })
             .catch(function(error) {
@@ -211,7 +282,7 @@ export default {
                 if (response.status === 200) {
                     callback(response)
                 } else {
-                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定' })
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
                 }
             })
             .catch(function(error) {
@@ -231,7 +302,7 @@ export default {
                 if (response.status === 200) {
                     callback(response)
                 } else {
-                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定' })
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
                 }
             })
             .catch(function(error) {
@@ -251,7 +322,7 @@ export default {
                 if (response.status === 200) {
                     callback(response)
                 } else {
-                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定' })
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
                 }
             })
             .catch(function(error) {

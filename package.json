@@ -1,7 +1,7 @@
 {
-    "name": "vue-backstage",
-    "version": "0.0.5",
-    "description": "vue-backstage demo",
+    "name": "league",
+    "version": "1.0.0",
+    "description": "缤果盒子加盟商系统",
     "author": "董宏锋 <602029096@qq.com>",
     "private": true,
     "scripts": {

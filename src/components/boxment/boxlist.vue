@@ -18,22 +18,25 @@
 
     <el-row class="mb-10">
         <el-col :span="24" class="el-item pa-10">
-            <el-table :data="tableData" :stripe="true" class="w-100">
-                <el-table-column prop="boxno" label="盒子编号" width="100"></el-table-column>
-                <el-table-column prop="progress" label="省份" width="100"></el-table-column>
+            <el-table :data="boxlist" :stripe="true" class="w-100" :row-class-name="tableRowDisabled">
+                <el-table-column prop="box_no" label="盒子编号" width="100"></el-table-column>
+                <el-table-column prop="province" label="省份" width="100"></el-table-column>
                 <el-table-column prop="city" label="城市" width="100"></el-table-column>
                 <el-table-column prop="area" label="区/镇" width="100"></el-table-column>
-                <el-table-column prop="residential" label="小区/商务区名称" width="150"></el-table-column>
-                <el-table-column prop="address" label="详细地址"></el-table-column>
-                <el-table-column prop="status" label="状态" width="100"></el-table-column>
+                <el-table-column prop="community" label="小区/商务区名称" width="150"></el-table-column>
+                <el-table-column prop="addr" label="详细地址"></el-table-column>
+                <el-table-column prop="status" label="状态" width="100">
+                    <template scope="scope">
+                        <span :class="scope.row.status === '1' ? 'f-success' : '' ">{{ scope.row.status | enableStatus}}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column label="操作" width="80">
                     <template scope="scope">
                         <el-button type="primary" size="small" @click="routerPush(scope.row.id)">编辑</el-button>
 					</template>
 			  	</el-table-column>
 			</el-table>
-
-            <el-pagination @current-change="handleCurrentChange" :current-page="1" layout="total, prev, pager, next, jumper" :total="tableData.length">
+            <el-pagination @current-change="handleCurrentChange" :page-size="20" :current-page="1" layout="total, prev, pager, next, jumper" :total="boxlist.length">
             </el-pagination>
 		</el-col>
 	</el-row>
@@ -49,63 +52,14 @@ export default {
         return {
             progress: '',
             city: '',
-            area: '',
-            tableData: [{
-                id: 1,
-                boxno: 'A1001',
-                progress: '广东省',
-                city: '中山市',
-                area: '三乡',
-                residential: '东城花园',
-                address: '温泉村东城温泉里',
-                status: '启用中'
-            },{
-                id: 2,
-                boxno: 'A1001',
-                progress: '广东省',
-                city: '中山市',
-                area: '三乡',
-                residential: '东城花园',
-                address: '温泉村东城温泉里',
-                status: '启用中'
-            },{
-                id: 3,
-                boxno: 'A1001',
-                progress: '广东省',
-                city: '中山市',
-                area: '三乡',
-                residential: '东城花园',
-                address: '温泉村东城温泉里',
-                status: '启用中'
-            },{
-                id: 4,
-                boxno: 'A1001',
-                progress: '广东省',
-                city: '中山市',
-                area: '三乡',
-                residential: '东城花园',
-                address: '温泉村东城温泉里',
-                status: '启用中'
-            },{
-                id: 5,
-                boxno: 'A1001',
-                progress: '广东省',
-                city: '中山市',
-                area: '三乡',
-                residential: '东城花园',
-                address: '温泉村东城温泉里',
-                status: '启用中'
-            },{
-                id: 6,
-                boxno: 'A1001',
-                progress: '广东省',
-                city: '中山市',
-                area: '三乡',
-                residential: '东城花园',
-                address: '温泉村东城温泉里',
-                status: '启用中'
-            }]
+            area: ''
         }
+    },
+    created() {
+        this.$store.dispatch('getBoxList')
+    },
+    computed: {
+        boxlist() { return this.$store.getters.boxList }
     },
     methods: {
         routerPush(id) {
@@ -117,6 +71,12 @@ export default {
         },
         searchToolbar() {
 
+        },
+        tableRowDisabled(row, index) {
+            // 设置表格禁用行样式
+            if(row.status == 0) {
+                return 'row-disabled'
+            }
         }
     }
 }
