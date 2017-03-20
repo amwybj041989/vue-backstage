@@ -1,5 +1,5 @@
 /**
- * 地图概览页
+ * 账号登录相关
  */
 import api from '../../api/api'
 import * as types from '../mutation'

@@ -1,45 +1,37 @@
 <template>
 <div id="supplieredior" class="right-content">
-    <topbar bone="供应商管理" btwo="新建供货商"></topbar>
+    <topbar bone="供应商管理" :btwo="btwo"></topbar>
     <el-row class="mb-10">
         <el-col :span="24" class="el-item editor-form display-table">
             <div class="form-left">
                 <el-form ref="form" :rules="rules" label-position="right" :model="form" label-width="150px">
-
-                    <el-form-item label="公司名称" prop="companyName">
-                        <el-input v-model="form.companyName" placeholder="请填写公司名称"></el-input>
+                    <el-form-item label="公司名称" prop="company">
+                        <el-input v-model="form.company" placeholder="请填写公司名称"></el-input>
                     </el-form-item>
-
-                    <el-form-item label="营业工商号" prop="businessNumber">
-                        <el-input v-model="form.businessNumber" placeholder="请填写营业执照工商号"></el-input>
+                    <el-form-item label="营业工商号" prop="business_number">
+                        <el-input v-model="form.business_number" placeholder="请填写营业执照工商号"></el-input>
                     </el-form-item>
-
-                    <el-form-item label="一般纳税人" prop="taxpayers">
-                        <el-select v-model="form.taxpayers" placeholder="请选择">
-                              <el-option label="是" value="是"></el-option>
+                    <el-form-item label="一般纳税人" prop="general_taxpayer">
+                        <el-select v-model="form.general_taxpayer" placeholder="请选择">
+                              <el-option label="是" value="1"></el-option>
+                              <el-option label="否" value="0"></el-option>
                         </el-select>
                     </el-form-item>
-
-                    <el-form-item label="收款人姓名" prop="payee">
-                        <el-input v-model="form.payee" placeholder="请填写收款人姓名"></el-input>
+                    <el-form-item label="收款人姓名" prop="name">
+                        <el-input v-model="form.name" placeholder="请填写收款人姓名"></el-input>
                     </el-form-item>
-
                     <el-form-item label="联系方式" prop="phone">
                         <el-input v-model="form.phone" placeholder="请填写联系方式"></el-input>
                     </el-form-item>
-
                     <el-form-item label="开户银行" prop="bank">
                         <el-input v-model="form.bank" placeholder="请填写开户银行"></el-input>
                     </el-form-item>
-
-                    <el-form-item label="银行账号" prop="bankAccount">
-                        <el-input v-model="form.bankAccount" placeholder="请填写银行账号"></el-input>
+                    <el-form-item label="银行账号" prop="bank_account">
+                        <el-input v-model="form.bank_account" placeholder="请填写银行账号"></el-input>
                     </el-form-item>
-
-                    <el-form-item label="主营业务" prop="business">
-                        <el-input v-model="form.business" placeholder="请填写公司主营业务"></el-input>
+                    <el-form-item label="主营业务" prop="service">
+                        <el-input v-model="form.service" placeholder="请填写公司主营业务"></el-input>
                     </el-form-item>
-
                 </el-form>
             </div>
             <div class="form-right">
@@ -63,6 +55,7 @@
 
 <script>
 // 编辑供货商
+import api from '../../api/api.js'
 import topbar from '../common/topbar.vue'
 import '../../static/style/datament/supplierEdior.scss'
 
@@ -70,35 +63,34 @@ export default {
     data() {
         return {
             imageUrl: '',
+            btwo: '新建供货商',
             form: {
-                companyName: '',
-                businessNumber: '',
-                taxpayers: '',
-                payee: '',
+                company: '',
+                business_number: '',
+                general_taxpayer: '',
+                name: '',
                 phone: '',
                 bank: '',
-                bankAccount: '',
-                business: ''
+                bank_account: '',
+                service: ''
             },
             rules: {
-                companyName: [{
-                        required: true,
-                        message: '请输入公司名称',
-                        trigger: 'blur'
-                    }
-                ],
-                businessNumber: [{
-                        required: true,
-                        message: '请输入营业执照工商号',
-                        trigger: 'blur'
-                    }
-                ],
-                taxpayers: [{
+                company: [{
+                    required: true,
+                    message: '请输入公司名称',
+                    trigger: 'blur'
+                }],
+                business_number: [{
+                    required: true,
+                    message: '请输入营业执照工商号',
+                    trigger: 'blur'
+                }],
+                general_taxpayer: [{
                     required: true,
                     message: '请选择纳税人类型',
                     trigger: 'change'
                 }],
-                payee: [{
+                name: [{
                     required: true,
                     message: '请输入收款人姓名',
                     trigger: 'blur'
@@ -113,7 +105,7 @@ export default {
                     message: '请输入开户银行',
                     trigger: 'blur'
                 }],
-                bankAccount: [{
+                bank_account: [{
                     required: true,
                     message: '请输入银行账号',
                     trigger: 'blur'
@@ -123,14 +115,72 @@ export default {
             supplierId: this.$route.params.id
         }
     },
+    created() {
+        if(this.supplierId !== 'new'){
+            this.btwo = '编辑供货商'
+            let that = this,
+                param = {
+                    id: this.supplierId
+                }
+            api.getSupplierInfo(param, function (response) {
+                if (response.data.status === '200') {
+                    let _data = response.data.data
+                    that.form.company = _data.company
+                    that.form.business_number = _data.business_number
+                    that.form.general_taxpayer = _data.general_taxpayer
+                    that.form.name = _data.name
+                    that.form.phone = _data.phone
+                    that.form.bank = _data.bank
+                    that.form.bank_account = _data.bank_account
+                    that.form.service = _data.service
+                } else {
+                    that.$alert('获取数据失败，服务器出错', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                }
+            })
+        }
+    },
+    computed: {
+
+    },
     methods: {
         handleAvatarScucess(res, file) {
             // 图片上传成功的回调
             this.imageUrl = URL.createObjectURL(file.raw);
         },
         submit(formName) {
+            var that = this
             this.$refs[formName].validate((valid) => {
                 if (valid) {
+                    let param = this.form
+                    param.id = this.supplierId
+
+                    if(this.supplierId !== 'new') {
+                        api.updateSupplier(param, function (response) {
+                            if (response.data.status === '200') {
+                                that.$message({
+                                    message: '更新成功！',
+                                    type: 'success'
+                                })
+                                // 创建成功，回到列表页
+                                that.$router.go(-1)
+                            } else {
+                                that.$alert('更新失败，服务器出错', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                            }
+                        })
+                    } else {
+                        api.createSupplier(param, function (response) {
+                            if (response.data.status === '200') {
+                                that.$message({
+                                    message: '新建成功！',
+                                    type: 'success'
+                                })
+                                // 创建成功，回到列表页
+                                that.$router.go(-1)
+                            } else {
+                                that.$alert('创建失败，服务器出错', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                            }
+                        })
+                    }
 
                 } else {
                     this.$alert('必填的字段不能为空，请检查填写后重新提交', '系统通知', { confirmButtonText: '确定' })
@@ -138,7 +188,7 @@ export default {
             })
         },
         beforeAvatarUpload() {
-            
+
         }
     },
     components: { topbar }

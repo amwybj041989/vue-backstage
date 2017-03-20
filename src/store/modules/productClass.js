@@ -1,5 +1,5 @@
 /**
- * 地图概览页数据管理
+ * 商品分类管理
  */
 import api from '../../api/api'
 import * as types from '../mutation'

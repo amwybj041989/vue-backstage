@@ -41,13 +41,13 @@ export default {
         // 员工搜索
         searchToolbar() {
             if(this.toolbarFrom.searchkey === ''){
-                this.$alert('请输入查询关键字', '系统通知', { confirmButtonText: '确定' })
+                this.$alert('请输入查询关键字', '系统通知', { confirmButtonText: '确定', type: 'error' })
                 return false
             }
-        },
-        // 新增理货员
-        addMan() {
-
+            let param = {
+                key: this.toolbarFrom.searchkey
+            }
+            this.$store.dispatch('getStafftalist', param)
         },
         routerPush(id) {
 

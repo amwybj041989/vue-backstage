@@ -27,7 +27,6 @@ const actions = {
 
 const mutations = {
     [types.GET_STAFFTALIST_SUCCESS] (state, { response }) {
-        console.log('dddd');
         state.stafftalist = response.data.data
     }
 }

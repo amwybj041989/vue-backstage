@@ -3,7 +3,7 @@
         <div class="overview-ordernum">
             <div class="overview-ordernum-item display-table total-ordernum">
                 <div class="ordernum-title"><span>累积订单</span></div>
-                <div class="ordernum-text">{{ overviewdata.allOrdersTotal }}</div>
+                <div class="ordernum-text">{{ overviewdata.CumulativeOrder }}</div>
             </div>
             <div class="overview-ordernum-item display-table">
                 <div class="ordernum-title"><span>今日订单</span></div>

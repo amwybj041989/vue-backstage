@@ -37,6 +37,7 @@ export default {
         stafftalist() { return this.$store.getters.stafftalist }
     },
     methods: {
+
     }
 }
 </script>

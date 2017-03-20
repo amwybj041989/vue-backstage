@@ -1,5 +1,5 @@
 /**
- * 注册用户详情
+ * 盒子管理
  */
 import api from '../../api/api'
 import * as types from '../mutation'

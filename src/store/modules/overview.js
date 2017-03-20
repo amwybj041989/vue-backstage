@@ -14,9 +14,9 @@ const getters = {
 }
 
 const actions = {
-     /*
+    /**
      * 获取地图概览数据
-     * */
+     */
     getOverviewData ({ commit }) {
         // loading 开始
         // commit(types.COM_LOADING_STATUS,true)

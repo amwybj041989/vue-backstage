@@ -6,12 +6,12 @@ import { MessageBox } from 'element-ui'
 import axios from 'axios'
 import { API_HOST } from '../config/config'
 import querystring from 'querystring'
-// import store from '../store/store'
+import store from '../store/store'
 
 export default {
     token() {
-        // return store.getters.getToken
-        return 'test'
+        return store.getters.getToken
+        // return 'test'
     },
     /**
      * 用户登录
@@ -263,6 +263,106 @@ export default {
                     callback(response)
                 } else {
                     MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                }
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
+    },
+    /**
+     * 新增供货商
+     */
+    createSupplier(param, callback) {
+        var token = {
+            token: this.token()
+        }
+        var params = Object.assign(token, param)
+        axios.post(API_HOST + '/Material/CreateSupplier', querystring.stringify(params))
+            .then(function(response) {
+                if (response.status === 200) {
+                    callback(response)
+                } else {
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                }
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
+    },
+    /**
+     * 供货商列表
+     */
+    getSupplierList(param, callback) {
+        var token = {
+            token: this.token()
+        }
+        var params = Object.assign(token, param)
+        axios.post(API_HOST + '/Material/SupplierList', querystring.stringify(params))
+            .then(function(response) {
+                if (response.status === 200) {
+                    callback(response)
+                } else {
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                }
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
+    },
+    /**
+     * 删除供货商
+     */
+    deleteSupplier(param, callback) {
+        var token = {
+            token: this.token()
+        }
+        var params = Object.assign(token, param)
+        axios.post(API_HOST + '/Material/DeleteSupplier', querystring.stringify(params))
+            .then(function(response) {
+                if (response.status === 200) {
+                    callback(response)
+                } else {
+                    MessageBox.alert('删除数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                }
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
+    },
+    /**
+     * 获取某个供货商详情
+     */
+    getSupplierInfo(param, callback) {
+        var token = {
+            token: this.token()
+        }
+        var params = Object.assign(token, param)
+        axios.post(API_HOST + '/Material/SupplierInfo', querystring.stringify(params))
+            .then(function(response) {
+                if (response.status === 200) {
+                    callback(response)
+                } else {
+                    MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                }
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
+    },
+    /**
+     * 更新供货商资料
+     */
+    updateSupplier(param, callback) {
+        var token = {
+            token: this.token()
+        }
+        var params = Object.assign(token, param)
+        axios.post(API_HOST + '/Material/UpdateSupplier', querystring.stringify(params))
+            .then(function(response) {
+                if (response.status === 200) {
+                    callback(response)
+                } else {
+                    MessageBox.alert('数据更新失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
                 }
             })
             .catch(function(error) {

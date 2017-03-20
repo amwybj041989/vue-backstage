@@ -25,6 +25,7 @@ AMap.initAMapApiLoader({
 // 注册导航全局钩子，检查是否已登录
 router.beforeEach((to, from, next) => {
     let token = store.getters.getToken
+    console.log(token)
     if (token != null && to.path == '/login') {
         // 已登录不能进入登录页
         next('/overview')

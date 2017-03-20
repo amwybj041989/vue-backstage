@@ -1,5 +1,5 @@
 /**
- * 注册用户详情
+ * 订单数据统计
  */
 import api from '../../api/api'
 import * as types from '../mutation'
