@@ -29,7 +29,7 @@
                         <el-button type="primary" @click="">查看商品结构分类表&gt;</el-button>
                     </el-form-item>
                     <el-form-item label="启动开关">
-                        <el-switch on-text="" off-text="" v-model="switchStatus"></el-switch>
+                        <el-switch on-text="" off-text="" v-model="switchStatus" disabled></el-switch>
                     </el-form-item>
                 </el-form>
             </div>
@@ -48,7 +48,6 @@
 
 <script>
 // 编辑/新增商品分类
-import { Message } from 'element-ui';
 import api from '../../api/api.js'
 import topbar from '../../components/common/topbar.vue'
 
@@ -82,9 +81,7 @@ export default {
                 parentId1: [{ required: true, message: '请选择所属一级类目', trigger: 'change' }],
                 parentId2: [{ required: true, message: '请选择所属二级类目', trigger: 'blur' }],
                 title: [{ required: true, message: '请填写类目名称',trigger: 'blur' }],
-                number: [
-                    { validator: checkNumber, trigger: 'blur' }
-                ]
+                number: [ { validator: checkNumber, trigger: 'blur' } ]
             },
         }
     },

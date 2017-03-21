@@ -122,6 +122,10 @@ const datamentdata = [
         url: '／prodyctdictionary',
         child: [
             {
+                name: '字典类型管理',
+                url: '/datament/dictionarytype'
+            },
+            {
                 name: '商品字典管理',
                 url: '/datament/pdictionary'
             }

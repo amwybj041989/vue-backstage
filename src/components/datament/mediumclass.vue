@@ -30,9 +30,9 @@
                         <span :class="scope.row.status === '1' ? 'f-success' : '' ">{{ scope.row.status | enableStatus}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="140">
+                <el-table-column label="操作" width="80">
                     <template scope="scope">
-                        <el-button type="primary" size="small" @click="routerPush(scope.row.id)">编辑</el-button>
+                        <!-- <el-button type="primary" size="small" @click="routerPush(scope.row.id)">编辑</el-button> -->
                         <el-button type="danger" size="small" @click="deleteItem(scope.row.id)">删除</el-button>
                     </template>
 			  	</el-table-column>

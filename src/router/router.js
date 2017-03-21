@@ -170,6 +170,16 @@ const routes = [
                 name: 'pdictionaryeditor',
                 path: 'pdictionaryeditor/:id',
                 component: require('../components/datament/pdictionaryEditor.vue')
+            },
+            {
+                name: 'dictionarytype',
+                path: 'dictionarytype',
+                component: require('../components/datament/dictionaryTypeList.vue')
+            },
+            {
+                name: 'dictionarytypeeditor',
+                path: 'dictionarytypeeditor/:id',
+                component: require('../components/datament/dictionaryTypeEditor.vue')
             }
         ]
     },

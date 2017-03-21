@@ -1,3 +1,7 @@
+/**
+ * 配置一些公用的方法
+ */
+
 export function getNowTime(format) {
     var d = new Date(),
         year = d.getFullYear(),
@@ -12,7 +16,7 @@ export function getNowTime(format) {
     return year + '-' + month + '-' + date + ' ' + hours + '-' + minutes + '-' + seconds
 }
 
-// 为Date原型添加方法
+// 为Date原型添加时间格式化方法
 Date.prototype.format = function(fmt) {
      var o = {
         "M+" : this.getMonth()+1,                 //月份
