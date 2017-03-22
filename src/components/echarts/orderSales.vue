@@ -10,6 +10,7 @@
                 <el-button :type="groupStatus.ninety" size="small" @click="switchData(90)">90天</el-button>
             </el-button-group>
         </div>
+        <!-- <el-alert class="echarts-alert" title="没有数据，无法显示销售额／订单量曲线图" type="info" show-icon :closable="false"></el-alert> -->
     </el-col>
 </el-row>
 </template>
@@ -205,13 +206,16 @@ export default {
                     _xAxis = [],
                     _sales = [],
                     _order = []
-                for (let index of _data.sales.keys()) {
-                    _xAxis.push(_data.sales[index].time)
-                    _sales.push(_data.sales[index].todaySales)
+                if (_data.sales.length > 0) {
+                    for (let index of _data.sales.keys()) {
+                        _xAxis.push(_data.sales[index].time)
+                        _sales.push(_data.sales[index].todaySales)
+                    }
+                    for (let index of _data.order.keys()) {
+                        _order.push(_data.order[index].todayOrder)
+                    }
                 }
-                for (let index of _data.order.keys()) {
-                    _order.push(_data.order[index].todayOrder)
-                }
+
                 that.setOption.xAxis.data = _xAxis
                 that.setOption.series[0].data = _order
                 that.setOption.series[1].data = _sales

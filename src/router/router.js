@@ -35,11 +35,6 @@ const routes = [
                 component: require('../components/sellment/sellOverview.vue')
             },
             {
-                name: 'sellproduct',
-                path: 'productmgt',
-                component: require('../components/sellment/productMgt.vue')
-            },
-            {
                 name: 'sellsales',
                 path: 'productsales',
                 component: require('../components/sellment/productSales.vue')
@@ -180,6 +175,11 @@ const routes = [
                 name: 'dictionarytypeeditor',
                 path: 'dictionarytypeeditor/:id',
                 component: require('../components/datament/dictionaryTypeEditor.vue')
+            },
+            {
+                name: 'productmgt',
+                path: 'productmgt',
+                component: require('../components/datament/productMgt.vue')
             }
         ]
     },

@@ -2,6 +2,7 @@
 <el-row>
     <el-col :span="24" class="el-item">
         <div id="salesTime" class="echarts-wrap"></div>
+        <!-- <el-alert class="echarts-alert" title="没有数据，无法显示销售时间段分析图表" type="info" show-icon :closable="false"></el-alert> -->
     </el-col>
 </el-row>
 </template>

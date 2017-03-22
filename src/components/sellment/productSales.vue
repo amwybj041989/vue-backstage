@@ -10,41 +10,39 @@
                         </el-date-picker>
                     </el-form-item>
                     <el-form-item>
-                        <el-select v-model="toolbarFrom.box" placeholder="选择盒子">
-                            <el-option label="缤果盒子A1001" value="缤果盒子A1001"></el-option>
-                            <el-option label="缤果盒子A1002" value="缤果盒子A1002"></el-option>
+                        <el-select v-model="toolbarFrom.box" clearable placeholder="选择盒子" no-data-text="没有盒子">
+                            <el-option v-for="item in boxlist" :label="item.box_name" :value="item.box_no" :key="item.id"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="searchToolbar">查询</el-button>
                     </el-form-item>
-
                 </el-form>
             </div>
         </el-col>
     </el-row>
 
-    <el-row class="mb-10">
+    <el-row class="mb-10" v-if="salesData.top">
         <el-col :span="24" class="el-item inline-datalist">
             <ul>
                 <li>
-                    <h2 class="theme-h2 tc">62987.08</h2>
+                    <h2 class="theme-h2 tc">{{ salesData.top.sales }}</h2>
                     <p class="theme-p tc mt-5">销售总金额(元)</p>
                 </li>
                 <li>
-                    <h2 class="theme-h2 tc cl-supernova">61843.7</h2>
+                    <h2 class="theme-h2 tc f-color f-money">{{ salesData.top.shiSales }}</h2>
                     <p class="theme-p tc mt-5">实收总金额(元)</p>
                 </li>
                 <li>
-                    <h2 class="theme-h2 tc">12580</h2>
+                    <h2 class="theme-h2 tc">{{ salesData.top.salesCount }}</h2>
                     <p class="theme-p tc mt-5">销售商品总量</p>
                 </li>
                 <li>
-                    <h2 class="theme-h2 tc">24853.2</h2>
+                    <h2 class="theme-h2 tc">{{ salesData.top.profit }}</h2>
                     <p class="theme-p tc mt-5">商品总毛利(元)</p>
                 </li>
                 <li>
-                    <h2 class="theme-h2 tc">39.45</h2>
+                    <h2 class="theme-h2 tc">{{ salesData.top.profitM }}</h2>
                     <p class="theme-p tc mt-5">总毛利率(%)</p>
                 </li>
             </ul>
@@ -53,21 +51,24 @@
 
     <el-row class="mb-10">
         <el-col :span="24" class="el-item pa-10">
-            <div class="tableTopbar"><span>查询时间内商品销售情况</span>
-                <el-button type="success">导出EXCEL</el-button>
+            <div class="tableTopbar"><span>查询时间内商品销售情况（默认为全部数据）</span>
+                <el-button type="success" @click="exportExcel">导出EXCEL</el-button>
             </div>
-            <el-table :data="tableData" :stripe="true" style="width: 100%">
-                <el-table-column prop="id" label="商品ID" width="110"></el-table-column>
-                <el-table-column prop="name" label="商品名称"></el-table-column>
+            <el-table :data="salesData.ProductList" :stripe="true" class="w-100">
+                <el-table-column prop="productId" label="商品ID" width="110"></el-table-column>
                 <el-table-column prop="code" label="国际条码" width="150"></el-table-column>
-                <el-table-column prop="package" label="包装" width="95"></el-table-column>
-                <el-table-column prop="specification" label="规格" width="95"></el-table-column>
-                <el-table-column prop="sales" label="销量(份)" width="130"></el-table-column>
-                <el-table-column prop="price" label="售价(元)" width="130"></el-table-column>
-                <el-table-column prop="money" label="销售额(元)" width="130"></el-table-column>
+                <el-table-column prop="title" label="商品名称"></el-table-column>
+                <el-table-column prop="pack" label="包装" width="95"></el-table-column>
+                <el-table-column prop="spec" label="规格" width="95"></el-table-column>
+                <el-table-column prop="num" label="销量(份)" width="130"></el-table-column>
+                <el-table-column prop="single_price" label="售价(元)" width="130"></el-table-column>
+                <el-table-column label="销售额(元)" width="130" >
+                    <template scope="scope">
+                        <span class="f-color f-money">{{ scope.row.all_price }}</span>
+                    </template>
+                </el-table-column>
             </el-table>
-
-            <el-pagination @current-change="handleCurrentChange" :current-page="1" layout="total, prev, pager, next, jumper" :total="tableData.length">
+            <el-pagination @current-change="handleCurrentChange" :page-size="20" :current-page="1" layout="total, prev, pager, next, jumper" :total="salesData.count">
             </el-pagination>
         </el-col>
     </el-row>
@@ -76,7 +77,8 @@
 </template>
 
 <script type="text/javascript">
-// 订单数据查询页
+// 商品销售统计
+import { API_HOST } from '../../config/config.js'
 import '../../static/style/sellment/productSales.scss'
 
 export default {
@@ -86,6 +88,7 @@ export default {
                 box: '',
                 time: ''
             },
+            searchBtn: 0,
             pickerOptions: {
                 shortcuts: [{
                     text: '最近一周',
@@ -112,28 +115,77 @@ export default {
                         picker.$emit('pick', [start, end]);
                     }
                 }]
-            },
-            tableData: [{
-                id: '9666',
-                name: '大白兔奶糖',
-                code: '056418562541',
-                package: '1包',
-                specification: '100g',
-                sales: 1568,
-                price: 16.88,
-                money: 26822.32
-            }]
+            }
         }
     },
+    created() {
+        this.$store.dispatch('getBoxList', { page: 0 })
+        this.$store.dispatch('getProductSales', { page: 1 })
+    },
+    computed: {
+        boxlist() {
+            let _data = this.$store.getters.boxList,
+                _boxList = []
+            for (let elem of _data.values()) {
+                if(elem.status === '1'){
+                    _boxList.push(elem)
+                }
+            }
+            return _boxList
+         },
+        salesData() { return this.$store.getters.productSales }
+    },
     methods: {
-        searchToolbar() {
-            if(this.toolbarFrom.box === '' && this.toolbarFrom.time === ''){
+        searchToolbar(val) {
+            // 1.没有选择或填写查询字段不允许查询
+            // 2.搜索条件不能清空，如果要查看没有搜索条件的数据，刷新页面或加个清除条件按钮
+            // 3.记录查询按钮被点击次数，如果有点击过搜索，点击页码时根据会查询条件返回数据
+            // 4.以上操作能保证分页数据不出错
+            // 如果是输入框，手动删除输入框内容，再点击页码，因为内容没了，会导致页面数据不准确
+            if(this.toolbarFrom.box === '' && (this.toolbarFrom.time === '' || this.toolbarFrom.time[0] === null)){
                 this.$alert('请至少选择一个查询字段', '系统通知', { confirmButtonText: '确定' })
                 return false
             }
-            console.log(this.toolbarFrom)
+            let param = {
+                page: (typeof val === "number") ? val : 1
+            }
+            if(this.toolbarFrom.box !== '') {
+                param.box_no = this.toolbarFrom.box
+            }
+            if(this.toolbarFrom.time !== '' && this.toolbarFrom.time[0] !== null) {
+                param.start_time = new Date(this.toolbarFrom.time[0]).format("yyyy-MM-dd")
+                param.end_time = new Date(this.toolbarFrom.time[1]).format("yyyy-MM-dd")
+            }
+            this.$store.dispatch('getProductSales', param).then(() => {
+                this.$message({
+                    message: '获取数据成功',
+                    type: 'success'
+                })
+            })
+            console.log(this.searchBtn)
+            this.searchBtn++
         },
         handleCurrentChange(val) {
+            // 页码改变
+            if(this.searchBtn > 0 && (this.toolbarFrom.box !== '' || this.toolbarFrom.time !== '')){
+                this.searchToolbar(val)
+                return false
+            }
+            this.$store.dispatch('getProductSales', { page: val })
+        },
+        exportExcel() {
+            // 导出excel
+            let token = this.$store.getters.getToken,
+                url = API_HOST + '/Order/getProductsExcel.html?token=' + token
+
+            if(this.toolbarFrom.box !== '') {
+                url += '&box_no=' + this.toolbarFrom.box
+            }
+            if(this.toolbarFrom.time !== '' && this.toolbarFrom.time[0] !== null) {
+                url += '&start_time=' + new Date(this.toolbarFrom.time[0]).format("yyyy-MM-dd")
+                url += '&end_time=' + new Date(this.toolbarFrom.time[1]).format("yyyy-MM-dd")
+            }
+            window.open(url)
 
         }
     }

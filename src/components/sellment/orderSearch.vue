@@ -63,7 +63,7 @@
 
     <el-row class="mb-10">
         <el-col :span="24" class="el-item pa-10">
-            <el-table :data="orderList.order" :stripe="true" style="width: 100%">
+            <el-table :data="orderList.order" :stripe="true" class="w-100">
                 <el-table-column prop="box" label="来源盒子" width="110"></el-table-column>
                 <el-table-column prop="time" label="付款时间" width="170"></el-table-column>
                 <el-table-column prop="order_no" label="订单号"></el-table-column>
@@ -149,11 +149,8 @@ export default {
         }
     },
     created() {
-        this.getOrderList()
-        let param = {
-            page: 0
-        }
-        this.$store.dispatch('getBoxList', param)
+        this.$store.dispatch('getOrderList', { page: 1 })
+        this.$store.dispatch('getBoxList', { page: 0 })
     },
     computed: {
         boxlist() {
@@ -172,7 +169,7 @@ export default {
         searchToolbar(val) {
             // 搜索
             if(this.toolbarFrom.provinces === '' && this.toolbarFrom.city === '' && this.toolbarFrom.area === '' && this.toolbarFrom.time === ''){
-                this.getOrderList()
+                this.$store.dispatch('getOrderList', { page: 1 })
                 return false
             }
             let param = {
@@ -185,7 +182,12 @@ export default {
                 param.start_time = new Date(this.toolbarFrom.time[0]).format("yyyy-MM-dd")
                 param.end_time = new Date(this.toolbarFrom.time[1]).format("yyyy-MM-dd")
             }
-            this.$store.dispatch('getOrderList', param)
+            this.$store.dispatch('getOrderList', param).then(() => {
+                this.$message({
+                    message: '获取数据成功',
+                    type: 'success'
+                })
+            })
         },
         handleCurrentChange(val) {
             // 页码改变
@@ -193,29 +195,17 @@ export default {
                 this.searchToolbar(val)
                 return false
             }
-            let param = {
-                page: val
-            }
-            this.$store.dispatch('getOrderList', param)
-        },
-        getOrderList() {
-            // 获取所有订单
-            let param = {
-                page: 1
-            }
-            this.$store.dispatch('getOrderList', param)
+            this.$store.dispatch('getOrderList', { page: val })
         },
         exportExcel() {
             // 导出excel
-            // let token = this.$store.getters.getToken
-            console.log(this.$store.getters.getToken)
-            let token = 'test',
+            let token = this.$store.getters.getToken,
                 url = API_HOST + '/Order/getExcel.html?token=' + token
 
             if(this.toolbarFrom.box !== '') {
                 url += '&box_no=' + this.toolbarFrom.box
             }
-            if(this.toolbarFrom.time !== '') {
+            if(this.toolbarFrom.time !== '' && this.toolbarFrom.time[0] !== null) {
                 url += '&start_time=' + new Date(this.toolbarFrom.time[0]).format("yyyy-MM-dd")
                 url += '&end_time=' + new Date(this.toolbarFrom.time[1]).format("yyyy-MM-dd")
             }

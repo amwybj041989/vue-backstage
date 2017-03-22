@@ -24,14 +24,14 @@ const sellmentdata = [
             url: '/sellment/selloverview',
         }]
     },
-    // {
-    //     name: '在售商品管理',
-    //     url: '/product',
-    //     child: [{
-    //         name: '商品销售统计',
-    //         url: '/sellment/productsales'
-    //     }]
-    // },
+    {
+        name: '商品数据统计',
+        url: '/product',
+        child: [{
+            name: '商品销售统计',
+            url: '/sellment/productsales'
+        }]
+    },
     {
         name: '订单数据统计',
         url: '/order',
@@ -51,14 +51,14 @@ const boxmentdata = [
             url: '/boxment/boxlist'
         }]
     },
-    // {
-    //     name: '城市小区管理',
-    //     url: '/community',
-    //     child: [{
-    //         name: '城市小区管理',
-    //         url: '/boxment/community'
-    //     }]
-    // }
+    {
+        name: '区域管理',
+        url: '/community',
+        child: [{
+            name: '小区管理',
+            url: '/boxment/community'
+        }]
+    }
 ]
 // 用户管理左侧导航
 const usermentdata = [
@@ -119,7 +119,7 @@ const datamentdata = [
     },
     {
         name: '商品字典管理',
-        url: '／prodyctdictionary',
+        url: '/prodyctdictionary',
         child: [
             {
                 name: '字典类型管理',
@@ -128,6 +128,16 @@ const datamentdata = [
             {
                 name: '商品字典管理',
                 url: '/datament/pdictionary'
+            }
+        ]
+    },
+    {
+        name: '商品管理',
+        url: '/productment',
+        child: [
+            {
+                name: '商品管理',
+                url: '/datament/productmgt'
             }
         ]
     }

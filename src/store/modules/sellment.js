@@ -6,12 +6,14 @@ import * as types from '../mutation'
 
 const state = {
     overview: {},
-    orderList: {}
+    orderList: {},
+    productSales: {}
 }
 
 const getters = {
     selldata: state => state.overview,
-    orderList: state => state.orderList
+    orderList: state => state.orderList,
+    productSales: state => state.productSales
 }
 
  const actions = {
@@ -36,6 +38,14 @@ const getters = {
         api.getOrderList(param, function (response) {
             commit(types.GET_ORDERLIST_SUCCESS, { response })
         })
+    },
+    /**
+     * 获取商品销售统计
+     */
+    getProductSales ({ commit }, param) {
+        api.getProductSales(param, function (response) {
+            commit(types.GET_PRODUCTSALESDATA_SUCCESS, { response })
+        })
     }
 }
 
@@ -55,7 +65,19 @@ const mutations = {
             _data.count = Number(response.data.data.count)
         }
         state.orderList = _data
-    }
+    },
+    [types.GET_PRODUCTSALESDATA_SUCCESS] (state, { response }) {
+        if(response.data.status === '404') {
+            state.productSales = {
+                list: [],
+                count: 0
+            }
+            return false
+        }
+        let _data = response.data.data
+        _data.count = Number(response.data.data.count)
+        state.productSales =_data
+    },
 }
 
 export default{

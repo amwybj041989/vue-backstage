@@ -121,7 +121,7 @@ export default {
                         that.$alert('删除失败', '系统通知', { confirmButtonText: '确定', type: 'error' })
                     }
                 })
-            })
+            }).catch(() => {})
         },
         handleCurrentChange(val) {
             if(this.toolbarFrom.searchkey !== '') {

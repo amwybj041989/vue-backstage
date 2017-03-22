@@ -30,9 +30,10 @@
                         <span :class="scope.row.status === '1' ? 'f-success' : '' ">{{ scope.row.status | enableStatus}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="80">
+                <el-table-column label="操作" width="140">
                     <template scope="scope">
-                        <el-button type="danger" size="small" @click="deleteItem(scope.row.id)">删除</el-button>
+                        <el-button type="primary" size="small" @click="development">编辑</el-button>
+                        <el-button type="danger" size="small" @click="development">删除</el-button>
                     </template>
 			  	</el-table-column>
 			</el-table>
@@ -62,7 +63,7 @@ export default {
     },
     methods: {
         deleteItem(id) {
-            this.$alert('功能还在开发中', '系统通知', { confirmButtonText: '确定', type: 'error' })
+
 
         },
         routerPush(id) {
@@ -73,6 +74,9 @@ export default {
         },
         handleCurrentChange() {
 
+        },
+        development() {
+            this.$alert('功能正开发中.....', '系统通知', { confirmButtonText: '确定', type: 'warning' })
         }
     }
 }

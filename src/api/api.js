@@ -55,6 +55,36 @@ export default {
         })
     },
     /**
+     * 获取商品销售统计
+     */
+    getProductSales(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/Order/ProductSalesData', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response)
+            } else {
+                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
+     * 订单数据查询
+     */
+    getOrderList(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/Order/OrderList', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response)
+            } else {
+                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
      * 理货员列表
      */
     getStafftalist(param, callback) {
@@ -105,21 +135,6 @@ export default {
     getUserBuyRecord(param, callback){
         var params = setParams(param)
         axios.post(API_HOST + '/User/getBuyRecord', querystring.stringify(params)).then(function(response) {
-            if (response.status === 200) {
-                callback(response)
-            } else {
-                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
-            }
-        }).catch(function(error) {
-            console.log(error)
-        })
-    },
-    /**
-     * 订单数据查询
-     */
-    getOrderList(param, callback) {
-        var params = setParams(param)
-        axios.post(API_HOST + '/Order/OrderList', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
                 callback(response)
             } else {

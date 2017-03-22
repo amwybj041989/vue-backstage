@@ -9,7 +9,7 @@
                         <el-button type="primary" @click="routerPush('created')">新增字典</el-button>
                     </el-form-item>
                     <el-form-item>
-                        <el-input placeholder="查找关键字" class="function-search" icon="search" v-model="toolbarFrom.searchkey" :on-icon-click="searchToolbar"></el-input>
+                        <el-input placeholder="输入字典名称" class="function-search" icon="search" v-model="toolbarFrom.searchkey" :on-icon-click="searchToolbar"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="searchToolbar">查询</el-button>
@@ -23,17 +23,17 @@
         <el-col :span="24" class="el-item pa-10">
             <el-table :data="list.list" :stripe="true" class="w-100">
                 <el-table-column prop="id" label="编号" width="100"></el-table-column>
-                <el-table-column prop="parents" label="字典类型" width="130"></el-table-column>
+                <el-table-column prop="parentTitle" label="字典类型" width="130"></el-table-column>
                 <el-table-column prop="title" label="字典名称"></el-table-column>
                 <el-table-column prop="status" label="状态" width="100">
                     <template scope="scope">
                         <span :class="scope.row.status === '1' ? 'f-success' : '' ">{{ scope.row.status | enableStatus}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="80">
+                <el-table-column label="操作" width="140">
                     <template scope="scope">
-                        <!-- <el-button type="primary" size="small" @click="routerPush(scope.row.id)">编辑</el-button> -->
-                        <el-button type="danger" size="small" @click="deleteItem(scope.row.id)">删除</el-button>
+                        <el-button type="primary" size="small" @click="development">编辑</el-button>
+                        <el-button type="danger" size="small" @click="development">删除</el-button>
                     </template>
 			  	</el-table-column>
 			</el-table>
@@ -69,14 +69,18 @@ export default {
         deleteItem(id) {
 
         },
-        hideDialog() {
-
-        },
         searchToolbar() {
-
+            this.$store.dispatch('getDictionaryList', { page: 1, title: this.toolbarFrom.searchkey })
         },
         handleCurrentChange(val) {
-
+            if(this.toolbarFrom.searchkey !== '') {
+                this.$store.dispatch('getDictionaryList', { page: 1, title: this.toolbarFrom.searchkey })
+            }else {
+                this.$store.dispatch('getDictionaryList', { page: val })
+            }
+        },
+        development() {
+            this.$alert('功能正开发中.....', '系统通知', { confirmButtonText: '确定', type: 'warning' })
         }
     }
 }
