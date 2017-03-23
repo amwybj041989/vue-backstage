@@ -162,7 +162,6 @@ export default {
                     type: 'success'
                 })
             })
-            console.log(this.searchBtn)
             this.searchBtn++
         },
         handleCurrentChange(val) {
@@ -177,14 +176,16 @@ export default {
             // 导出excel
             let token = this.$store.getters.getToken,
                 url = API_HOST + '/Order/getProductsExcel.html?token=' + token
+            if(this.searchBtn > 0) {
+                if(this.toolbarFrom.box !== '') {
+                    url += '&box_no=' + this.toolbarFrom.box
+                }
+                if(this.toolbarFrom.time !== '' && this.toolbarFrom.time[0] !== null) {
+                    url += '&start_time=' + new Date(this.toolbarFrom.time[0]).format("yyyy-MM-dd")
+                    url += '&end_time=' + new Date(this.toolbarFrom.time[1]).format("yyyy-MM-dd")
+                }
+            }
 
-            if(this.toolbarFrom.box !== '') {
-                url += '&box_no=' + this.toolbarFrom.box
-            }
-            if(this.toolbarFrom.time !== '' && this.toolbarFrom.time[0] !== null) {
-                url += '&start_time=' + new Date(this.toolbarFrom.time[0]).format("yyyy-MM-dd")
-                url += '&end_time=' + new Date(this.toolbarFrom.time[1]).format("yyyy-MM-dd")
-            }
             window.open(url)
 
         }

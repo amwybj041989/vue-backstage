@@ -35,10 +35,11 @@
                 </el-form>
             </div>
             <div class="form-right">
-                <el-upload action="//jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarScucess" :before-upload="beforeAvatarUpload" drag>
+                <!-- <el-upload action="http://t-box.bingofresh.com/Api/Upload/CreateImg" :show-file-list="false" :on-success="handleAvatarScucess" :on-error="handleAvatarError" :before-upload="beforeAvatarUpload" drag>
                     <img v-if="imageUrl" :src="imageUrl" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload>
+                </el-upload> -->
+                <image-upload></image-upload>
                 <p class="mt-10">营业执照图片</p>
             </div>
         </el-col>
@@ -57,6 +58,7 @@
 // 编辑供货商
 import api from '../../api/api.js'
 import topbar from '../common/topbar.vue'
+import imageUpload from '../common/imageUpload.vue'
 import '../../static/style/datament/supplierEdior.scss'
 
 export default {
@@ -114,6 +116,7 @@ export default {
                     that.form.bank = _data.bank
                     that.form.bank_account = Number(_data.bank_account)
                     that.form.service = _data.service
+                    that.imageUrl = _data.img
                 } else {
                     that.$alert('获取数据失败，服务器出错', '系统通知', { confirmButtonText: '确定', type: 'error' })
                 }
@@ -124,16 +127,13 @@ export default {
 
     },
     methods: {
-        handleAvatarScucess(res, file) {
-            // 图片上传成功的回调
-            this.imageUrl = URL.createObjectURL(file.raw);
-        },
         submit(formName) {
             var that = this
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     let param = this.form
                     param.id = this.supplierId
+                    param.img = this.imageUrl
 
                     if(this.supplierId !== 'new') {
                         api.updateSupplier(param, function (response) {
@@ -168,10 +168,24 @@ export default {
                 }
             })
         },
-        beforeAvatarUpload() {
-
+        beforeAvatarUpload(file) {
+            // 上传文件前的钩子
+            console.log("正在上传");
+        },
+        handleAvatarScucess(res, file) {
+            console.log(res);
+            console.log(file);
+            // 图片上传成功钩子
+            this.imageUrl = res.data
+        },
+        handleAvatarError(err, file) {
+            // 图片上传失败钩子
+            that.$alert('图片上传失败，请确认图片格式大小正确后重试', '系统通知', { confirmButtonText: '确定', type: 'error' })
         }
     },
-    components: { topbar }
+    components: {
+        topbar,
+        imageUpload
+    }
 }
 </script>
