@@ -1,0 +1,18 @@
+#staffmenteditor {
+    .el-upload-dragger {
+        width: 180px;
+        line-height: 0;
+        .el-icon-plus {
+            font-size: 28px;
+            color: #8c939d;
+            width: 178px;
+            height: 178px;
+            line-height: 178px;
+            text-align: center;
+        }
+    }
+    .el-pagination {
+        text-align: right;
+        margin-top: 25px;
+    }
+}

@@ -11,9 +11,9 @@ import { API_HOST } from '../../config/config.js'
 import '../../static/style/common/imageUpload.scss'
 
 export default {
+    props: ['imageUrl'],
     data() {
         return {
-            imageUrl: '',
             actionUrl: API_HOST + '/Upload/CreateImg'
         }
     },
@@ -23,10 +23,8 @@ export default {
             console.log("正在上传");
         },
         handleAvatarScucess(res, file) {
-            console.log(res);
-            console.log(file);
-            // 图片上传成功钩子
-            this.imageUrl = res.data
+            // 图片上传成功钩子，使用自定义事件给父组件传数据
+            this.$emit('increment',res.data)
         },
         handleAvatarError(err, file) {
             // 图片上传失败钩子

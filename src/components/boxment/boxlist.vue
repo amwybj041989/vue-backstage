@@ -50,9 +50,11 @@ import '../../static/style/boxment/boxlist.scss'
 export default {
     data() {
         return {
-            progress: '',
-            city: '',
-            area: ''
+            toolbarFrom: {
+                progress: '',
+                city: '',
+                area: ''
+            }
         }
     },
     created() {
@@ -64,7 +66,7 @@ export default {
     methods: {
         routerPush(id) {
             console.log(id)
-            this.$router.push({ name: 'boxedior', params: { id: id } })
+            this.$router.push({ name: 'boxeditor', params: { id: id } })
         },
         handleCurrentChange(val) {
 

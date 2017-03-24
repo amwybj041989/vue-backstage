@@ -1,5 +1,5 @@
 /**
- * 供货商管理
+ * 资料管理
  */
 import api from '../../api/api'
 import * as types from '../mutation'

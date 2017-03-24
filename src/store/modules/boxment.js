@@ -4,21 +4,82 @@
 import api from '../../api/api'
 import * as types from '../mutation'
 
-
 const state = {
-
+    provinceAdminList: {},
+    cityAdminList: {},
+    areaAdminList: {}
 }
 
 const getters = {
-
+    provinceAdminList: state => state.provinceAdminList,
+    cityAdminList: state => state.cityAdminList,
+    areaAdminList: state => state.areaAdminList
 }
 
 const actions = {
-
+    /**
+     * 获取省份列表
+     */
+    getProvinceAdminList ({ commit }, param) {
+        api.getProvinceAdminList(param, function (response) {
+            commit(types.GET_PROVINCEADMINLIST_SUCCESS, { response })
+        })
+    },
+    /**
+     * 获取城市列表
+     */
+    getCityAdminList ({ commit }, param) {
+        api.getCityAdminList(param, function (response) {
+            commit(types.GET_CITYADMINLIST_SUCCESS, { response })
+        })
+    },
+    /**
+     * 获取区域列表
+     */
+    getAreaAdminList ({ commit }, param) {
+        api.getAreaAdminList(param, function (response) {
+            commit(types.GET_AREAADMINLIST_SUCCESS, { response })
+        })
+    },
 }
 
 const mutations = {
-
+    [types.GET_PROVINCEADMINLIST_SUCCESS] (state, { response }) {
+        if(response.data.status === '404') {
+            state.provinceAdminList = {
+                list: [],
+                count: 0
+            }
+            return false
+        }
+        let _data = response.data.data
+        _data.count = Number(_data.count)
+        state.provinceAdminList = _data
+    },
+    [types.GET_CITYADMINLIST_SUCCESS] (state, { response }) {
+        if(response.data.status === '404') {
+            state.cityAdminList = {
+                list: [],
+                count: 0
+            }
+            return false
+        }
+        let _data = response.data.data
+        _data.count = Number(_data.count)
+        state.cityAdminList = _data
+    },
+    [types.GET_AREAADMINLIST_SUCCESS] (state, { response }) {
+        if(response.data.status === '404') {
+            state.areaAdminList = {
+                list: [],
+                count: 0
+            }
+            return false
+        }
+        let _data = response.data.data
+        _data.count = Number(_data.count)
+        state.areaAdminList = _data
+    }
 }
 
 export default{

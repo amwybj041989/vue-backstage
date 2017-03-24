@@ -53,11 +53,25 @@ const boxmentdata = [
     },
     {
         name: '区域管理',
-        url: '/community',
-        child: [{
-            name: '小区管理',
-            url: '/boxment/community'
-        }]
+        url: '/regionmgt',
+        child: [
+            {
+                name: '省份管理',
+                url: '/boxment/province'
+            },
+            {
+                name: '城市管理',
+                url: '/boxment/city'
+            },
+            {
+                name: '区域管理',
+                url: '/boxment/area'
+            },
+            {
+                name: '小区管理',
+                url: '/boxment/community'
+            }
+        ]
     }
 ]
 // 用户管理左侧导航
@@ -93,10 +107,10 @@ const staffmentdata = [
 const datamentdata = [
     {
         name: '供货商管理',
-        url: '/dealerment',
+        url: '/supplier',
         child: [{
             name: '供货商管理',
-            url: '/datament/dealerment'
+            url: '/datament/supplier'
         }]
     },
     {

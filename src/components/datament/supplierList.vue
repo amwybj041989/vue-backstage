@@ -97,7 +97,7 @@ export default {
             this.getSupplierList(1,this.toolbarFrom)
         },
         routerPush(id) {
-            this.$router.push({ name: 'supplierEdior', params: { id: id } })
+            this.$router.push({ name: 'supplierEditor', params: { id: id } })
         },
         deleteItem(id) {
             var that = this

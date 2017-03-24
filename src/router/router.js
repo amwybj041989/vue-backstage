@@ -58,9 +58,34 @@ const routes = [
                 component: require('../components/boxment/boxlist.vue')
             },
             {
-                name: 'boxedior',
-                path: 'boxedior/:id',
-                component: require('../components/boxment/boxEdior.vue')
+                name: 'boxeditor',
+                path: 'boxeditor/:id',
+                component: require('../components/boxment/boxEditor.vue')
+            },
+            {
+                name: 'province',
+                path: 'province',
+                component: require('../components/boxment/province.vue')
+            },
+            {
+                name: 'city',
+                path: 'city',
+                component: require('../components/boxment/city.vue')
+            },
+            {
+                name: 'area',
+                path: 'area',
+                component: require('../components/boxment/area.vue')
+            },
+            {
+                name: 'administrativeeditor',
+                path: 'administrativeeditor/:id/type',
+                component: require('../components/boxment/administrativeEditor.vue')
+            },
+            {
+                name: 'administrativecreate',
+                path: 'administrativecreate/:type',
+                component: require('../components/boxment/administrativeCreate.vue')
             },
             {
                 name: 'community',
@@ -70,7 +95,7 @@ const routes = [
             {
                 name: 'communityeditor',
                 path: 'communityeditor/:id',
-                component: require('../components/boxment/communityEdior.vue')
+                component: require('../components/boxment/communityEditor.vue')
             }
         ]
     },
@@ -111,25 +136,25 @@ const routes = [
             {
                 name: 'staffmenteditor',
                 path: 'tallymaneditor/:id',
-                component: require('../components/staffment/tallymanEdior.vue')
+                component: require('../components/staffment/tallymanEditor.vue')
             }
         ]
     },
     {
         name: 'datament',
         path: '/datament',
-        redirect: '/datament/dealerment',
+        redirect: '/datament/supplier',
         component: require('../components/datament/index.vue'),
         children: [
             {
-                name: 'dealerment',
-                path: 'dealerment',
+                name: 'supplier',
+                path: 'supplier',
                 component: require('../components/datament/supplierList.vue')
             },
             {
-                name: 'supplierEdior',
-                path: 'supplierEdior/:id',
-                component: require('../components/datament/supplierEdior.vue')
+                name: 'supplierEditor',
+                path: 'supplierEditor/:id',
+                component: require('../components/datament/supplierEditor.vue')
             },
             {
                 name: 'bigclass',
@@ -147,9 +172,9 @@ const routes = [
                 component: require('../components/datament/smallclass.vue')
             },
             {
-                name: 'classnew',
-                path: 'classnew/:type',
-                component: require('../components/datament/classNew.vue')
+                name: 'classcreate',
+                path: 'classcreate/:type',
+                component: require('../components/datament/classCreate.vue')
             },
             {
                 name: 'classeditor',

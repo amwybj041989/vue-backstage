@@ -85,6 +85,51 @@ export default {
         })
     },
     /**
+     * 省份管理列表
+     */
+    getProvinceAdminList(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/City/ProvinceAdminList', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response)
+            } else {
+                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
+     * 城市管理列表
+     */
+    getCityAdminList(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/City/CityAdminList', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response)
+            } else {
+                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
+     * 区域管理列表
+     */
+    getAreaAdminList(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/City/AreaAdminList', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response)
+            } else {
+                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
      * 理货员列表
      */
     getStafftalist(param, callback) {

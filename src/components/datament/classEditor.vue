@@ -48,7 +48,7 @@
         <el-col :span="24" class="el-item pa-20">
             <p class="theme-p mb-10">是否保存</p>
             <el-button type="primary" @click="submit('form')">保存</el-button>
-            <el-button>取消</el-button>
+            <cancel></cancel>
         </el-col>
     </el-row>
 </div>
@@ -57,7 +57,8 @@
 <script>
 // 编辑/新增商品分类
 import api from '../../api/api.js'
-import topbar from '../../components/common/topbar.vue'
+import cancel from '../common/cancel.vue'
+import topbar from '../common/topbar.vue'
 
 export default {
     data() {
@@ -170,6 +171,9 @@ export default {
             })
         }
     },
-    components: { topbar }
+    components: {
+        topbar,
+        cancel
+    }
 }
 </script>
