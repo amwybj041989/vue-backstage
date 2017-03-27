@@ -71,7 +71,7 @@ export default {
                     param.status = this.switchStatus === true ? 1 : 0
 
                     api.createDictionary(param, function (response) {
-                        if (response.data.status === '200') {
+                        if (response.status === '200') {
                             that.$message({
                                 message: '新建成功！',
                                 type: 'success'

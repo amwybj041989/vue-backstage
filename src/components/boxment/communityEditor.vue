@@ -49,7 +49,6 @@
 // 小区管理
 import topbar from '../common/topbar.vue'
 import cancel from '../common/cancel.vue'
-import '../../static/style/boxment/communityEditor.scss'
 
 export default {
     data() {

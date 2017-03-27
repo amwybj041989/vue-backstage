@@ -11,7 +11,7 @@ const routes = [
     {
         name: 'home',
         path: '/',
-        redirect: '/overview'
+        redirect: '/sellment'
     },
     {
         name: 'login',
@@ -58,6 +58,11 @@ const routes = [
                 component: require('../components/boxment/boxlist.vue')
             },
             {
+                name: 'boxcreate',
+                path: 'boxcreate',
+                component: require('../components/boxment/boxCreate.vue')
+            },
+            {
                 name: 'boxeditor',
                 path: 'boxeditor/:id',
                 component: require('../components/boxment/boxEditor.vue')
@@ -68,9 +73,29 @@ const routes = [
                 component: require('../components/boxment/province.vue')
             },
             {
+                name: 'provincecreate',
+                path: 'provincecreate',
+                component: require('../components/boxment/provinceCreate.vue')
+            },
+            {
+                name: 'provinceeditor',
+                path: 'provinceeditor',
+                component: require('../components/boxment/provinceEditor.vue')
+            },
+            {
                 name: 'city',
                 path: 'city',
                 component: require('../components/boxment/city.vue')
+            },
+            {
+                name: 'citycreate',
+                path: 'citycreate',
+                component: require('../components/boxment/cityCreate.vue')
+            },
+            {
+                name: 'cityeditor',
+                path: 'cityeditor',
+                component: require('../components/boxment/cityEditor.vue')
             },
             {
                 name: 'area',
@@ -78,19 +103,24 @@ const routes = [
                 component: require('../components/boxment/area.vue')
             },
             {
-                name: 'administrativeeditor',
-                path: 'administrativeeditor/:id/type',
-                component: require('../components/boxment/administrativeEditor.vue')
+                name: 'areacreate',
+                path: 'areacreate',
+                component: require('../components/boxment/areaCreate.vue')
             },
             {
-                name: 'administrativecreate',
-                path: 'administrativecreate/:type',
-                component: require('../components/boxment/administrativeCreate.vue')
+                name: 'areaeditor',
+                path: 'areaeditor',
+                component: require('../components/boxment/areaEditor.vue')
             },
             {
                 name: 'community',
                 path: 'community',
                 component: require('../components/boxment/community.vue')
+            },
+            {
+                name: 'communitycreate',
+                path: 'communitycreate',
+                component: require('../components/boxment/communityCreate.vue')
             },
             {
                 name: 'communityeditor',

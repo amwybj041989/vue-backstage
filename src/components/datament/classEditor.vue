@@ -91,7 +91,10 @@ export default {
                 parentId1: [{ required: true, message: '请选择所属一级类目', trigger: 'change' }],
                 parentId2: [{ required: true, message: '请选择所属二级类目', trigger: 'blur' }],
                 title: [{ required: true, message: '请填写类目名称', trigger: 'blur' }],
-                number: [ { validator: checkNumber, trigger: 'blur' } ]
+                number: [
+                    { required: true, message: '类目编号不能为空'},
+                    { validator: checkNumber, trigger: 'blur' }
+                ]
             },
         }
     },
@@ -137,7 +140,7 @@ export default {
                     param.status = this.switchStatus === true ? 1 : 0
 
                     api.updateProductClass(param, function (response) {
-                        if (response.data.status === '200') {
+                        if (response.status === '200') {
                             that.$message({
                                 message: '更新成功！',
                                 type: 'success'
@@ -158,8 +161,8 @@ export default {
             // 获取分类详情
             let that = this
             api.getProductClassInfo(param, function (response) {
-                if (response.data.status === '200') {
-                    let _data = response.data.data
+                if (response.status === '200') {
+                    let _data = response.data
                     that.form.parentId1 = _data.parentId1
                     that.form.parentId2 = _data.parentId2
                     that.form.title = _data.title

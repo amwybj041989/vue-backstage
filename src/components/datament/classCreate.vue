@@ -29,7 +29,7 @@
                         <el-button type="primary" @click="">查看商品结构分类表&gt;</el-button>
                     </el-form-item>
                     <el-form-item label="启动开关">
-                        <el-switch on-text="" off-text="" v-model="switchStatus" disabled></el-switch>
+                        <el-switch on-text="" off-text="" v-model="switchStatus"></el-switch>
                     </el-form-item>
                 </el-form>
             </div>
@@ -82,7 +82,10 @@ export default {
                 parentId1: [{ required: true, message: '请选择所属一级类目', trigger: 'change' }],
                 parentId2: [{ required: true, message: '请选择所属二级类目', trigger: 'blur' }],
                 title: [{ required: true, message: '请填写类目名称',trigger: 'blur' }],
-                number: [ { validator: checkNumber, trigger: 'blur' } ]
+                number: [
+                    { required: true, message: '类目编号不能为空'},
+                    { validator: checkNumber, trigger: 'blur' }
+                ]
             },
         }
     },
@@ -129,7 +132,7 @@ export default {
                     param.status = this.switchStatus === true ? 1 : 0
 
                     api.createProductClass(param, function (response) {
-                        if (response.data.status === '200') {
+                        if (response.status === '200') {
                             that.$message({
                                 message: '新建成功！',
                                 type: 'success'

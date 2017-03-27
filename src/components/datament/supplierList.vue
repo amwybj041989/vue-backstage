@@ -110,7 +110,7 @@ export default {
                     id: id
                 }
                 api.deleteSupplier(param, function (response) {
-                    if (response.data.status === '200') {
+                    if (response.status === '200') {
                         that.$message({
                             message: '删除成功！',
                             type: 'success'

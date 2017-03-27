@@ -46,17 +46,16 @@ const getters = {
 
 const mutations = {
     [types.GET_USERLIST_SUCCESS] (state, { response }) {
-        let _data = response.data.data
+        let _data = response.data
         _data.count = Number(_data.count)
         state.userlist = _data
     },
     [types.GET_USERBASIS_DATA_SUCCESS] (state, { response }) {
-        state.userBasisData = response.data.data
+        state.userBasisData = response.data
     },
     [types.GET_USERBUYRECORD_SUCCESS] (state, { response }) {
-        let _data = response.data.data
+        let _data = response.data
         _data.count = Number(_data.count)
-        console.log(_data)
         state.userBuyRecord = _data
     }
 }

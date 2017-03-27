@@ -89,7 +89,7 @@ export default {
     mounted() {
         let that = this
         api.getSalesTime(function (response) {
-            let _data = response.data.data,
+            let _data = response.data,
                 _legendData = []
             for (let index of _data.keys()) {
                 _legendData.push(_data[index].name)

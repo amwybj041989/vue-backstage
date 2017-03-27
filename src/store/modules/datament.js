@@ -111,76 +111,76 @@ const actions = {
 
 const mutations = {
     [types.GET_SUPPLIERLIST_SUCCESS] (state, { response }) {
-        let _data = response.data.data
+        let _data = response.data
         _data.count = Number(_data.count)
         state.supplierlist = _data
     },
     [types.GET_SUPPLIERINFO_SUCCESS] (state, { response }) {
-        state.supplierinfo = response.data.data
+        state.supplierinfo = response.data
     },
     [types.GET_BIGCLASS_SUCCESS] (state, { response }) {
-        if(response.data.status === '404') {
+        if(response.status === '404') {
             state.bigclass = {
                 list: [],
                 count: 0
             }
             return false
         }
-        let _data = response.data.data
+        let _data = response.data
         _data.count = Number(_data.count)
         state.bigclass = _data
     },
     [types.GET_MEDIUMCLASS_SUCCESS] (state, { response }) {
-        if(response.data.status === '404') {
+        if(response.status === '404') {
             state.mediumclass = {
                 list: [],
                 count: 0
             }
             return false
         }
-        let _data = response.data.data
+        let _data = response.data
         _data.count = Number(_data.count)
         state.mediumclass =_data
     },
     [types.GET_SMALLCLASS_SUCCESS] (state, { response }) {
-        if(response.data.status === '404') {
+        if(response.status === '404') {
             state.smallclass = {
                 list: [],
                 count: 0
             }
             return false
         }
-        let _data = response.data.data
+        let _data = response.data
         _data.count = Number(_data.count)
         state.smallclass = _data
     },
     [types.GET_NBIGCLASS_SUCCESS] (state, { response }) {
-        state.nbigclass = response.data.status === '404' ? [] : response.data.data
+        state.nbigclass = response.status === '404' ? [] : response.data
     },
     [types.GET_NMEDIUMCLASS_SUCCESS] (state, { response }) {
-        state.nmediumclass = response.data.status === '404' ? [] : response.data.data
+        state.nmediumclass = response.status === '404' ? [] : response.data
     },
     [types.GET_DICTIONARYTYPELIST_SUCCESS] (state, { response }) {
-        if(response.data.status === '404') {
+        if(response.status === '404') {
             state.dictionaryTypeList = {
                 list: [],
                 count: 0
             }
             return false
         }
-        let _data = response.data.data
+        let _data = response.data
         _data.count = Number(_data.count)
         state.dictionaryTypeList = _data
     },
     [types.GET_DICTIONARYLIST_SUCCESS] (state, { response }) {
-        if(response.data.status === '404') {
+        if(response.status === '404') {
             state.dictionaryList = {
                 list: [],
                 count: 0
             }
             return false
         }
-        let _data = response.data.data
+        let _data = response.data
         _data.count = Number(_data.count)
         state.dictionaryList = _data
     }

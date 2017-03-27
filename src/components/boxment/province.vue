@@ -21,8 +21,8 @@
 
     <el-row class="mb-15">
         <el-col :span="24" class="el-item pa-10">
-            <el-table :data="dataList.list" :stripe="true" class="w-100">
-                <el-table-column prop="code" label="省份代码" width="100"></el-table-column>
+            <el-table :data="dataList.list" :stripe="true" class="w-100" :row-class-name="tableRowDisabled">
+                <el-table-column prop="code" label="省份编码" width="100"></el-table-column>
                 <el-table-column prop="name" label="省份名称"></el-table-column>
                 <el-table-column prop="status" label="状态" width="100">
                     <template scope="scope">
@@ -65,16 +65,17 @@ export default {
     methods: {
         searchToolbar() {
             if(this.toolbarFrom.searchkey === '') {
-                that.$alert('请输入搜索关键字', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                this.$alert('请输入搜索关键字', '系统通知', { confirmButtonText: '确定', type: 'error' })
                 return false
             }
             this.getProvinceAdminList({ page: 1, key: this.toolbarFrom.searchkey })
         },
         routerPush(id) {
             if(id === 'create') {
-                this.$router.push({ name: 'administrativecreate', params: { type: 'p' } })
+                this.$router.push({ name: 'provincecreate' })
             } else {
-                this.$router.push({ name: 'administrativeeditor', params: { id: id, type: 'p' } })
+                this.$alert('正在开发中。。', '系统通知', { confirmButtonText: '确定', type: 'warning' })
+                // this.$router.push({ name: 'provinceeditor' })
             }
         },
         deleteItem(id) {
@@ -89,6 +90,12 @@ export default {
         },
         getProvinceAdminList(param) {
             this.$store.dispatch('getProvinceAdminList', param)
+        },
+        tableRowDisabled(row, index) {
+            // 设置表格禁用行样式
+            if(row.status == 0) {
+                return 'row-disabled'
+            }
         }
     }
 }

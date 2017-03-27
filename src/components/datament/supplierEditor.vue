@@ -103,8 +103,8 @@ export default {
                     id: this.supplierId
                 }
             api.getSupplierInfo(param, function (response) {
-                if (response.data.status === '200') {
-                    let _data = response.data.data
+                if (response.status === '200') {
+                    let _data = response.data
                     that.form.company = _data.company
                     that.form.business_number = Number(_data.business_number)
                     that.form.general_taxpayer = _data.general_taxpayer
@@ -134,7 +134,7 @@ export default {
 
                     if(this.supplierId !== 'new') {
                         api.updateSupplier(param, function (response) {
-                            if (response.data.status === '200') {
+                            if (response.status === '200') {
                                 that.$message({
                                     message: '更新成功！',
                                     type: 'success'
@@ -147,7 +147,7 @@ export default {
                         })
                     } else {
                         api.createSupplier(param, function (response) {
-                            if (response.data.status === '200') {
+                            if (response.status === '200') {
                                 that.$message({
                                     message: '新建成功！',
                                     type: 'success'

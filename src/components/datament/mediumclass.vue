@@ -69,7 +69,7 @@ export default {
             this.$router.push({ name: 'classeditor', params: { id: id, type: 'm' } })
         },
         routerPushNew() {
-            this.$router.push({ name: 'classnew', params: { type: 'm' } })
+            this.$router.push({ name: 'classcreate', params: { type: 'm' } })
         },
         deleteItem(id) {
             var that = this
@@ -82,7 +82,7 @@ export default {
                     id: id
                 }
                 api.deleteProductClass(param, function (response) {
-                    if (response.data.status === '200') {
+                    if (response.status === '200') {
                         that.$message({
                             message: '删除成功！',
                             type: 'success'

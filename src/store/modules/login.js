@@ -25,7 +25,7 @@ const actions = {
             var exp = new Date()
             exp.setTime(exp.getTime() + 7 * 24 * 60 * 60 * 1000)
             // 保存token
-            cookie.save('bingoboxtoken', response.data.data, {
+            cookie.save('bingoboxtoken', response.data, {
                 path: '/',
                 expires: exp
             })
@@ -36,7 +36,7 @@ const actions = {
             // 获取成功，提交mutations处理数据
             commit(types.USER_LOGIN_SUCCESS, { response }, userinfo.username)
             // 重定向地图概览页
-            window.location.pathname = '/overview'
+            window.location.pathname = '/sellment'
         })
     },
     /**
@@ -55,7 +55,7 @@ const actions = {
 
 const mutations = {
     [types.USER_LOGIN_SUCCESS](state, { response }, account) {
-        state.token = response.data.data
+        state.token = response.data
         state.account = account
     },
     [types.USER_OUT_LOGIN](state) {

@@ -202,7 +202,7 @@ export default {
                     days: day
                 }
             api.getSalesAmount(param, function (response) {
-                let _data = response.data.data,
+                let _data = response.data,
                     _xAxis = [],
                     _sales = [],
                     _order = []

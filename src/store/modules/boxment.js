@@ -7,13 +7,15 @@ import * as types from '../mutation'
 const state = {
     provinceAdminList: {},
     cityAdminList: {},
-    areaAdminList: {}
+    areaAdminList: {},
+    communityAdminList: {}
 }
 
 const getters = {
     provinceAdminList: state => state.provinceAdminList,
     cityAdminList: state => state.cityAdminList,
-    areaAdminList: state => state.areaAdminList
+    areaAdminList: state => state.areaAdminList,
+    communityAdminList: state => state.communityAdminList
 }
 
 const actions = {
@@ -41,44 +43,64 @@ const actions = {
             commit(types.GET_AREAADMINLIST_SUCCESS, { response })
         })
     },
+    /**
+     * 获取区域列表
+     */
+    getCommunityAdminList ({ commit }, param) {
+        api.getCommunityAdminList(param, function (response) {
+            commit(types.GET_COMMUNITYADMINLIST_SUCCESS, { response })
+        })
+    }
 }
 
 const mutations = {
     [types.GET_PROVINCEADMINLIST_SUCCESS] (state, { response }) {
-        if(response.data.status === '404') {
+        if(response.status === '404') {
             state.provinceAdminList = {
                 list: [],
                 count: 0
             }
             return false
         }
-        let _data = response.data.data
+        let _data = response.data
         _data.count = Number(_data.count)
         state.provinceAdminList = _data
     },
     [types.GET_CITYADMINLIST_SUCCESS] (state, { response }) {
-        if(response.data.status === '404') {
+        if(response.status === '404') {
             state.cityAdminList = {
                 list: [],
                 count: 0
             }
             return false
         }
-        let _data = response.data.data
+        let _data = response.data
         _data.count = Number(_data.count)
         state.cityAdminList = _data
     },
     [types.GET_AREAADMINLIST_SUCCESS] (state, { response }) {
-        if(response.data.status === '404') {
+        if(response.status === '404') {
             state.areaAdminList = {
                 list: [],
                 count: 0
             }
             return false
         }
-        let _data = response.data.data
+        let _data = response.data
         _data.count = Number(_data.count)
         state.areaAdminList = _data
+    },
+    [types.GET_COMMUNITYADMINLIST_SUCCESS] (state, { response }) {
+        if(response.status === '404') {
+            state.communityAdminList = {
+                list: [],
+                count: 0
+            }
+            return false
+        }
+        let _data = response.data
+        _data.count = Number(_data.count)
+        state.communityAdminList = _data
     }
 }
 

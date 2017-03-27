@@ -51,31 +51,31 @@ const getters = {
 
 const mutations = {
     [types.GET_DASHBOARD_DATA_SUCCESS] (state, { response }) {
-        let _data = response.data.data
+        let _data = response.data
         _data.maintainProportions = Number(_data.maintainProportions)
         state.overview = _data
     },
     [types.GET_ORDERLIST_SUCCESS] (state, { response }) {
         let _data = {}
-        if(response.data.status === '404'){
+        if(response.status === '404'){
             _data.order = []
             _data.count = 0
         } else {
-            _data = response.data.data
-            _data.count = Number(response.data.data.count)
+            _data = response.data
+            _data.count = Number(response.data.count)
         }
         state.orderList = _data
     },
     [types.GET_PRODUCTSALESDATA_SUCCESS] (state, { response }) {
-        if(response.data.status === '404') {
+        if(response.status === '404') {
             state.productSales = {
-                list: [],
+                ProductList: [],
                 count: 0
             }
             return false
         }
-        let _data = response.data.data
-        _data.count = Number(response.data.data.count)
+        let _data = response.data
+        _data.count = Number(response.data.count)
         state.productSales =_data
     },
 }

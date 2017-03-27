@@ -52,7 +52,7 @@ const boxmentdata = [
         }]
     },
     {
-        name: '区域管理',
+        name: '开通区域',
         url: '/regionmgt',
         child: [
             {
@@ -64,7 +64,7 @@ const boxmentdata = [
                 url: '/boxment/city'
             },
             {
-                name: '区域管理',
+                name: '区镇管理',
                 url: '/boxment/area'
             },
             {
@@ -163,15 +163,16 @@ const actions = {
      * 切换顶部导航
      */
     headernavSwitch({ commit }) {
-        let data = [{
-                name: '地图概览',
-                url: '/overview',
-                type: 'overview'
-            },
+        let data = [
             {
                 name: '销售管理',
                 url: '/sellment',
                 type: 'sellment'
+            },
+            {
+                name: '地图概览',
+                url: '/overview',
+                type: 'overview'
             },
             {
                 name: '盒子管理',
@@ -227,14 +228,10 @@ const actions = {
 }
 
 const mutations = {
-    [types.HEADERNAV_SWITCH](state, {
-        data
-    }) {
+    [types.HEADERNAV_SWITCH](state, { data }) {
         state.headernav = data
     },
-    [types.ELMENU_SWITCH](state, {
-        data
-    }) {
+    [types.ELMENU_SWITCH](state, { data }) {
         state.elmenu = data
     }
 }

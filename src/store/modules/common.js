@@ -31,8 +31,8 @@ const getters = {
     /**
      * 获取省份列表
      */
-    getProvinceList ({ commit }) {
-        api.getProvinceList(function (response) {
+    getProvinceList ({ commit }, param) {
+        api.getProvinceList(param, function (response) {
             commit(types.GET_PROVINCELIST_SUCCESS, { response })
         })
     },
@@ -45,27 +45,38 @@ const getters = {
         })
     },
     /**
-     * 获取区域列表
+     * 获取区镇列表
      */
-    getCreaList ({ commit }, param) {
-        api.getCreaList(param, function (response) {
+    getAreaList ({ commit }, param) {
+        api.getAreaList(param, function (response) {
             commit(types.GET_AREALIST_SUCCESS, { response })
         })
+    },
+    /**
+     * 重置省份／城市／区镇列表
+     */
+    resetUnitList ({ commit }, param) {
+        commit(types.RESET_UNITLIST_SUCCESS)
     }
 }
 
 const mutations = {
     [types.GET_BOXLIST_SUCCESS] (state, { response }) {
-        state.boxList = (response.data.status !== '404') ? response.data.data.list : []
+        state.boxList = (response.status !== '404') ? response.data.list : []
     },
     [types.GET_PROVINCELIST_SUCCESS] (state, { response }) {
-        state.provinceList = (response.data.status !== '404') ? response.data.data : []
+        state.provinceList = (response.status !== '404') ? response.data : []
     },
     [types.GET_CITYLIST_SUCCESS] (state, { response }) {
-        state.cityList = (response.data.status !== '404') ? response.data.data : []
+        state.cityList = (response.status !== '404') ? response.data : []
     },
     [types.GET_AREALIST_SUCCESS] (state, { response }) {
-        state.areaList = (response.data.status !== '404') ? response.data.data : []
+        state.areaList = (response.status !== '404') ? response.data : []
+    },
+    [types.RESET_UNITLIST_SUCCESS] (state) {
+        state.provinceList = []
+        state.cityList = []
+        state.areaList = []
     },
 }
 

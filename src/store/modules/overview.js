@@ -32,7 +32,7 @@ const actions = {
 
 const mutations = {
     [types.GET_OVERVIEW_DATA_SUCCESS] (state, { response }) {
-        state.overview = response.data.data
+        state.overview = response.data
     }
 }
 

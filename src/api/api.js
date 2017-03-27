@@ -14,7 +14,7 @@ export default {
     onLogin(userinfo, callback) {
         axios.post(API_HOST + '/Login/login', querystring.stringify(userinfo)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('登录失败，请检查用户名或密码重新填写登录或者联系管理员', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -30,7 +30,7 @@ export default {
         var params = setParams({})
         axios.post(API_HOST + '/Sales/getDashboardData', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('登录失败，请检查用户名或密码重新填写登录或者联系管理员', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -46,7 +46,7 @@ export default {
         var params = setParams({})
         axios.post(API_HOST + '/Sales/SalesData', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -61,7 +61,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Order/ProductSalesData', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -76,7 +76,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Order/OrderList', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -91,7 +91,22 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/City/ProvinceAdminList', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
+            } else {
+                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
+     * 新建省份
+     */
+    createProvince(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/City/CreateProvince', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -106,7 +121,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/City/CityAdminList', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -115,13 +130,73 @@ export default {
         })
     },
     /**
-     * 区域管理列表
+     * 新建城市
+     */
+    createCity(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/City/CreateCity', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
+            } else {
+                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
+     * 区镇管理列表
      */
     getAreaAdminList(param, callback) {
         var params = setParams(param)
         axios.post(API_HOST + '/City/AreaAdminList', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
+            } else {
+                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
+     * 新建区镇
+     */
+    createArea(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/City/CreateArea', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
+            } else {
+                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
+     * 小区管理列表
+     */
+    getCommunityAdminList(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/City/CommunityAdminList', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
+            } else {
+                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
+     * 小区管理列表
+     */
+    createCommunity(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/City/CreateCommunity', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -136,7 +211,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Tallyman/TallymanList', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -151,7 +226,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/User/getUserList', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -166,7 +241,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/User/getUserInfo', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -181,7 +256,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/User/getBuyRecord', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -196,7 +271,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Material/ProductClassList', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -211,7 +286,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Material/getClass', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -226,7 +301,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Material/deleteProductClass', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('服务器通讯失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -241,7 +316,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Material/UpdateProductClass', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('保存失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -256,7 +331,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Material/CreateProductClass', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -271,7 +346,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Material/getProductClassInfo', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -286,7 +361,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Material/UpdateProductClass', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -301,7 +376,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Material/CreateSupplier', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -316,7 +391,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Material/SupplierList', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -331,7 +406,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Material/DeleteSupplier', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('删除数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -346,7 +421,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Material/SupplierInfo', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -361,7 +436,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Material/UpdateSupplier', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('数据更新失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -376,7 +451,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Material/DictionaryTypeList', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('数据获取失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -391,7 +466,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Material/CreateType', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('创建失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -406,7 +481,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Material/DictionaryList', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('数据获取失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -421,7 +496,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Material/CreateDictionary', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('创建失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -436,7 +511,7 @@ export default {
         var params = setParams({})
         axios.post(API_HOST + '/Sales/getTimeData', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -451,7 +526,7 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Sales/getSalesAmount', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
@@ -466,7 +541,67 @@ export default {
         var params = setParams(param)
         axios.post(API_HOST + '/Box/BoxList', querystring.stringify(params)).then(function(response) {
             if (response.status === 200) {
-                callback(response)
+                callback(response.data)
+            } else {
+                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
+     * 新建盒子
+     */
+    createBox(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/Box/CreateBox', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
+            } else {
+                MessageBox.alert('新建失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
+     * 所有省份列表
+     */
+    getProvinceList(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/City/ProvinceList', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
+            } else {
+                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
+     * 根据省份返回城市列表
+     */
+    getCityList(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/City/CityList', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
+            } else {
+                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
+     * 根据城市返回区镇列表
+     */
+    getAreaList(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/City/AreaList', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
             } else {
                 MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }

@@ -4,14 +4,35 @@
         <el-col :span="24" class="el-item display-table top-toolbar-complex">
             <div class="toolbar-path tn">缤果盒子列表</div>
             <div class="toolbar-function tr">
-                <el-button type="primary" @click="routerPush('new')">新增盒子</el-button>
-                <el-select v-model="progress" disabled placeholder="广东省"></el-select>
-                <el-select v-model="city" placeholder="选择城市">
-                    <el-option label="中山市" value="zhongshang"></el-option>
-                    <el-option label="广州市" value="guangzhou"></el-option>
-                </el-select>
-                <el-select v-model="area" placeholder="选择区/镇" no-data-text="请先选择城市"></el-select>
-                <el-button type="primary" @click="searchToolbar">查询</el-button>
+                <el-form :model="toolbarFrom" :inline="true" class="tr">
+                    <el-form-item>
+                        <el-button type="primary" @click="routerPush('create')">新增盒子</el-button>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-select v-model="toolbarFrom.province" placeholder="选择省份" @change="getCityList">
+                            <el-option :label="item.name" :value="item.id" :key="item.id" v-for="item in provincelist">
+                                {{ item.code }} {{ item.name }}
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-select v-model="toolbarFrom.city" placeholder="请选择城市" no-data-text="请先选择省份" @change="getArea">
+                            <el-option :label="item.name" :value="item.id" :key="item.id" v-for="item in citylist">
+                                {{ item.code }} {{ item.name }}
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-select v-model="toolbarFrom.area" placeholder="请选择区镇" no-data-text="请先选择城市">
+                            <el-option :label="item.name" :value="item.id" :key="item.id" v-for="item in areaList">
+                                {{ item.code }} {{ item.name }}
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="searchToolbar">查询</el-button>
+                    </el-form-item>
+                </el-form>
             </div>
         </el-col>
     </el-row>
@@ -51,34 +72,52 @@ export default {
     data() {
         return {
             toolbarFrom: {
-                progress: '',
+                province: '',
                 city: '',
                 area: ''
             }
         }
     },
     created() {
-        this.$store.dispatch('getBoxList')
+        this.$store.dispatch('resetUnitList')
+        this.$store.dispatch('getBoxList', {})
+        this.$store.dispatch('getProvinceList', {})
     },
     computed: {
-        boxlist() { return this.$store.getters.boxList }
+        boxlist() { return this.$store.getters.boxList },
+        provincelist() { return this.$store.getters.provinceList },
+        citylist() { return this.$store.getters.cityList },
+        areaList() { return this.$store.getters.areaList }
     },
     methods: {
         routerPush(id) {
-            console.log(id)
             this.$router.push({ name: 'boxeditor', params: { id: id } })
         },
         handleCurrentChange(val) {
 
         },
         searchToolbar() {
+            if(this.toolbarFrom.province === '' && this.toolbarFrom.city === '' && this.toolbarFrom.area === '') {
+                this.$alert('请至少选择一个查询关键字', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                console.log("ddd1");
 
+                return false
+            }
+            let param = this.toolbarFrom
+            param.page = 1
+            this.$store.dispatch('getBoxList')
         },
         tableRowDisabled(row, index) {
             // 设置表格禁用行样式
             if(row.status == 0) {
                 return 'row-disabled'
             }
+        },
+        getCityList(val) {
+            this.$store.dispatch('getCityList', { id: val })
+        },
+        getArea(val) {
+            this.$store.dispatch('getAreaList', { id: val })
         }
     }
 }
