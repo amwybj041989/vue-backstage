@@ -83,8 +83,8 @@
  * 销售数据概览页组件
  */
 import { getNowTime } from '../../utils/com.js'
-import orderSales from '../echarts/orderSales.vue'
-import salesTime from '../echarts/salesTime.vue'
+import orderSales from './orderSales.vue'
+import salesTime from './salesTime.vue'
 import '../../static/style/sellment/sellOverview.scss'
 
 export default {

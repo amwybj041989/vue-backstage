@@ -31,7 +31,7 @@
 
 <script>
 // 新增省份
-import api from '../../api/api.js'
+import api from '../../api/boxmentApi.js'
 import topbar from '../common/topbar.vue'
 import cancel from '../common/cancel.vue'
 

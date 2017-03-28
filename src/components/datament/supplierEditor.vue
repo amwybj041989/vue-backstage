@@ -52,7 +52,7 @@
 
 <script>
 // 编辑供货商
-import api from '../../api/api.js'
+import api from '../../api/datamentApi.js'
 import topbar from '../common/topbar.vue'
 import cancel from '../common/cancel.vue'
 import imageUpload from '../common/imageUpload.vue'

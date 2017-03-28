@@ -26,7 +26,7 @@
                         <el-input v-model="form.area_code" placeholder="请填写区镇编码"></el-input>
                     </el-form-item>
                     <el-form-item label="启动开关">
-                        <el-switch on-text="" off-text="" v-model="switchStatus"></el-switch>
+                        <el-switch on-text="开" off-text="关" v-model="switchStatus"></el-switch>
                     </el-form-item>
                 </el-form>
             </div>
@@ -45,7 +45,7 @@
 
 <script>
 // 新增/编辑 区镇
-import api from '../../api/api.js'
+import api from '../../api/boxmentApi.js'
 import topbar from '../common/topbar.vue'
 import cancel from '../common/cancel.vue'
 
@@ -85,7 +85,7 @@ export default {
     },
     created() {
         this.$store.dispatch('getProvinceList', {})
-        
+
     },
     computed: {
         provincelist() { return this.$store.getters.provinceList },

@@ -1,7 +1,7 @@
 /**
  * 理货员管理页数据管理
  */
-import api from '../../api/api'
+import api from '../../api/staffmentApi'
 import * as types from '../mutation'
 
 

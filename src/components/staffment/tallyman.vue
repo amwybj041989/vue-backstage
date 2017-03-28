@@ -30,8 +30,7 @@ export default {
         }
     },
     created() {
-        let param = {}
-        this.$store.dispatch('getStafftalist', param)
+        this.$store.dispatch('getStafftalist', {})
     },
     computed: {
         stafftalist() { return this.$store.getters.stafftalist }

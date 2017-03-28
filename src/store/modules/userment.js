@@ -1,7 +1,7 @@
 /**
  * 用户管理
  */
-import api from '../../api/api'
+import api from '../../api/usermentApi'
 import * as types from '../mutation'
 
 

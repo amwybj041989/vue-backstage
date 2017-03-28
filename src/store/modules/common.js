@@ -1,7 +1,7 @@
 /**
  * 全局数据
  */
-import api from '../../api/api'
+import api from '../../api/commonApi'
 import * as types from '../mutation'
 
 
@@ -9,14 +9,16 @@ const state = {
     boxList: [],
     provinceList: [],
     cityList: [],
-    areaList: []
+    areaList: [],
+    communityList: []
 }
 
 const getters = {
     boxList: state => state.boxList,
     provinceList: state => state.provinceList,
     cityList: state => state.cityList,
-    areaList: state => state.areaList
+    areaList: state => state.areaList,
+    communityList: state => state.communityList
 }
 
  const actions = {
@@ -53,7 +55,15 @@ const getters = {
         })
     },
     /**
-     * 重置省份／城市／区镇列表
+     * 获取小区列表
+     */
+    getCommunityList ({ commit }, param) {
+        api.getCommunityList(param, function (response) {
+            commit(types.GET_COMMUNITYLIST_SUCCESS, { response })
+        })
+    },
+    /**
+     * 重置省份／城市／区镇／小区列表
      */
     resetUnitList ({ commit }, param) {
         commit(types.RESET_UNITLIST_SUCCESS)
@@ -73,10 +83,14 @@ const mutations = {
     [types.GET_AREALIST_SUCCESS] (state, { response }) {
         state.areaList = (response.status !== '404') ? response.data : []
     },
+    [types.GET_COMMUNITYLIST_SUCCESS] (state, { response }) {
+        state.communityList = (response.status !== '404') ? response.data : []
+    },
     [types.RESET_UNITLIST_SUCCESS] (state) {
         state.provinceList = []
         state.cityList = []
         state.areaList = []
+        state.communityList = []
     },
 }
 

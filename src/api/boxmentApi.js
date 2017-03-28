@@ -24,6 +24,36 @@ export default {
         })
     },
     /**
+     * 盒子详情
+     */
+    getBoxInfo(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/Box/getBoxInfo', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
+            } else {
+                MessageBox.alert('获取盒子数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
+     * 更新盒子数据
+     */
+    updateBox(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/Box/UpdateBox', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
+            } else {
+                MessageBox.alert('更新盒子数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
      * 省份管理列表
      */
     getProvinceAdminList(param, callback) {

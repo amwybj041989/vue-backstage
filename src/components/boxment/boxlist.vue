@@ -9,22 +9,22 @@
                         <el-button type="primary" @click="routerPush('create')">新增盒子</el-button>
                     </el-form-item>
                     <el-form-item>
-                        <el-select v-model="toolbarFrom.province" placeholder="选择省份" @change="getCityList">
-                            <el-option :label="item.name" :value="item.id" :key="item.id" v-for="item in provincelist">
+                        <el-select v-model="toolbarFrom.province" placeholder="选择省份" :clearable="true" @change="getCity">
+                            <el-option :label="item.name" :value="item.code + ',' + item.id" :key="item.id" v-for="item in provincelist">
                                 {{ item.code }} {{ item.name }}
                             </el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item>
-                        <el-select v-model="toolbarFrom.city" placeholder="请选择城市" no-data-text="请先选择省份" @change="getArea">
-                            <el-option :label="item.name" :value="item.id" :key="item.id" v-for="item in citylist">
+                        <el-select v-model="toolbarFrom.city" placeholder="请选择城市" :clearable="true" no-data-text="请先选择省份" @change="getArea">
+                            <el-option :label="item.name" :value="item.code + ',' + item.id" :key="item.id" v-for="item in citylist">
                                 {{ item.code }} {{ item.name }}
                             </el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item>
-                        <el-select v-model="toolbarFrom.area" placeholder="请选择区镇" no-data-text="请先选择城市">
-                            <el-option :label="item.name" :value="item.id" :key="item.id" v-for="item in areaList">
+                        <el-select v-model="toolbarFrom.area" placeholder="请选择区镇" :clearable="true" no-data-text="请先选择城市">
+                            <el-option :label="item.name" :value="item.code + ',' + item.id" :key="item.id" v-for="item in areaList">
                                 {{ item.code }} {{ item.name }}
                             </el-option>
                         </el-select>
@@ -68,6 +68,7 @@
 <script type="text/javascript">
 // 缤果盒子列表
 import '../../static/style/boxment/boxlist.scss'
+
 export default {
     data() {
         return {
@@ -91,21 +92,33 @@ export default {
     },
     methods: {
         routerPush(id) {
-            this.$router.push({ name: 'boxeditor', params: { id: id } })
+            if(id === 'create'){
+                this.$router.push({ name: 'boxcreate' })
+            } else {
+                this.$router.push({ name: 'boxeditor', params: { id: id } })
+            }
         },
         handleCurrentChange(val) {
-
+            if(this.toolbarFrom.province !== '') {
+                let param = this.toolbarFrom
+                param.page = val
+                this.$store.dispatch('getBoxList', param)
+            }else {
+                this.$store.dispatch('getBoxList', { page: val })
+            }
         },
         searchToolbar() {
             if(this.toolbarFrom.province === '' && this.toolbarFrom.city === '' && this.toolbarFrom.area === '') {
                 this.$alert('请至少选择一个查询关键字', '系统通知', { confirmButtonText: '确定', type: 'error' })
-                console.log("ddd1");
-
                 return false
             }
-            let param = this.toolbarFrom
-            param.page = 1
-            this.$store.dispatch('getBoxList')
+            let param = {
+                province: this.toolbarFrom.province.split(',')[0],
+                city: this.toolbarFrom.city.split(',')[0],
+                area: this.toolbarFrom.area.split(',')[0],
+                page: 1
+            }
+            this.$store.dispatch('getBoxList', param)
         },
         tableRowDisabled(row, index) {
             // 设置表格禁用行样式
@@ -113,11 +126,11 @@ export default {
                 return 'row-disabled'
             }
         },
-        getCityList(val) {
-            this.$store.dispatch('getCityList', { id: val })
+        getCity(val) {
+            this.$store.dispatch('getCityList', { id: val.split(',')[1] })
         },
         getArea(val) {
-            this.$store.dispatch('getAreaList', { id: val })
+            this.$store.dispatch('getAreaList', { id: val.split(',')[1] })
         }
     }
 }

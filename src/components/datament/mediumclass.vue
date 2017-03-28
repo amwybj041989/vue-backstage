@@ -47,7 +47,7 @@
 
 <script>
 // 商品中类管理
-import api from '../../api/api.js'
+import api from '../../api/datamentApi.js'
 import '../../static/style/datament/productClass.scss'
 
 export default {

@@ -248,4 +248,19 @@ export default {
             console.log(error)
         })
     },
+    /**
+     * 获取商品列表
+     */
+    getProductList(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/Product/ProductList', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
+            } else {
+                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    }
 }

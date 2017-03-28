@@ -1,5 +1,5 @@
 /**
- * 共用api
+ * 公共api
  */
 import Vue from 'vue'
 import { MessageBox } from 'element-ui'
@@ -32,7 +32,7 @@ export default {
             if (response.status === 200) {
                 callback(response.data)
             } else {
-                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                MessageBox.alert('获取盒子数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
         }).catch(function(error) {
             console.log(error)
@@ -47,7 +47,7 @@ export default {
             if (response.status === 200) {
                 callback(response.data)
             } else {
-                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                MessageBox.alert('获取省份数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
         }).catch(function(error) {
             console.log(error)
@@ -62,7 +62,7 @@ export default {
             if (response.status === 200) {
                 callback(response.data)
             } else {
-                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                MessageBox.alert('获取城市数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
         }).catch(function(error) {
             console.log(error)
@@ -77,7 +77,22 @@ export default {
             if (response.status === 200) {
                 callback(response.data)
             } else {
-                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                MessageBox.alert('获取区镇数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
+     * 根据区镇返回小区列表
+     */
+    getCommunityList(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/City/CommunityList', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
+            } else {
+                MessageBox.alert('获取小区数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
             }
         }).catch(function(error) {
             console.log(error)

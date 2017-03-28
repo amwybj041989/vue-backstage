@@ -1,7 +1,7 @@
 /**
  * 账号登录相关
  */
-import api from '../../api/api'
+import api from '../../api/commonApi'
 import * as types from '../mutation'
 import cookie from 'react-cookie'
 

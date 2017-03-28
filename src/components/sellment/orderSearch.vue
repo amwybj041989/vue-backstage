@@ -102,7 +102,7 @@
 
 <script type="text/javascript">
 // 订单数据查询页
-import api from '../../api/api.js'
+import api from '../../api/sellmentApi.js'
 import { API_HOST } from '../../config/config.js'
 import '../../static/style/sellment/orderSearch.scss'
 

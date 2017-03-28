@@ -33,7 +33,7 @@
 
 <script>
 // 编辑/新增商品分类
-import api from '../../api/api.js'
+import api from '../../api/datamentApi.js'
 import topbar from '../common/topbar.vue'
 import cancel from '../common/cancel.vue'
 

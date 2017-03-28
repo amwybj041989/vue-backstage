@@ -1,7 +1,7 @@
 /**
  * 销售数据概览数据管理
  */
-import api from '../../api/api'
+import api from '../../api/sellmentApi'
 import * as types from '../mutation'
 
 const state = {

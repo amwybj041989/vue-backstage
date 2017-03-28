@@ -74,7 +74,7 @@
 
 <script type="text/javascript">
 // 供货商列表
-import api from '../../api/api.js'
+import api from '../../api/datamentApi.js'
 import '../../static/style/datament/supplierList.scss'
 
 export default {

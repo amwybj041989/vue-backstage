@@ -27,7 +27,7 @@
                         <el-input v-model="form.residential"></el-input>
                     </el-form-item>
                     <el-form-item label="启动开关">
-                        <el-switch on-text="" off-text="" v-model="form.delivery"></el-switch>
+                        <el-switch on-text="开" off-text="关" v-model="form.delivery"></el-switch>
                     </el-form-item>
                 </el-form>
             </div>

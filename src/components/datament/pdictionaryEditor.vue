@@ -15,7 +15,7 @@
                         <el-input v-model="form.title" placeholder="请填写名称，如一包，一瓶，一盒"></el-input>
                     </el-form-item>
                     <el-form-item label="启动开关">
-                        <el-switch on-text="" off-text="" v-model="switchStatus"></el-switch>
+                        <el-switch on-text="开" off-text="关" v-model="switchStatus"></el-switch>
                     </el-form-item>
                 </el-form>
             </div>
@@ -36,7 +36,7 @@
 
 <script>
 // 编辑/新增商品字典
-import api from '../../api/api.js'
+import api from '../../api/datamentApi.js'
 import topbar from '../common/topbar.vue'
 import cancel from '../common/cancel.vue'
 

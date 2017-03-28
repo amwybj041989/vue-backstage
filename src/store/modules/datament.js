@@ -1,7 +1,7 @@
 /**
  * 资料管理
  */
-import api from '../../api/api'
+import api from '../../api/datamentApi'
 import * as types from '../mutation'
 
 
@@ -23,7 +23,8 @@ const state = {
     nbigclass: [],
     nmediumclass: [],
     dictionaryTypeList: {},
-    dictionaryList: {}
+    dictionaryList: {},
+    productList: {}
 }
 
 const getters = {
@@ -35,7 +36,8 @@ const getters = {
     nbigclassdata: state => state.nbigclass,
     nmediumclassdata: state => state.nmediumclass,
     dictionaryTypeList: state => state.dictionaryTypeList,
-    dictionaryList: state => state.dictionaryList
+    dictionaryList: state => state.dictionaryList,
+    productList: state => state.productList
 }
 
 const actions = {
@@ -107,6 +109,14 @@ const actions = {
             commit(types.GET_DICTIONARYLIST_SUCCESS, { response })
         })
     },
+    /**
+     * 获取商品列表
+     */
+    getProductList ({ commit }, param) {
+        api.getProductList(param, function (response) {
+            commit(types.GET_PRODUCTLIST_SUCCESS, { response })
+        })
+    }
 }
 
 const mutations = {
@@ -183,6 +193,18 @@ const mutations = {
         let _data = response.data
         _data.count = Number(_data.count)
         state.dictionaryList = _data
+    },
+    [types.GET_PRODUCTLIST_SUCCESS] (state, { response }) {
+        if(response.status === '404') {
+            state.productList = {
+                list: [],
+                count: 0
+            }
+            return false
+        }
+        let _data = response.data
+        _data.count = Number(_data.count)
+        state.productList = _data
     }
 }
 

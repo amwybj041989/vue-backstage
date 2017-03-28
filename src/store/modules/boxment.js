@@ -1,7 +1,7 @@
 /**
  * 盒子管理
  */
-import api from '../../api/api'
+import api from '../../api/boxmentApi'
 import * as types from '../mutation'
 
 const state = {
@@ -15,7 +15,8 @@ const getters = {
     provinceAdminList: state => state.provinceAdminList,
     cityAdminList: state => state.cityAdminList,
     areaAdminList: state => state.areaAdminList,
-    communityAdminList: state => state.communityAdminList
+    communityAdminList: state => state.communityAdminList,
+    boxinfo: state => state.boxinfo
 }
 
 const actions = {
