@@ -1,8 +1,11 @@
 <template>
-<el-upload class="image-upload" :action="actionUrl" :show-file-list="false" :on-success="handleAvatarScucess" :on-error="handleAvatarError" :before-upload="beforeAvatarUpload" drag>
-    <img v-if="imageUrl" :src="imageUrl" class="avatar">
-    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-</el-upload>
+    <div>
+        <el-upload class="image-upload" :action="actionUrl" :show-file-list="false" :on-success="handleAvatarScucess" :on-error="handleAvatarError" :before-upload="beforeAvatarUpload" drag>
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+        <a :href="imageUrl" class="f-color f-link" target="_blank" v-if="imageUrl">点我查看大图</a>
+    </div>
 </template>
 
 <script>

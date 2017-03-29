@@ -21,7 +21,7 @@
 
     <el-row class="mb-15">
         <el-col :span="24" class="el-item pa-10">
-            <el-table :data="list.list" :stripe="true" class="w-100">
+            <el-table :data="datalist.list" :stripe="true" class="w-100">
                 <el-table-column prop="id" label="编号" width="100"></el-table-column>
                 <el-table-column prop="parentTitle" label="字典类型" width="130"></el-table-column>
                 <el-table-column prop="title" label="字典名称"></el-table-column>
@@ -37,7 +37,7 @@
                     </template>
 			  	</el-table-column>
 			</el-table>
-			<el-pagination @current-change="handleCurrentChange" :page-size="20" :current-page="1" layout="total, prev, pager, next, jumper" :total="list.count">
+			<el-pagination @current-change="handleCurrentChange" :page-size="20" :current-page="1" layout="total, prev, pager, next, jumper" :total="datalist.count">
             </el-pagination>
 		</el-col>
 	</el-row>
@@ -60,7 +60,7 @@ export default {
         this.$store.dispatch('getDictionaryList', { page: 1 })
     },
     computed: {
-        list() { return this.$store.getters.dictionaryList }
+        datalist() { return this.$store.getters.dictionaryList }
     },
     methods: {
         routerPush(id) {
@@ -69,15 +69,29 @@ export default {
         deleteItem(id) {
 
         },
-        searchToolbar() {
-            this.$store.dispatch('getDictionaryList', { page: 1, title: this.toolbarFrom.searchkey })
+        searchToolbar(val) {
+            let param = {
+                page: (typeof val === "number") ? val : 1
+            }
+            if(this.toolbarFrom.searchkey !== ''){
+                param.key = this.toolbarFrom.searchkey
+            }
+            this.$store.dispatch('getDictionaryList', param).then(() => {
+                if(!(typeof val === "number")){
+                    this.$message({
+                        message: '获取数据成功',
+                        type: 'success'
+                    })
+                }
+            })
+            this.searchBtn++
         },
         handleCurrentChange(val) {
-            if(this.toolbarFrom.searchkey !== '') {
-                this.$store.dispatch('getDictionaryList', { page: 1, title: this.toolbarFrom.searchkey })
-            }else {
-                this.$store.dispatch('getDictionaryList', { page: val })
+            if(this.searchBtn > 0 && this.toolbarFrom.searchkey !== '') {
+                this.searchToolbar(val)
+                return false
             }
+            this.$store.dispatch('getDictionaryList', { page: val })
         },
         development() {
             this.$alert('功能正开发中.....', '系统通知', { confirmButtonText: '确定', type: 'warning' })

@@ -1,49 +1,93 @@
+@import "../base/min";
+
 #login {
-    width: 1000px;
-    height: 100%;
-    margin: 0 auto;
-    & > * {
-        height: 100%;
-    }
-    .login-left {
-        position: relative;
-        height: 100%;
-        background: #353535;
-        .login-left-up {
-            text-align: center;
-            margin-top: 90px;
-            img {
-                width: 53%;
+    .login-header {
+        padding: 22px 0;
+        height: 60px;
+        .header-logo {
+            width: $loginWidth;
+            margin: 0 auto;
+            overflow: hidden;
+            h1 {
+                display: block;
+                float: left;
+                zoom: 1;
+                width: 206px;
+                height: 60px;
+                vertical-align: middle;
+            }
+            .header-link {
+                display: inline-block;
+                float: right;
+                height: 60px;
+                line-height: 60px;
+                zoom: 1;
+                vertical-align: middle;
+                span {
+                    margin: 0 10px;
+                }
             }
         }
     }
-    .login-left-down {
-        position: absolute;
-        width: 78%;
-        bottom: 10%;
-        left: 0;
-    }
-    .login-right {
-        position: relative;
-        height: 100%;
-        .login-right-wrap {
-            position: absolute;
-            top: 50%;
-            right: 0;
-            width: 50%;
-            margin-top: -127.5px;
-            h2 {
-                font-weight: 400;
-                font-size: 1.2em;
-            }
-            h1 {
-                font-weight: 400;
-                font-size: 2.3em;
-            }
-            .login-login {
+    .login-content {
+        width: 100%;
+        height: 600px;
+        background-image: url(../../img/login-bg.jpg);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        .content-wrap {
+            width: $loginWidth;
+            height: 600px;
+            margin: 0 auto;
+            .content-title {
                 width: 100%;
-                margin-top: 20px;
+                z-index: 1;
+                position: relative;
+                .title-wrap {
+                    position: absolute;
+                    width: 360px;
+                    top: 187.5px;
+                    left: 0;
+                    line-height: 0;
+                }
             }
+            .content-form {
+                width: 100%;
+                z-index: 1;
+                position: relative;
+                .form-wrap {
+                    position: absolute;
+                    top: 125.5px;
+                    right: 0;
+                    width: 333px;
+                    padding: 25px;
+                    background-color: #fff;
+                    border-radius: 10px;
+                    h2 {
+                        font-weight: 400;
+                        font-size: 1.2em;
+                    }
+                    h1 {
+                        font-weight: 400;
+                        font-size: 2.3em;
+                    }
+                    .content-login {
+                        width: 100%;
+                        margin-top: 20px;
+                    }
+                }
+            }
+        }
+    }
+    .login-footer {
+        width: $loginWidth;
+        margin: 0 auto;
+        text-align: center;
+        margin-top: 100px;
+        p {
+            color: #aaa;
+            line-height: 1.7em;
         }
     }
 }

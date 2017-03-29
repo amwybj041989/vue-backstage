@@ -55,41 +55,44 @@ export default {
         return {
             toolbarFrom: {
                 searchkey: ''
-            }
+            },
+            searchBtn: 0
         }
     },
     created() {
-        let param = {
-            page: 1
-        }
-        this.$store.dispatch('getUserList', param)
+        this.$store.dispatch('getUserList', { page: 1 })
     },
     computed: {
         // 计算属性
         userlist() { return this.$store.getters.userlist }
     },
     methods: {
-        searchToolbar() {
-            // 页内导航页搜索
-            if(this.toolbarFrom.searchkey === ''){
-                this.$alert('请至少选择一个查询字段', '系统通知', { confirmButtonText: '确定' })
-                return false
-            }
+        searchToolbar(val) {
             let param = {
-                page: 1,
-                key: this.toolbarFrom.searchkey
+                page: (typeof val === "number") ? val : 1
             }
-            this.$store.dispatch('getUserList', param)
+            if(this.toolbarFrom.searchkey !== ''){
+                param.key = this.toolbarFrom.searchkey
+            }
+            this.$store.dispatch('getUserList', param).then(() => {
+                if(!(typeof val === "number")){
+                    this.$message({
+                        message: '获取数据成功',
+                        type: 'success'
+                    })
+                }
+            })
+            this.searchBtn++
         },
         routerPush(id) {
             this.$router.push({ name: 'usermentdetail', params: { id: id } })
         },
         handleCurrentChange(val) {
-            // 页码切换
-            let param = {
-                page: val
+            if(this.searchBtn > 0 && this.toolbarFrom.searchkey !== '') {
+                this.searchToolbar(val)
+                return false
             }
-            this.$store.dispatch('getUserList', param)
+            this.$store.dispatch('getUserList', { page: val })
         }
     },
     filters: {

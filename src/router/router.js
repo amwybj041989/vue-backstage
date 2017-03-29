@@ -235,7 +235,12 @@ const routes = [
                 name: 'productmgt',
                 path: 'productmgt',
                 component: require('../components/datament/productMgt.vue')
-            }
+            },
+            // {
+            //     name: 'productcreate',
+            //     path: 'productcreate',
+            //     component: require('../components/datament/productCreate.vue')
+            // }
         ]
     },
     {

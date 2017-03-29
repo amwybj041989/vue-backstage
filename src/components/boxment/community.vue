@@ -8,24 +8,23 @@
                     <el-form-item>
                         <el-button type="primary" @click="routerPush('create')">新增小区</el-button>
                     </el-form-item>
-
                     <el-form-item>
-                        <el-select v-model="toolbarFrom.province" placeholder="选择省份" @change="getCityList">
-                            <el-option :label="item.name" :value="item.id" :key="item.id" v-for="item in provincelist">
+                        <el-select v-model="toolbarFrom.province" placeholder="选择省份" :clearable="true" @change="getCity">
+                            <el-option :label="item.name" :value="item.code + ',' + item.id" :key="item.id" v-for="item in provincelist">
                                 {{ item.code }} {{ item.name }}
                             </el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item>
-                        <el-select v-model="toolbarFrom.city" placeholder="请选择城市" no-data-text="请先选择省份" @change="getArea">
-                            <el-option :label="item.name" :value="item.id" :key="item.id" v-for="item in citylist">
+                        <el-select v-model="toolbarFrom.city" placeholder="请选择城市" :clearable="true" no-data-text="请先选择省份" @change="getArea">
+                            <el-option :label="item.name" :value="item.code + ',' + item.id" :key="item.id" v-for="item in citylist">
                                 {{ item.code }} {{ item.name }}
                             </el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item>
-                        <el-select v-model="toolbarFrom.area" placeholder="请选择区镇" no-data-text="请先选择城市">
-                            <el-option :label="item.name" :value="item.id" :key="item.id" v-for="item in areaList">
+                        <el-select v-model="toolbarFrom.area" placeholder="请选择区镇" :clearable="true" no-data-text="请先选择城市">
+                            <el-option :label="item.name" :value="item.code + ',' + item.id" :key="item.id" v-for="item in areaList">
                                 {{ item.code }} {{ item.name }}
                             </el-option>
                         </el-select>
@@ -76,12 +75,13 @@ export default {
                 province: '',
                 city: '',
                 area: ''
-            }
+            },
+            searchBtn: 0
         }
     },
     created() {
         this.$store.dispatch('resetUnitList')
-        this.getCommunityAdminList({ page: 1 })
+        this.$store.dispatch('getCommunityAdminList', { page: 1 })
         this.$store.dispatch('getProvinceList', {})
     },
     computed: {
@@ -91,14 +91,28 @@ export default {
         areaList() { return this.$store.getters.areaList }
     },
     methods: {
-        searchToolbar() {
-            if(this.toolbarFrom.province === '' && this.toolbarFrom.city === '' && this.toolbarFrom.area === '') {
-                that.$alert('请至少选择一个查询关键字', '系统通知', { confirmButtonText: '确定', type: 'error' })
-                return false
+        searchToolbar(val) {
+            let param = {
+                page: (typeof val === "number") ? val : 1
             }
-            let param = this.toolbarFrom
-            param.page = 1
-            this.getCommunityAdminList(param)
+            if(this.toolbarFrom.province !== '') {
+                param.province = this.toolbarFrom.province.split(',')[0]
+            }
+            if(this.toolbarFrom.city !== ''){
+                param.city = this.toolbarFrom.city.split(',')[0]
+            }
+            if(this.toolbarFrom.area !== ''){
+                param.area = this.toolbarFrom.area.split(',')[0]
+            }
+            this.$store.dispatch('getCommunityAdminList', param).then(() => {
+                if(!(typeof val === "number")){
+                    this.$message({
+                        message: '获取数据成功',
+                        type: 'success'
+                    })
+                }
+            })
+            this.searchBtn++
         },
         routerPush(id) {
             if(id === 'create') {
@@ -113,14 +127,11 @@ export default {
 
         },
         handleCurrentChange(val) {
-            if(this.toolbarFrom.searchkey !== '') {
-                this.getCommunityAdminList({ page: val, key: this.toolbarFrom.searchkey })
-            }else {
-                this.getCommunityAdminList({ page: val })
+            if(this.searchBtn > 0 && (this.toolbarFrom.province !== '' || this.toolbarFrom.city !== '' || this.toolbarFrom.area !== '')) {
+                this.searchToolbar(val)
+                return false
             }
-        },
-        getCommunityAdminList(param) {
-            this.$store.dispatch('getCommunityAdminList', param)
+            this.$store.dispatch('getCommunityAdminList', { page: val })
         },
         tableRowDisabled(row, index) {
             // 设置表格禁用行样式
@@ -128,11 +139,13 @@ export default {
                 return 'row-disabled'
             }
         },
-        getCityList(val) {
-            this.$store.dispatch('getCityList', { id: val })
+        getCity(val) {
+            // 根据省份获取城市
+            this.$store.dispatch('getCityList', { id: val.split(',')[1] })
         },
         getArea(val) {
-            this.$store.dispatch('getAreaList', { id: val })
+            // 根据城市获取区镇
+            this.$store.dispatch('getAreaList', { id: val.split(',')[1] })
         }
     }
 }

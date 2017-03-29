@@ -28,7 +28,7 @@ router.beforeEach((to, from, next) => {
     console.log(token)
     if (token != null && to.path == '/login') {
         // 已登录不能进入登录页
-        next('/overview')
+        next('/sellment')
     }
     if (token === null && to.path !== '/login' && to.path !== '/404') {
         // 未登录

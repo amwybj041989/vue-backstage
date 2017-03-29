@@ -40,14 +40,19 @@ export default {
     methods: {
         // 员工搜索
         searchToolbar() {
-            if(this.toolbarFrom.searchkey === ''){
-                this.$alert('请输入查询关键字', '系统通知', { confirmButtonText: '确定', type: 'error' })
-                return false
+            let param = {}
+            if(this.toolbarFrom.searchkey !== ''){
+                param.key = this.toolbarFrom.searchkey
             }
-            let param = {
-                key: this.toolbarFrom.searchkey
-            }
-            this.$store.dispatch('getStafftalist', param)
+            this.$store.dispatch('getStafftalist', param).then(() => {
+                if(!(typeof val === "number")){
+                    this.$message({
+                        message: '获取数据成功',
+                        type: 'success'
+                    })
+                }
+            })
+            this.searchBtn++
         },
         routerPush(id) {
 

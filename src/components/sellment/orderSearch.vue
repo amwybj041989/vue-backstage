@@ -24,7 +24,7 @@
                         </el-date-picker>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="searchToolbar(1)">查询</el-button>
+                        <el-button type="primary" @click="searchToolbar">查询</el-button>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="success" @click="exportExcel">导出EXCEL</el-button>
@@ -116,6 +116,7 @@ export default {
                 time: '',
                 box: ''
             },
+            searchBtn: 0,
             pickerOptions: {
                 disabledDate(time) {
                     return time.getTime() > Date.now()
@@ -167,13 +168,8 @@ export default {
     },
     methods: {
         searchToolbar(val) {
-            // 搜索
-            if(this.toolbarFrom.provinces === '' && this.toolbarFrom.city === '' && this.toolbarFrom.area === '' && this.toolbarFrom.time === ''){
-                this.$store.dispatch('getOrderList', { page: 1 })
-                return false
-            }
             let param = {
-                page: (val != undefined) ? val : 1
+                page: (typeof val === "number") ? val : 1
             }
             if(this.toolbarFrom.box !== '') {
                 param.box_no = this.toolbarFrom.box
@@ -183,15 +179,18 @@ export default {
                 param.end_time = new Date(this.toolbarFrom.time[1]).format("yyyy-MM-dd")
             }
             this.$store.dispatch('getOrderList', param).then(() => {
-                this.$message({
-                    message: '获取数据成功',
-                    type: 'success'
-                })
+                if(!(typeof val === "number")){
+                    this.$message({
+                        message: '获取数据成功',
+                        type: 'success'
+                    })
+                }
             })
+            this.searchBtn++
         },
         handleCurrentChange(val) {
             // 页码改变
-            if(this.toolbarFrom.provinces !== '' || this.toolbarFrom.city !== '' || this.toolbarFrom.area !== '' || this.toolbarFrom.time !== ''){
+            if(this.searchBtn > 0 && (this.toolbarFrom.provinces !== '' || this.toolbarFrom.city !== '' || this.toolbarFrom.area !== '' || this.toolbarFrom.time !== '')){
                 this.searchToolbar(val)
                 return false
             }
@@ -201,13 +200,14 @@ export default {
             // 导出excel
             let token = this.$store.getters.getToken,
                 url = API_HOST + '/Order/getExcel.html?token=' + token
-
-            if(this.toolbarFrom.box !== '') {
-                url += '&box_no=' + this.toolbarFrom.box
-            }
-            if(this.toolbarFrom.time !== '' && this.toolbarFrom.time[0] !== null) {
-                url += '&start_time=' + new Date(this.toolbarFrom.time[0]).format("yyyy-MM-dd")
-                url += '&end_time=' + new Date(this.toolbarFrom.time[1]).format("yyyy-MM-dd")
+            if(this.searchBtn > 0){
+                if(this.toolbarFrom.box !== '') {
+                    url += '&box_no=' + this.toolbarFrom.box
+                }
+                if(this.toolbarFrom.time !== '' && this.toolbarFrom.time[0] !== null) {
+                    url += '&start_time=' + new Date(this.toolbarFrom.time[0]).format("yyyy-MM-dd")
+                    url += '&end_time=' + new Date(this.toolbarFrom.time[1]).format("yyyy-MM-dd")
+                }
             }
             window.open(url)
 

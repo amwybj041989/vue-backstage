@@ -137,15 +137,6 @@ export default {
     },
     methods: {
         searchToolbar(val) {
-            // 1.没有选择或填写查询字段不允许查询
-            // 2.搜索条件不能清空，如果要查看没有搜索条件的数据，刷新页面或加个清除条件按钮
-            // 3.记录查询按钮被点击次数，如果有点击过搜索，点击页码时根据会查询条件返回数据
-            // 4.以上操作能保证分页数据不出错
-            // 如果是输入框，手动删除输入框内容，再点击页码，因为内容没了，会导致页面数据不准确
-            if(this.toolbarFrom.box === '' && (this.toolbarFrom.time === '' || this.toolbarFrom.time[0] === null)){
-                this.$alert('请至少选择一个查询字段', '系统通知', { confirmButtonText: '确定' })
-                return false
-            }
             let param = {
                 page: (typeof val === "number") ? val : 1
             }
@@ -157,10 +148,12 @@ export default {
                 param.end_time = new Date(this.toolbarFrom.time[1]).format("yyyy-MM-dd")
             }
             this.$store.dispatch('getProductSales', param).then(() => {
-                this.$message({
-                    message: '获取数据成功',
-                    type: 'success'
-                })
+                if(!(typeof val === "number")){
+                    this.$message({
+                        message: '获取数据成功',
+                        type: 'success'
+                    })
+                }
             })
             this.searchBtn++
         },

@@ -54,11 +54,12 @@ export default {
         return {
             toolbarFrom: {
                 searchkey: ''
-            }
+            },
+            searchBtn: 0
         }
     },
     created() {
-        this.getProductClassList(1)
+        this.$store.dispatch('getProductClassList', { type: 1, page: 1 })
     },
     computed: {
         productClassList() { return this.$store.getters.bigclassdata }
@@ -88,32 +89,37 @@ export default {
                             type: 'success'
                         })
                         // 删除成功，重新获取列表
-                        that.getProductClassList(1)
+                        this.$store.dispatch('getProductClassList', { type: 1, page: 1 })
                     } else {
                         that.$alert('删除失败，该类目下已关联分类或者商品', '系统通知', { confirmButtonText: '确定', type: 'error' })
                     }
                 })
             })
         },
-        searchToolbar() {
-            this.getProductClassList(1,this.toolbarFrom)
-        },
-        handleCurrentChange(val) {
-            if(this.toolbarFrom.searchkey !== '') {
-                this.getProductClassList(val, this.toolbarFrom)
-            }else {
-                this.getProductClassList(val)
-            }
-        },
-        getProductClassList(page, toolbarFrom) {
+        searchToolbar(val) {
             let param = {
                 type: 1,
-                page: page
+                page: (typeof val === "number") ? val : 1
             }
-            if(toolbarFrom) {
-                param.title = toolbarFrom.searchkey
+            if(this.toolbarFrom.searchkey !== ''){
+                param.key = this.toolbarFrom.searchkey
             }
-            this.$store.dispatch('getProductClassList', param)
+            this.$store.dispatch('getProductClassList', param).then(() => {
+                if(!(typeof val === "number")){
+                    this.$message({
+                        message: '获取数据成功',
+                        type: 'success'
+                    })
+                }
+            })
+            this.searchBtn++
+        },
+        handleCurrentChange(val) {
+            if(this.searchBtn > 0 && this.toolbarFrom.searchkey !== '') {
+                this.searchToolbar(val)
+                return false
+            }
+            this.$store.dispatch('getProductClassList', { type: 1, page: val })
         },
         tableRowDisabled(row, index) {
             // 设置表格禁用行样式

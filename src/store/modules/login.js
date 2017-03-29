@@ -19,8 +19,8 @@ const actions = {
     /**
      * 用户登录
      */
-    onLogin({ commit }, userinfo) {
-        api.onLogin(userinfo, function(response) {
+    onLogin({ commit }, param) {
+        api.onLogin(param, function(response) {
             //设置cookie过期时间
             var exp = new Date()
             exp.setTime(exp.getTime() + 7 * 24 * 60 * 60 * 1000)
@@ -29,13 +29,13 @@ const actions = {
                 path: '/',
                 expires: exp
             })
-            cookie.save('bingoboxaccount', userinfo.username, {
+            cookie.save('bingoboxaccount', param.username, {
                 path: '/',
                 expires: exp
             })
             // 获取成功，提交mutations处理数据
-            commit(types.USER_LOGIN_SUCCESS, { response }, userinfo.username)
-            // 重定向地图概览页
+            commit(types.USER_LOGIN_SUCCESS, { response }, param.username)
+            // 重定向销售概览页
             window.location.pathname = '/sellment'
         })
     },

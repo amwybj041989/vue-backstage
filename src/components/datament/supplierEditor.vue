@@ -36,7 +36,7 @@
             </div>
             <div class="form-right">
                 <image-upload :imageUrl="imageUrl" @increment="handleAvatarScucess"></image-upload>
-                <p class="mt-10">营业执照图片 <a :href="imageUrl" class="f-color f-link" target="_blank" v-if="imageUrl">点我查看大图</a></p>
+                <p class="mt-10">营业执照图片 </p>
             </div>
         </el-col>
     </el-row>

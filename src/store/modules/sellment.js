@@ -5,13 +5,13 @@ import api from '../../api/sellmentApi'
 import * as types from '../mutation'
 
 const state = {
-    overview: {},
+    selldata: {},
     orderList: {},
     productSales: {}
 }
 
 const getters = {
-    selldata: state => state.overview,
+    selldata: state => state.selldata,
     orderList: state => state.orderList,
     productSales: state => state.productSales
 }
@@ -53,7 +53,7 @@ const mutations = {
     [types.GET_DASHBOARD_DATA_SUCCESS] (state, { response }) {
         let _data = response.data
         _data.maintainProportions = Number(_data.maintainProportions)
-        state.overview = _data
+        state.selldata = _data
     },
     [types.GET_ORDERLIST_SUCCESS] (state, { response }) {
         let _data = {}

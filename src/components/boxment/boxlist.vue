@@ -76,7 +76,8 @@ export default {
                 province: '',
                 city: '',
                 area: ''
-            }
+            },
+            searchBtn: 0,
         }
     },
     created() {
@@ -99,26 +100,34 @@ export default {
             }
         },
         handleCurrentChange(val) {
-            if(this.toolbarFrom.province !== '') {
-                let param = this.toolbarFrom
-                param.page = val
-                this.$store.dispatch('getBoxList', param)
-            }else {
-                this.$store.dispatch('getBoxList', { page: val })
-            }
-        },
-        searchToolbar() {
-            if(this.toolbarFrom.province === '' && this.toolbarFrom.city === '' && this.toolbarFrom.area === '') {
-                this.$alert('请至少选择一个查询关键字', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            if(this.searchBtn > 0 && (this.toolbarFrom.province !== '' || this.toolbarFrom.city !== '' || this.toolbarFrom.area !== '')) {
+                this.searchToolbar(val)
                 return false
             }
+            this.$store.dispatch('getBoxList', { page: val })
+        },
+        searchToolbar(val) {
             let param = {
-                province: this.toolbarFrom.province.split(',')[0],
-                city: this.toolbarFrom.city.split(',')[0],
-                area: this.toolbarFrom.area.split(',')[0],
-                page: 1
+                page: (typeof val === "number") ? val : 1
             }
-            this.$store.dispatch('getBoxList', param)
+            if(this.toolbarFrom.province !== '') {
+                param.province = this.toolbarFrom.province.split(',')[0]
+            }
+            if(this.toolbarFrom.city !== ''){
+                param.city = this.toolbarFrom.city.split(',')[0]
+            }
+            if(this.toolbarFrom.area !== ''){
+                param.area = this.toolbarFrom.area.split(',')[0]
+            }
+            this.$store.dispatch('getBoxList', param).then(() => {
+                if(!(typeof val === "number")){
+                    this.$message({
+                        message: '获取数据成功',
+                        type: 'success'
+                    })
+                }
+            })
+            this.searchBtn++
         },
         tableRowDisabled(row, index) {
             // 设置表格禁用行样式
@@ -127,9 +136,11 @@ export default {
             }
         },
         getCity(val) {
+            // 根据省份获取城市
             this.$store.dispatch('getCityList', { id: val.split(',')[1] })
         },
         getArea(val) {
+            // 根据城市获取区镇
             this.$store.dispatch('getAreaList', { id: val.split(',')[1] })
         }
     }

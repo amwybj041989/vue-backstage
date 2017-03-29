@@ -55,29 +55,39 @@ export default {
         return {
             toolbarFrom: {
                 searchkey: ''
-            }
+            },
+            searchBtn: 0
         }
     },
     created() {
-        this.getAreaAdminList({ page: 1 })
+        this.$store.dispatch('getAreaAdminList', { page: 1 })
     },
     computed: {
         dataList() { return this.$store.getters.areaAdminList }
     },
     methods: {
-        searchToolbar() {
-            if(this.toolbarFrom.searchkey === '') {
-                this.$alert('请输入搜索关键字', '系统通知', { confirmButtonText: '确定', type: 'error' })
-                return false
+        searchToolbar(val) {
+            let param = {
+                page: (typeof val === "number") ? val : 1
             }
-            this.getAreaAdminList({ page: 1, key: this.toolbarFrom.searchkey })
+            if(this.toolbarFrom.searchkey !== ''){
+                param.key = this.toolbarFrom.searchkey
+            }
+            this.$store.dispatch('getAreaAdminList', param).then(() => {
+                if(!(typeof val === "number")){
+                    this.$message({
+                        message: '获取数据成功',
+                        type: 'success'
+                    })
+                }
+            })
+            this.searchBtn++
         },
         routerPush(id) {
             if(id === 'create') {
                 this.$router.push({ name: 'areacreate' })
             } else {
                 this.$alert('正在开发中。。', '系统通知', { confirmButtonText: '确定', type: 'warning' })
-
                 // this.$router.push({ name: 'areaeditor' })
             }
         },
@@ -85,14 +95,11 @@ export default {
 
         },
         handleCurrentChange(val) {
-            if(this.toolbarFrom.searchkey !== '') {
-                this.getAreaAdminList({ page: val, key: this.toolbarFrom.searchkey })
-            }else {
-                this.getAreaAdminList({ page: val })
+            if(this.searchBtn > 0 && this.toolbarFrom.searchkey !== '') {
+                this.searchToolbar(val)
+                return false
             }
-        },
-        getAreaAdminList(param) {
-            this.$store.dispatch('getAreaAdminList', param)
+            this.$store.dispatch('getAreaAdminList', { page: val })
         },
         tableRowDisabled(row, index) {
             // 设置表格禁用行样式

@@ -11,9 +11,9 @@ export default {
     /**
      * 用户登录
      */
-    onLogin(userinfo, callback) {
-        axios.post(API_HOST + '/Login/login', querystring.stringify(userinfo)).then(function(response) {
-            if (response.status === 200) {
+    onLogin(param, callback) {
+        axios.post(API_HOST + '/Login/login', querystring.stringify(param)).then(function(response) {
+            if (response.status === 200 && response.data.status !== '-1') {
                 callback(response.data)
             } else {
                 MessageBox.alert('登录失败，请检查用户名或密码重新填写登录或者联系管理员', '系统通知', { confirmButtonText: '确定', type: 'error' })

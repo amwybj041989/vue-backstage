@@ -21,7 +21,7 @@
 
     <el-row class="mb-15">
         <el-col :span="24" class="el-item pa-10">
-            <el-table :data="list.list" :stripe="true" class="w-100">
+            <el-table :data="datalist.list" :stripe="true" class="w-100">
                 <el-table-column prop="id" label="ID" width="70"></el-table-column>
                 <el-table-column prop="code" label="编码" width="150"></el-table-column>
                 <el-table-column prop="title" label="名称"></el-table-column>
@@ -37,7 +37,7 @@
                     </template>
 			  	</el-table-column>
 			</el-table>
-			<el-pagination @current-change="handleCurrentChange" :page-size="20" :current-page="1" layout="total, prev, pager, next, jumper" :total="list.count">
+			<el-pagination @current-change="handleCurrentChange" :page-size="20" :current-page="1" layout="total, prev, pager, next, jumper" :total="datalist.count">
             </el-pagination>
 		</el-col>
 	</el-row>
@@ -52,14 +52,15 @@ export default {
         return {
             toolbarFrom: {
                 searchkey: ''
-            }
+            },
+            searchBtn: 0
         }
     },
     created() {
         this.$store.dispatch('getDictionaryTypeList', { page: 1 })
     },
     computed: {
-        list() { return this.$store.getters.dictionaryTypeList }
+        datalist() { return this.$store.getters.dictionaryTypeList }
     },
     methods: {
         deleteItem(id) {
@@ -69,11 +70,29 @@ export default {
         routerPush(id) {
             this.$router.push({ name: 'dictionarytypeeditor', params: { id: id } })
         },
-        searchToolbar() {
-
+        searchToolbar(val) {
+            let param = {
+                page: (typeof val === "number") ? val : 1
+            }
+            if(this.toolbarFrom.searchkey !== ''){
+                param.key = this.toolbarFrom.searchkey
+            }
+            this.$store.dispatch('getDictionaryTypeList', param).then(() => {
+                if(!(typeof val === "number")){
+                    this.$message({
+                        message: '获取数据成功',
+                        type: 'success'
+                    })
+                }
+            })
+            this.searchBtn++
         },
         handleCurrentChange() {
-
+            if(this.searchBtn > 0 && this.toolbarFrom.searchkey !== '') {
+                this.searchToolbar(val)
+                return false
+            }
+            this.$store.dispatch('getDictionaryTypeList', { page: val })
         },
         development() {
             this.$alert('功能正开发中.....', '系统通知', { confirmButtonText: '确定', type: 'warning' })
