@@ -7,3 +7,28 @@
 //         margin-bottom: 15px;
 //     }
 // }
+
+#productmgt {
+    .editor-form .form-left {
+        padding-left: 60px;
+    }
+    .gross-margin {
+        width: 410px;
+        background: #F5F5F5;
+        padding: 15px 0;
+        margin-bottom: 22px;
+        border-radius: 5px;
+        .el-form-item {
+            width: 400px;
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+    .supplier .el-input {
+        width: 204px;
+    }
+    .supplier-list {
+        width: 400px;
+    }
+}

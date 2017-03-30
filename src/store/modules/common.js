@@ -10,7 +10,11 @@ const state = {
     provinceList: [],
     cityList: [],
     areaList: [],
-    communityList: []
+    communityList: [],
+    productBigclassList: [],
+    productMediumclassList: [],
+    productSmallclassList: [],
+    dictionarySearchList: []
 }
 
 const getters = {
@@ -18,7 +22,11 @@ const getters = {
     provinceList: state => state.provinceList,
     cityList: state => state.cityList,
     areaList: state => state.areaList,
-    communityList: state => state.communityList
+    communityList: state => state.communityList,
+    productBigclassList: state => state.productBigclassList,
+    productMediumclassList: state => state.productMediumclassList,
+    productSmallclassList: state => state.productSmallclassList,
+    dictionarySearchList: state => state.dictionarySearchList
 }
 
  const actions = {
@@ -65,8 +73,46 @@ const getters = {
     /**
      * 重置省份／城市／区镇／小区列表
      */
-    resetUnitList ({ commit }, param) {
+    resetUnitList ({ commit }) {
         commit(types.RESET_UNITLIST_SUCCESS)
+    },
+    /**
+     * 获取大类列表
+     */
+    getProductBigClass ({ commit }) {
+        api.getProductBigClass(function (response) {
+            commit(types.GET_PRODUCTBIGCLASSLIST_SUCCESS, { response })
+        })
+    },
+    /**
+     * 获取中类列表
+     */
+    getProductMediumClass ({ commit }, param) {
+        api.getProductMediumClass(param, function (response) {
+            commit(types.GET_PRODUCTMEDIUMCLASSLIST_SUCCESS, { response })
+        })
+    },
+    /**
+     * 获取小类列表
+     */
+    getProductSmallClass ({ commit }, param) {
+        api.getProductSmallClass(param, function (response) {
+            commit(types.GET_PRODUCTSMALLCLASSLIST_SUCCESS, { response })
+        })
+    },
+    /**
+     * 获取字典列表
+     */
+    getDictionarySearchList ({ commit }, param) {
+        api.getDictionarySearchList(param, function (response) {
+            commit(types.GET_DICTIONARYSEARCHLIST_SUCCESS, { response })
+        })
+    },
+    /**
+     * 重置省份／城市／区镇／小区列表
+     */
+    resetClass ({ commit }) {
+        commit(types.RESET_CLASS_SUCCESS)
     }
 }
 
@@ -91,6 +137,23 @@ const mutations = {
         state.cityList = []
         state.areaList = []
         state.communityList = []
+    },
+    [types.GET_PRODUCTBIGCLASSLIST_SUCCESS] (state, { response }) {
+        state.productBigclassList = (response.status !== '404') ? response.data : []
+    },
+    [types.GET_PRODUCTMEDIUMCLASSLIST_SUCCESS] (state, { response }) {
+        state.productMediumclassList = (response.status !== '404') ? response.data : []
+    },
+    [types.GET_PRODUCTSMALLCLASSLIST_SUCCESS] (state, { response }) {
+        state.productSmallclassList = (response.status !== '404') ? response.data : []
+    },
+    [types.GET_DICTIONARYSEARCHLIST_SUCCESS] (state, { response }) {
+        state.dictionarySearchList = (response.status !== '404') ? response.data : []
+    },
+    [types.RESET_CLASS_SUCCESS] (state) {
+        state.productBigclassList = []
+        state.productMediumclassList = []
+        state.productSmallclassList = []
     },
 }
 

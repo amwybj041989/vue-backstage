@@ -97,5 +97,65 @@ export default {
         }).catch(function(error) {
             console.log(error)
         })
+    },
+    /**
+     * 获取商品大类列表
+     */
+    getProductBigClass(callback) {
+        var params = setParams({})
+        axios.post(API_HOST + '/Material/ProductBigClass', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
+            } else {
+                MessageBox.alert('获取商品大类数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
+     * 根据商品大类id获取商品中类
+     */
+    getProductMediumClass(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/Material/ProductMediumClass', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
+            } else {
+                MessageBox.alert('获取商品中类数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
+     * 根据商品中类id获取商品小类
+     */
+    getProductSmallClass(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/Material/ProductSmallClass', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
+            } else {
+                MessageBox.alert('获取商品小类数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
+    /**
+     * 根据字典类型编码获取字典列表
+     */
+    getDictionarySearchList(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/Material/DictionarySearchList', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
+            } else {
+                MessageBox.alert('获取字典数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
     }
 }

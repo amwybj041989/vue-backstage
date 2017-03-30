@@ -73,9 +73,9 @@ export default {
     methods: {
         routerPush(id) {
             if (id === 'create') {
-                // this.$router.push({ name: 'productcreate'})
+                this.$router.push({ name: 'productcreate' })
             } else {
-                // this.$router.push({ name: 'classeditor', params: { id: id, type: 'b' } })
+                this.$router.push({ name: 'productcreate', params: { id: id } })
             }
         },
         searchToolbar() {
