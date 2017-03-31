@@ -157,5 +157,20 @@ export default {
         }).catch(function(error) {
             console.log(error)
         })
-    }
+    },
+    /**
+     * 获取供应商列表
+     */
+    getProductSupplier(callback) {
+        var params = setParams({})
+        axios.post(API_HOST + '/Product/ProductSelectSupplier', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
+            } else {
+                MessageBox.alert('获取字典数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
+    },
 }

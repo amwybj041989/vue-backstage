@@ -14,7 +14,8 @@ const state = {
     productBigclassList: [],
     productMediumclassList: [],
     productSmallclassList: [],
-    dictionarySearchList: []
+    dictionarySearchList: [],
+    productSupplier: []
 }
 
 const getters = {
@@ -26,7 +27,8 @@ const getters = {
     productBigclassList: state => state.productBigclassList,
     productMediumclassList: state => state.productMediumclassList,
     productSmallclassList: state => state.productSmallclassList,
-    dictionarySearchList: state => state.dictionarySearchList
+    dictionarySearchList: state => state.dictionarySearchList,
+    productSupplier: state => state.productSupplier
 }
 
  const actions = {
@@ -113,6 +115,14 @@ const getters = {
      */
     resetClass ({ commit }) {
         commit(types.RESET_CLASS_SUCCESS)
+    },
+    /**
+     * 获取供应商列表
+     */
+    getProductSupplier ({ commit }) {
+        api.getProductSupplier(function (response) {
+            commit(types.GET_PRODUCTSUPPLIER_SUCCESS, { response })
+        })
     }
 }
 
@@ -155,6 +165,9 @@ const mutations = {
         state.productMediumclassList = []
         state.productSmallclassList = []
     },
+    [types.GET_PRODUCTSUPPLIER_SUCCESS] (state, { response }) {
+        state.productSupplier = (response.status !== '404') ? response.data : []
+    }
 }
 
 export default{

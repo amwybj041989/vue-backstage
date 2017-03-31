@@ -313,3 +313,12 @@ p.theme-p {
 	   white-space: nowrap!important;
    	}
 }
+
+.supplier-form {
+	.el-select {
+		width: 100%;
+	}
+	.supplier-submitform {
+		margin-bottom: 0;
+	}
+}

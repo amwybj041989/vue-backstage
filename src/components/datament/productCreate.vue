@@ -84,17 +84,45 @@
                     </el-form-item>
 
                     <el-form-item label="供货商" class="supplier">
-                        <el-input value="已选4个供货商" :disabled="true"></el-input>
-                        <el-button type="primary" @click="submit('form')">添加供货商</el-button>
+                        <el-input :value="supplierNum" :disabled="true"></el-input>
+
+                        <el-popover ref="addsupplier" placement="right" width="400" trigger="click" v-model="popoverVisible">
+
+                            <el-form ref="supplierForm" :rules="supplierRules" label-position="right" :model="supplierForm" label-width="120px" class="supplier-form">
+
+                                <el-form-item label="选择供货商" prop="name">
+                                    <el-select v-model="supplierForm.name" filterable placeholder="请选择">
+                                        <el-option :label="item.company" :value="item.id + ',' + item.company" :key="item.id" v-for="item in supplierSelectList"></el-option>
+                                    </el-select>
+                                </el-form-item>
+
+                                <el-form-item label="初始报价" prop="bprice">
+                                    <el-input v-model.number="supplierForm.bprice" placeholder="请输入商品初始报价">
+                                        <template slot="append">元</template>
+                                    </el-input>
+                                </el-form-item>
+
+                                <el-form-item label="" class="supplier-submitform">
+                                    <el-button type="primary" @click="submitSupplier('supplierForm')">添加</el-button>
+                                </el-form-item>
+                            </el-form>
+
+                        </el-popover>
+
+                        <el-button type="primary" v-popover:addsupplier>添加供货商</el-button>
                     </el-form-item>
 
                     <el-form-item class="supplier-list" label-width="0">
                         <el-table :data="supplier" :stripe="true" class="w-100">
                             <el-table-column prop="name" label="供货商" width="218"></el-table-column>
-                            <el-table-column prop="bprice" label="初始报价" width="100"></el-table-column>
+                            <el-table-column prop="bprice" label="初始报价" width="100">
+                                <template scope="scope">
+                                    {{ scope.row.bprice }} 元
+            					</template>
+                            </el-table-column>
                             <el-table-column label="操作" width="80">
                                 <template scope="scope">
-                                    <el-button type="danger" size="small" @click="">删除</el-button>
+                                    <el-button type="danger" size="small" @click="deleteSupplier(scope.$index)">删除</el-button>
             					</template>
             			  	</el-table-column>
             			</el-table>
@@ -122,11 +150,12 @@
 </template>
 
 <script>
-// 编辑/新增商品分类
+// 新建商品
 import api from '../../api/datamentApi.js'
 import topbar from '../common/topbar.vue'
 import cancel from '../common/cancel.vue'
 import imageUpload from '../common/imageUpload.vue'
+import '../../static/style/datament/productMgt.scss'
 
 export default {
     data() {
@@ -141,12 +170,16 @@ export default {
                 packing_id: '',
                 spec: '',
                 price: '',
-                inprice: '',
                 time_validity: '',
                 yu_validity: '',
-                orgin: '',
-                supplier: ''
+                orgin: ''
             },
+            supplierForm: {
+                name: '',
+                bprice: ''
+            },
+            supplierNum: '已选0个供货商',
+            popoverVisible: false,
             purchasePrice: '',
             grossMargin: '',
             switchStatus: true,
@@ -164,32 +197,45 @@ export default {
                 ],
                 purchasePrice: [{ type: 'number', message: '进货价格必须为数字值'}]
             },
+            supplierRules: {
+                name: [{ required: true, message: '请选择供货商', trigger: 'change' }],
+                bprice: [
+                    { required: true, message: '请填写供货商初始报价'},
+                   { type: 'number', message: '价格必须为数字值'}
+                ]
+            },
             supplier: []
         }
     },
     created() {
         // 获取大类
         // 获取包装
+        // 获取供货商
         this.$store.dispatch('resetClass')
         this.$store.dispatch('getProductBigClass')
         this.$store.dispatch('getDictionarySearchList', { code: 'packing' })
+        this.$store.dispatch('getProductSupplier')
     },
     computed: {
         bigclass() { return this.$store.getters.productBigclassList },
         mediumclass() { return this.$store.getters.productMediumclassList },
         smallclass() { return this.$store.getters.productSmallclassList },
         packing() { return this.$store.getters.dictionarySearchList },
+        supplierSelectList() { return this.$store.getters.productSupplier }
     },
     methods: {
         submit(formName) {
             let that = this
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    // 新建类
+                    // 新建商品
                     let param = this.form
                     param.status = this.switchStatus === true ? 1 : 0
+                    param.supplier = JSON.stringify(this.supplier)
+                    param.img = this.imageUrl
+                    console.log(param);
 
-                    api.createProductClass(param, function (response) {
+                    api.CreateProduct(param, function (response) {
                         if (response.status === '200') {
                             that.$message({
                                 message: '新建成功！',
@@ -198,18 +244,47 @@ export default {
                             // 创建成功，回到列表页
                             that.$router.go(-1)
                         } else {
-                            that.$alert('创建失败，编号不能重复', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                            that.$alert('新增商品失败，请检查字段重新提交或者刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
                         }
                     })
 
                 } else {
-                    this.$alert('必填的字段不能为空，请检查填写后重新提交', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                    this.$alert('必填的字段不能为空或者字段格式不符合，请检查填写后重新提交', '系统通知', { confirmButtonText: '确定', type: 'error' })
                 }
             })
         },
-        handleAvatarScucess(row) {
+        submitSupplier(formName) {
+            // 添加供货商
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    // 新建类
+                    let _item = {
+                        id: this.supplierForm.name.split(',')[0],
+                        name: this.supplierForm.name.split(',')[1],
+                        bprice: this.supplierForm.bprice
+                    }
+                    // 检查是否已存在该供货商
+                    if(this.supplier.find((n) => n.id === _item.id) === undefined) {
+                        // 添加供货商
+                        this.supplier.push(_item)
+                        this.supplierNum = '已选' + this.supplier.length + '个供货商'
+                        // 关闭弹出框
+                        this.popoverVisible = false
+                    } else {
+                        this.$alert('请勿重复提交同一个供货商', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                    }
+                } else {
+                    this.$alert('必填的字段不能为空或者字段格式不符合，请检查填写后重新提交', '系统通知', { confirmButtonText: '确定', type: 'error' })
+                }
+            })
+        },
+        deleteSupplier(val) {
+            this.supplier.splice(val,1)
+            this.supplierNum = '已选' + this.supplier.length + '个供货商'
+        },
+        handleAvatarScucess(val) {
             // 图片上传成功钩子，接收子组件数据
-            this.imageUrl = row
+            this.imageUrl = val
         },
         changePrice(val) {
             // 改变销售价

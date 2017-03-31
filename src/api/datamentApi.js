@@ -262,5 +262,20 @@ export default {
         }).catch(function(error) {
             console.log(error)
         })
+    },
+    /**
+     * 新增商品
+     */
+    CreateProduct(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/Product/CreateProduct', querystring.stringify(params)).then(function(response) {
+            if (response.status === 200) {
+                callback(response.data)
+            } else {
+                MessageBox.alert('新增商品失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            }
+        }).catch(function(error) {
+            console.log(error)
+        })
     }
 }
