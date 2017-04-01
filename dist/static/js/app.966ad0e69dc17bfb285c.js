@@ -2269,7 +2269,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 // 新建盒子
 
@@ -2289,9 +2288,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 area: '',
                 community: '',
                 addr: '',
-                display_name: ''
+                display_name: '',
+                apoints: ''
             },
-            apoints: '',
             realnameStatus: false,
             humanfaceStatus: false,
             ownerStatue: false,
@@ -2345,7 +2344,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         community: this.form.community,
                         addr: this.form.addr,
                         display_name: this.form.display_name,
-                        apoints: this.apoints,
+                        apoints: this.form.apoints,
                         status: this.switchStatus ? 1 : 0,
                         realname: this.realnameStatus ? 1 : 0,
                         face: this.humanfaceStatus ? 1 : 0,
@@ -3955,6 +3954,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 // 编辑/新增商品分类
 
@@ -4087,6 +4089,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_cancel_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__common_cancel_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__common_topbar_vue__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__common_topbar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__common_topbar_vue__);
+//
+//
 //
 //
 //
@@ -6689,6 +6693,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 // 订单数据查询页
 
@@ -6801,6 +6806,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }
             window.open(url);
+        }
+    },
+    filters: {
+        setProductNum(val) {
+            let _num = 0;
+            for (let i in val) {
+                _num += Number(val[i].num);
+            }
+            return _num;
         }
     }
 };
@@ -11091,26 +11105,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), _c('el-table-column', {
     attrs: {
-      "label": "购买商品",
-      "width": "130"
+      "label": "购买数量",
+      "width": "100"
     },
     scopedSlots: _vm._u([
       ["default", function(scope) {
-        return [_vm._v("\n                        " + _vm._s(scope.row.product.length) + "份 " + _vm._s(scope.row.productMoney) + "元\n                    ")]
-      }]
-    ])
-  }), _vm._v(" "), _c('el-table-column', {
-    attrs: {
-      "label": "",
-      "width": "70"
-    },
-    scopedSlots: _vm._u([
-      ["default", function(scope) {
-        return [_c('el-popover', {
+        return [_vm._v("\n                        " + _vm._s(_vm._f("setProductNum")(scope.row.product)) + "    \n                        "), _c('el-popover', {
           ref: "popover",
           attrs: {
             "placement": "right",
-            "width": "531",
+            "width": "546",
             "trigger": "click"
           }
         }, [_c('el-table', {
@@ -11119,7 +11123,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           }
         }, [_c('el-table-column', {
           attrs: {
-            "width": "170",
+            "width": "185",
             "property": "name",
             "label": "商品"
           }
@@ -11161,9 +11165,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     ])
   }), _vm._v(" "), _c('el-table-column', {
     attrs: {
+      "label": "商品总价",
+      "width": "100"
+    },
+    scopedSlots: _vm._u([
+      ["default", function(scope) {
+        return [_vm._v("\n                        " + _vm._s(scope.row.productMoney) + "\n                    ")]
+      }]
+    ])
+  }), _vm._v(" "), _c('el-table-column', {
+    attrs: {
       "prop": "vouchers",
       "label": "使用代金券",
-      "width": "130"
+      "width": "110"
     }
   }), _vm._v(" "), _c('el-table-column', {
     attrs: {
@@ -12329,14 +12343,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       expression: "form.number"
     }
-  })], 1), _vm._v(" "), _c('el-form-item', [_c('el-button', {
+  })], 1), _vm._v(" "), _c('el-form-item', [_c('a', {
+    staticClass: "f-color f-link",
     attrs: {
-      "type": "primary"
-    },
-    on: {
-      "click": function($event) {}
+      "href": "http://bapi.binguobox.com/images/1491039976.jpg",
+      "target": "_blank"
     }
-  }, [_vm._v("查看商品结构分类表>")])], 1), _vm._v(" "), _c('el-form-item', {
+  }, [_vm._v("查看商品结构分类表>")])]), _vm._v(" "), _c('el-form-item', {
     attrs: {
       "label": "启动开关"
     }
@@ -13223,14 +13236,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       expression: "form.number"
     }
-  })], 1), _vm._v(" "), _c('el-form-item', [_c('el-button', {
+  })], 1), _vm._v(" "), _c('el-form-item', [_c('a', {
+    staticClass: "f-color f-link",
     attrs: {
-      "type": "primary"
-    },
-    on: {
-      "click": function($event) {}
+      "href": "http://bapi.binguobox.com/images/1491039976.jpg",
+      "target": "_blank"
     }
-  }, [_vm._v("查看商品结构分类表>")])], 1), _vm._v(" "), _c('el-form-item', {
+  }, [_vm._v("查看商品结构分类表>")])]), _vm._v(" "), _c('el-form-item', {
     attrs: {
       "label": "启动开关"
     }
@@ -16391,22 +16403,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('a', {
     staticClass: "editor-coordinate mb-15",
     attrs: {
-      "href": "http://box.bingofresh.com/admin.php?s=/Box/map.html",
+      "href": "http://lbs.amap.com/api/javascript-api/example/map/click-to-get-lnglat",
       "target": "_blank"
     }
-  }, [_vm._v("编辑盒子坐标")]), _vm._v(" "), _c('el-input', {
+  }, [_vm._v("手动选择坐标")]), _vm._v(" "), _c('el-input', {
     attrs: {
-      "type": "textarea",
-      "placeholder": "使用“编辑盒子坐标”工具绘制盒子区域及中心点坐标，将代码复制到文本框内。"
+      "placeholder": "填入坐标"
     },
     model: {
-      value: (_vm.apoints),
+      value: (_vm.form.apoints),
       callback: function($$v) {
-        _vm.apoints = $$v
+        _vm.form.apoints = $$v
       },
-      expression: "apoints"
+      expression: "form.apoints"
     }
-  }), _vm._v(" "), _c('br'), _c('br'), _vm._v(" "), _c('p', [_vm._v("隶属省份城市区镇小区暂时无法获取，等待后续开发，请重新选择")])], 1)])], 1), _vm._v(" "), _c('el-row', {
+  }), _vm._v(" "), _c('p', [_c('br'), _vm._v("隶属省份城市区镇小区暂时无法获取"), _c('br'), _vm._v("等待后续开发，请重新选择")])], 1)])], 1), _vm._v(" "), _c('el-row', {
     staticClass: "mb-10"
   }, [_c('el-col', {
     staticClass: "el-item pa-20",
@@ -17839,4 +17850,4 @@ new __WEBPACK_IMPORTED_MODULE_0_vue__["default"]({
 
 /***/ })
 ],[735]);
-//# sourceMappingURL=app.ff327d093cc26e7a52ff.js.map
+//# sourceMappingURL=app.966ad0e69dc17bfb285c.js.map

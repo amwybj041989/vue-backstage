@@ -31,7 +31,9 @@
                     </el-form-item>
 
                     <el-form-item>
-                        <el-button type="primary" @click="">查看商品结构分类表&gt;</el-button>
+                        <a href="http://bapi.binguobox.com/images/1491039976.jpg" class="f-color f-link" target="_blank">查看商品结构分类表&gt;</a>
+
+                        <!-- <el-button type="primary" @click="">查看商品结构分类表&gt;</el-button> -->
                     </el-form-item>
 
                     <el-form-item label="启动开关">

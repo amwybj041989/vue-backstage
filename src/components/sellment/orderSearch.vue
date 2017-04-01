@@ -68,16 +68,12 @@
                 <el-table-column prop="time" label="付款时间" width="170"></el-table-column>
                 <el-table-column prop="order_no" label="订单号"></el-table-column>
                 <el-table-column prop="phone" label="联系方式" width="130"></el-table-column>
-                <el-table-column label="购买商品" width="130">
+                <el-table-column label="购买数量" width="100">
                     <template scope="scope">
-                        {{ scope.row.product.length }}份 {{ scope.row.productMoney }}元
-                    </template>
-                </el-table-column>
-                <el-table-column label="" width="70">
-                    <template scope="scope">
-                        <el-popover ref="popover" placement="right" width="531" trigger="click">
+                        {{ scope.row.product | setProductNum }}&nbsp;&nbsp;&nbsp;&nbsp;
+                        <el-popover ref="popover" placement="right" width="546" trigger="click">
                             <el-table :data="scope.row.product">
-                                <el-table-column width="170" property="name" label="商品"></el-table-column>
+                                <el-table-column width="185" property="name" label="商品"></el-table-column>
                                 <el-table-column width="120" property="code" label="国际条码"></el-table-column>
                                 <el-table-column width="70" property="num" label="数量"></el-table-column>
                                 <el-table-column width="85" property="original" label="原价"></el-table-column>
@@ -87,7 +83,12 @@
                         <el-button v-popover:popover class="" size="mini">详情</el-button>
                     </template>
                 </el-table-column>
-                <el-table-column prop="vouchers" label="使用代金券" width="130"></el-table-column>
+                <el-table-column label="商品总价" width="100">
+                    <template scope="scope">
+                        {{ scope.row.productMoney }}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="vouchers" label="使用代金券" width="110"></el-table-column>
                 <el-table-column prop="integral" label="使用积分" width="95"></el-table-column>
                 <el-table-column prop="money" label="实付金额" width="95"></el-table-column>
                 <el-table-column prop="payType" label="支付方式" width="95"></el-table-column>
@@ -210,7 +211,15 @@ export default {
                 }
             }
             window.open(url)
-
+        }
+    },
+    filters: {
+        setProductNum(val) {
+            let _num = 0;
+            for (let i in val) {
+                _num += Number(val[i].num)
+            }
+            return _num
         }
     }
 }

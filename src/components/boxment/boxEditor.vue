@@ -60,10 +60,9 @@
                 </el-form>
             </div>
             <div class="form-right">
-                <a href="http://box.bingofresh.com/admin.php?s=/Box/map.html" target="_blank" class="editor-coordinate mb-15">编辑盒子坐标</a>
-                <el-input type="textarea" v-model="apoints" placeholder="使用“编辑盒子坐标”工具绘制盒子区域及中心点坐标，将代码复制到文本框内。"></el-input>
-                <br><br>
-                <p>隶属省份城市区镇小区暂时无法获取，等待后续开发，请重新选择</p>
+                <a href="http://lbs.amap.com/api/javascript-api/example/map/click-to-get-lnglat" target="_blank" class="editor-coordinate mb-15">手动选择坐标</a>
+                <el-input v-model="form.apoints" placeholder="填入坐标"></el-input>
+                <p><br>隶属省份城市区镇小区暂时无法获取<br>等待后续开发，请重新选择</p>
             </div>
         </el-col>
     </el-row>
@@ -97,8 +96,8 @@ export default {
                 community: '',
                 addr: '',
                 display_name: '',
+                apoints: ''
             },
-            apoints: '',
             realnameStatus: false,
             humanfaceStatus: false,
             ownerStatue: false,
@@ -142,7 +141,7 @@ export default {
                         community: this.form.community,
                         addr: this.form.addr,
                         display_name: this.form.display_name,
-                        apoints: this.apoints,
+                        apoints: this.form.apoints,
                         status: this.switchStatus ? 1 : 0,
                         realname: this.realnameStatus ? 1 : 0,
                         face: this.humanfaceStatus ? 1 : 0,
