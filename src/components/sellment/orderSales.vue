@@ -10,7 +10,7 @@
                 <el-button :type="groupStatus.ninety" size="small" @click="switchData(90)">90天</el-button>
             </el-button-group>
         </div>
-        <!-- <el-alert class="echarts-alert" title="没有数据，无法显示销售额／订单量曲线图" type="info" show-icon :closable="false"></el-alert> -->
+        <el-alert title="系统提示" type="info" description="没有数据，无法显示销售额／订单量曲线图" show-icon  v-if="echartsDisplay"></el-alert>
     </el-col>
 </el-row>
 </template>
@@ -21,11 +21,12 @@
  */
 import echarts from 'echarts'
 import api from '../../api/sellmentApi.js'
-import '../../static/style/common/echarts.scss'
+import '../../static/style/sellment/echarts.scss'
 
 export default {
     data() {
         return {
+            echartsDisplay: false,
             groupStatus: {
                 now: 7,
                 today: '',
@@ -198,24 +199,26 @@ export default {
         },
         getSalesAmount(day) {
             let that = this,
-                param = {
-                    days: day
-                }
+                param = { days: day }
             api.getSalesAmount(param, function (response) {
                 let _data = response.data,
                     _xAxis = [],
                     _sales = [],
                     _order = []
-                if (_data.sales.length > 0) {
-                    for (let index of _data.sales.keys()) {
-                        _xAxis.push(_data.sales[index].time)
-                        _sales.push(_data.sales[index].todaySales)
-                    }
-                    for (let index of _data.order.keys()) {
-                        _order.push(_data.order[index].todayOrder)
+                if (response.status === '404') {
+                    that.echartsDisplay = true
+                } else {
+                    that.echartsDisplay = false
+                    if (_data.sales.length > 0) {
+                        for (let index of _data.sales.keys()) {
+                            _xAxis.push(_data.sales[index].time)
+                            _sales.push(_data.sales[index].todaySales)
+                        }
+                        for (let index of _data.order.keys()) {
+                            _order.push(_data.order[index].todayOrder)
+                        }
                     }
                 }
-
                 that.setOption.xAxis.data = _xAxis
                 that.setOption.series[0].data = _order
                 that.setOption.series[1].data = _sales

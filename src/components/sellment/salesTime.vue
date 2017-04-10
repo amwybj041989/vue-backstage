@@ -1,8 +1,8 @@
 <template>
 <el-row>
     <el-col :span="24" class="el-item">
-        <div id="salesTime" class="echarts-wrap"></div>
-        <!-- <el-alert class="echarts-alert" title="没有数据，无法显示销售时间段分析图表" type="info" show-icon :closable="false"></el-alert> -->
+        <div id="salesTime" class="echarts-wrap" v-show="echartsDisplay"></div>
+        <el-alert title="系统提示" type="info" description="没有数据，无法显示销售时间段分析图表" show-icon v-if="!echartsDisplay"></el-alert>
     </el-col>
 </el-row>
 </template>
@@ -13,11 +13,12 @@
  */
 import echarts from 'echarts'
 import api from '../../api/sellmentApi.js'
-import '../../static/style/common/echarts.scss'
+import '../../static/style/sellment/echarts.scss'
 
 export default {
     data() {
         return {
+            echartsDisplay: true,
             setOption: {
                 title: {
                     text: '销售时间段分析'
@@ -68,13 +69,6 @@ export default {
                         show: false
                     }
                 },
-                // dataZoom: [{
-                //     type: 'slider',
-                //     show: true,
-                //     xAxisIndex: [0],
-                //     start: 0,
-                //     end: 50
-                // }],
                 grid: {
                     left: '0%',
                     right: '0%',
@@ -89,6 +83,11 @@ export default {
     mounted() {
         let that = this
         api.getSalesTime(function (response) {
+            if (response.status === '404') {
+                that.echartsDisplay = false
+                return false
+            }
+            that.echartsDisplay = true
             let _data = response.data,
                 _legendData = []
             for (let index of _data.keys()) {

@@ -159,12 +159,17 @@ const routes = [
         component: require('../components/staffment/index.vue'),
         children: [
             {
-                name: 'staffmentlist',
+                name: 'tallymanlist',
                 path: 'tallymanlist',
                 component: require('../components/staffment/tallymanList.vue')
             },
             {
-                name: 'staffmenteditor',
+                name: 'tallymancreate',
+                path: 'tallymancreate',
+                component: require('../components/staffment/tallymanCreate.vue')
+            },
+            {
+                name: 'tallymaneditor',
                 path: 'tallymaneditor/:id',
                 component: require('../components/staffment/tallymanEditor.vue')
             }

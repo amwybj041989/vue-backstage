@@ -13,7 +13,7 @@
                     <div class="tn">今日维护：0</div>
                 </div>
             </div>
-            <router-link class="tallyman-editor bg-picton" :to="{ name: 'staffmenteditor', params: { id: 11 }}">编辑</router-link>
+            <router-link class="tallyman-editor bg-picton" :to="{ name: 'tallymaneditor', params: { id: 11 }}">编辑</router-link>
         </el-card>
     </el-col>
 </el-row>

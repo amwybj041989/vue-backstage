@@ -55,7 +55,7 @@ export default {
             this.searchBtn++
         },
         routerPush(id) {
-
+            this.$router.push({ name: 'tallymancreate' })
         }
     },
 	components: { stafftallyman }
