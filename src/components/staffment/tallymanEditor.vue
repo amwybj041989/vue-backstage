@@ -23,47 +23,22 @@
                 </el-form>
             </div>
             <div class="form-right">
-                <el-upload action="//jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarScucess" :before-upload="beforeAvatarUpload" drag>
-                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload>
-                <p class="mt-10">理货员头像<br>只能上传jpg/png文件且不超过2mb</p>
+                <image-upload :imageUrl="imageUrl" @increment="handleAvatarScucess"></image-upload>
+                <p class="mt-10">理货员头像</p>
             </div>
         </el-col>
     </el-row>
     <el-row class="mb-10">
         <el-col :span="24" class="el-item pa-20">
-            <el-dropdown trigger="click" @command="dropdownCity">
-                <el-button>
-                    {{ dropdown.city }}<i class="el-icon-caret-bottom el-icon--right"></i>
-                </el-button>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="中山市">中山市</el-dropdown-item>
-                    <el-dropdown-item command="广州市">广州市</el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown>
-            <el-dropdown trigger="click" @command="dropdownArea">
-                <el-button>
-                    {{ dropdown.area }}<i class="el-icon-caret-bottom el-icon--right"></i>
-                </el-button>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="东区">东区</el-dropdown-item>
-                    <el-dropdown-item command="三乡">三乡</el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown>
-
-            <el-table :data="tableData" :stripe="true" class="w-100 mt-10">
-                <el-table-column prop="provinces" label="省份" width="90"></el-table-column>
-                <el-table-column prop="city" label="城市" width="90"></el-table-column>
-                <el-table-column prop="area" label="区域" width="90"></el-table-column>
-                <el-table-column prop="boxname" label="盒子名称" width="150"></el-table-column>
-                <el-table-column prop="address" label="所在地址"></el-table-column>
-                <el-table-column type="selection" width="55"></el-table-column>
+            <div class="tableTopbar"><span>分配理货员管理的盒子</span></div>
+            <el-table :data="boxlist" :stripe="true" class="w-100 mt-10" max-height="540" @selection-change="handleSelectionChange">
+                <el-table-column prop="province" label="省份" width="90" :filters="provinceList" :filter-method="filterProvince"></el-table-column>
+                <el-table-column prop="city" label="城市" width="100" :filters="cityList" :filter-method="filterCity"></el-table-column>
+                <el-table-column prop="area" label="区域" width="110" :filters="areaList" :filter-method="filterArea"></el-table-column>
+                <el-table-column prop="community" label="盒子名称" width="170"></el-table-column>
+                <el-table-column prop="addr" label="所在地址"></el-table-column>
+                <el-table-column type="selection" label="分配管理" width="55"></el-table-column>
             </el-table>
-
-            <el-pagination @current-change="handleCurrentChange" :current-page="1" layout="total, prev, pager, next, jumper" :total="tableData.length">
-            </el-pagination>
-
         </el-col>
     </el-row>
     <el-row class="mb-10">
@@ -80,6 +55,7 @@
 // 编辑理货员
 import topbar from '../common/topbar.vue'
 import cancel from '../common/cancel.vue'
+import imageUpload from '../common/imageUpload.vue'
 import '../../static/style/staffment/tallymanEditor.scss'
 
 export default {
@@ -93,121 +69,79 @@ export default {
                 phone: '',
                 delivery: false
             },
+            switchStatus: true,
             rules: {
-                name: [{
-                        required: true,
-                        message: '请输入登录账号',
-                        trigger: 'blur'
-                    },
-                    {
-                        min: 3,
-                        max: 20,
-                        message: '长度在 3 到 20 个字符',
-                        trigger: 'blur'
-                    }
+                name: [
+                    { required: true, message: '请输入登录账号', trigger: 'blur' },
+                    { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
                 ],
-                password: [{
-                        required: true,
-                        message: '请输入登录密码',
-                        trigger: 'blur'
-                    },
-                    {
-                        min: 5,
-                        max: 20,
-                        message: '长度在 5 到 20 个字符',
-                        trigger: 'blur'
-                    }
+                password: [
+                    { required: true, message: '请输入登录密码', trigger: 'blur' },
+                    { min: 5, max: 20, message: '长度在 5 到 20 个字符', trigger: 'blur' }
                 ],
-                post: [{
-                        required: true,
-                        message: '请输入管理区域职位',
-                        trigger: 'blur'
-                    },
-                    {
-                        min: 5,
-                        max: 20,
-                        message: '长度在 5 到 20 个字符',
-                        trigger: 'blur'
-                    }
+                post: [
+                    { required: true, message: '请输入管理区域职位', trigger: 'blur' },
+                    { min: 5, max: 20, message: '长度在 5 到 20 个字符', trigger: 'blur' }
                 ],
-                phone: [{
-                        required: true,
-                        message: '请输入联系方式',
-                        trigger: 'blur'
-                    },
-                    {
-                        min: 11,
-                        max: 11,
-                        message: '长度为11个字符',
-                        trigger: 'blur'
-                    }
+                phone: [
+                    { required: true, message: '请输入联系方式', trigger: 'blur' },
+                    { min: 11, max: 11, message: '长度为11个字符', trigger: 'blur' }
                 ]
             },
-            tableData: [{
-                provinces: '广东省',
-                city: '中山市',
-                area: '三乡',
-                boxname: '缤果盒子A1001',
-                address: '中山市三乡温泉村温泉里小区'
-            }, {
-                provinces: '广东省',
-                city: '中山市',
-                area: '三乡',
-                boxname: '缤果盒子A1001',
-                address: '中山市三乡温泉村温泉里小区'
-            }, {
-                provinces: '广东省',
-                city: '中山市',
-                area: '三乡',
-                boxname: '缤果盒子A1001',
-                address: '中山市三乡温泉村温泉里小区'
-            }, {
-                provinces: '广东省',
-                city: '中山市',
-                area: '三乡',
-                boxname: '缤果盒子A1001',
-                address: '中山市三乡温泉村温泉里小区'
-            }, {
-                provinces: '广东省',
-                city: '中山市',
-                area: '三乡',
-                boxname: '缤果盒子A1001',
-                address: '中山市三乡温泉村温泉里小区'
-            }],
-            dropdown: {
-                city: '选择城市',
-                area: '选择区域'
-            },
-            fileList: [],
-            manid: this.$route.params.id
+            filters: [{ text: '已分配', value: true }, { text: '未分配', value: false }],
+            selectBox: []
         }
     },
-    // 如果manid为new就是新增理货员
+    created() {
+        var that = this
+        this.$store.dispatch('getBoxList',{ page: 0 })
+    },
+    computed: {
+        boxlist() { return this.$store.getters.boxList },
+        provinceList() {
+            let _data = this.boxlist,
+                _list = [],
+                _filter = []
+            for(let item of _data) {
+                if(!_filter.includes(item.province)){
+                    _filter.push(item.province)
+                }
+            }
+            for(let item of _filter) {
+                _list.push({ text: item, value: item })
+            }
+            return _list
+        },
+        cityList() {
+            let _data = this.boxlist,
+                _list = [],
+                _filter = []
+            for(let item of _data) {
+                if(!_filter.includes(item.city)){
+                    _filter.push(item.city)
+                }
+            }
+            for(let item of _filter) {
+                _list.push({ text: item, value: item })
+            }
+            return _list
+        },
+        areaList() {
+            let _data = this.boxlist,
+                _list = [],
+                _filter = []
+            for(let item of _data) {
+                if(!_filter.includes(item.area)){
+                    _filter.push(item.area)
+                }
+            }
+            for(let item of _filter) {
+                _list.push({ text: item, value: item })
+            }
+            return _list
+        }
+    },
     methods: {
-        handleAvatarScucess(res, file) {
-            this.imageUrl = URL.createObjectURL(file.raw);
-        },
-        beforeAvatarUpload(file) {
-            const isJPG = file.type === 'image/jpeg' || file.type === 'image/png'
-            const isLt2M = file.size / 1024 / 1024 < 2
-
-            if (!isJPG) {
-                this.$message.error('上传头像图片只能是 JPG/PNG 格式!')
-            }
-            if (!isLt2M) {
-                this.$message.error('上传头像图片大小不能超过 2MB!')
-            }
-            return isJPG && isLt2M;
-        },
-        dropdownCity(command) {
-            this.dropdown.city = command
-        },
-        dropdownArea(command) {
-            this.dropdown.area = command
-        },
-        handleCurrentChange(val) {
-            console.log(`当前页: ${val}`)
-        },
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -216,11 +150,28 @@ export default {
                     this.$alert('必填的字段不能为空，请检查填写后重新提交', '系统通知', { confirmButtonText: '确定' })
                 }
             })
+        },
+        handleAvatarScucess(row) {
+            // 图片上传成功钩子，接收子组件数据
+            this.imageUrl = row
+        },
+        filterProvince(value, row) {
+            return row.province === value
+        },
+        filterCity(value, row) {
+            return row.city === value
+        },
+        filterArea(value, row) {
+            return row.area === value
+        },
+        handleSelectionChange(val) {
+            this.selectBox = val
         }
     },
     components: {
         topbar,
-        cancel
+        cancel,
+        imageUpload
     }
 }
 </script>

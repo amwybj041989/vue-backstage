@@ -4,7 +4,10 @@
         <el-card :body-style="{ padding: '0px' }">
             <div class="tallyman-wrap">
                 <p class="tallyman-status"><i class="el-icon-circle-check"></i>&nbsp;启用中</p>
-                <p class="tallyman-head tc"><img src="../../static/img/head.png"></p>
+                <p class="tallyman-head tc">
+                    <img v-if="item.img" :src="item.img">
+                    <img v-else src="../../static/img/head.png">
+                </p>
                 <p class="tc fs-s9em lh-1s8em mt-10">{{ item.name }}</p>
                 <p class="tc cl-dove fs-s9em lh-1s8em">{{ item.phone }}</p>
                 <el-progress :text-inside="true" :stroke-width="24" :percentage="0" status="success" class="mt-15"></el-progress>

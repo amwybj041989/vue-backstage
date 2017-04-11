@@ -1,7 +1,7 @@
 /**
  * 地图概览页数据管理
  */
-import api from '../../api/overviewApi'
+import api from '../../api/api'
 import * as types from '../mutation'
 
 
@@ -20,7 +20,7 @@ const actions = {
     getOverviewData ({ commit }) {
         // loading 开始
         // commit(types.COM_LOADING_STATUS,true)
-        api.getOverviewData(function (response) {
+        api.apiCommunication('/Sales/getDashboardData', {}, function (response) {
             // console.log(response);
             // 获取成功，提交mutations处理数据
             commit(types.GET_OVERVIEW_DATA_SUCCESS, { response })

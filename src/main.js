@@ -11,6 +11,7 @@ import league from './components/league.vue'
 import AMap from 'vue-amap'
 import axios from 'axios'
 import 'element-ui/lib/theme-default/index.css'
+import { MessageBox } from 'element-ui'
 
 // 使用 ElementUI\高德地图
 
@@ -43,15 +44,21 @@ Vue.filter('enableStatus', function (value) {
     return value === '1' ? '启用中' : '已禁用'
 })
 
-// 添加接口回调拦截器，处理token过期
+// 添加接口回调拦截器
 axios.interceptors.response.use(function (response) {
-    if(response.data.status === '-1') {
-        // token过期，执行退出登录
-        store.dispatch('outLogin')
-    } else {
-        return response;
+    if(response.status === 200) {
+        if(response.data.status === '-1') {
+            // token过期，执行退出登录
+            store.dispatch('outLogin')
+        } else {
+            return response;
+        }
+    }else {
+        MessageBox.alert('接口通讯失败，请尝试刷新页面或者重新登录。如果还是存在问题，请联系管理员', '系统通知', { confirmButtonText: '确定', type: 'error' })
     }
+
 }, function (error) {
+    MessageBox.alert('接口通讯失败，请尝试刷新页面或者重新登录。如果还是存在问题，请联系管理员', '系统通知', { confirmButtonText: '确定', type: 'error' })
     return Promise.reject(error);
 })
 

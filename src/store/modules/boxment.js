@@ -1,7 +1,7 @@
 /**
  * 盒子管理
  */
-import api from '../../api/boxmentApi'
+import api from '../../api/api'
 import * as types from '../mutation'
 
 const state = {
@@ -24,7 +24,7 @@ const actions = {
      * 获取省份列表
      */
     getProvinceAdminList ({ commit }, param) {
-        api.getProvinceAdminList(param, function (response) {
+        api.apiCommunication('/City/ProvinceAdminList', param, function (response) {
             commit(types.GET_PROVINCEADMINLIST_SUCCESS, { response })
         })
     },
@@ -32,7 +32,7 @@ const actions = {
      * 获取城市列表
      */
     getCityAdminList ({ commit }, param) {
-        api.getCityAdminList(param, function (response) {
+        api.apiCommunication('/City/CityAdminList', param, function (response) {
             commit(types.GET_CITYADMINLIST_SUCCESS, { response })
         })
     },
@@ -40,15 +40,15 @@ const actions = {
      * 获取区域列表
      */
     getAreaAdminList ({ commit }, param) {
-        api.getAreaAdminList(param, function (response) {
+        api.apiCommunication('/City/AreaAdminList', param, function (response) {
             commit(types.GET_AREAADMINLIST_SUCCESS, { response })
         })
     },
     /**
-     * 获取区域列表
+     * 获取小区列表
      */
     getCommunityAdminList ({ commit }, param) {
-        api.getCommunityAdminList(param, function (response) {
+        api.apiCommunication('/City/CommunityAdminList', param, function (response) {
             commit(types.GET_COMMUNITYADMINLIST_SUCCESS, { response })
         })
     }

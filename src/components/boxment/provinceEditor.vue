@@ -1,6 +1,6 @@
 <template>
 <div class="right-content">
-    <topbar bone="省份管理" btwo="编辑省份"></topbar>
+    <topbar bone="省份管理" btwo="新建省份"></topbar>
     <el-row class="mb-10">
         <el-col :span="24" class="el-item editor-form display-table">
             <div class="form-left">
@@ -12,7 +12,7 @@
                         <el-input v-model="form.province_code" placeholder="请填写省份编码"></el-input>
                     </el-form-item>
                     <el-form-item label="启动开关">
-                        <el-switch on-text="开" off-text="关" v-model="switchStatus"></el-switch>
+                        <el-switch on-text="" off-text="" v-model="switchStatus"></el-switch>
                     </el-form-item>
                 </el-form>
             </div>
@@ -31,7 +31,7 @@
 
 <script>
 // 编辑省份
-import api from '../../api/boxmentApi.js'
+import api from '../../api/api.js'
 import topbar from '../common/topbar.vue'
 import cancel from '../common/cancel.vue'
 
@@ -64,9 +64,6 @@ export default {
             }
         }
     },
-    created() {
-
-    },
     methods: {
         submit(formName) {
             let that = this
@@ -76,7 +73,7 @@ export default {
                     let param = this.form
                     param.status = this.switchStatus === true ? 1 : 0
 
-                    api.createProvince(param, function (response) {
+                    api.apiCommunication('/City/CreateProvince', param, function (response) {
                         if (response.status === '200') {
                             that.$message({
                                 message: '新建成功！',

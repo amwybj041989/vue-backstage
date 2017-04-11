@@ -6,14 +6,14 @@
             <div class="toolbar-function">
                 <el-form :inline="true" :model="toolbarFrom" class="tr">
                     <el-form-item>
-                        <el-date-picker v-model="toolbarFrom.time" type="daterange" align="right" placeholder="选择查询/导出时间范围" :picker-options="pickerOptions">
-                        </el-date-picker>
-                    </el-form-item>
-                    <el-form-item>
                         <el-select v-model="toolbarFrom.box" clearable placeholder="选择盒子" no-data-text="没有盒子">
                             <el-option v-for="item in boxlist" :label="item.box_name" :value="item.box_no" :key="item.id"></el-option>
                         </el-select>
                     </el-form-item>
+                    <el-form-item>
+                        <el-date-picker v-model="toolbarFrom.time" type="daterange" align="right" placeholder="选择查询/导出时间范围" :picker-options="pickerOptions"></el-date-picker>
+                    </el-form-item>
+
                     <el-form-item>
                         <el-button type="primary" @click="searchToolbar">查询</el-button>
                     </el-form-item>
@@ -51,7 +51,8 @@
 
     <el-row class="mb-10">
         <el-col :span="24" class="el-item pa-10">
-            <div class="tableTopbar"><span>查询时间内商品销售情况（默认为全部数据）</span>
+            <div class="tableTopbar">
+                <span>查询时间内商品销售情况（默认为全部数据）</span>
                 <el-button type="success" @click="exportExcel">导出EXCEL</el-button>
             </div>
             <el-table :data="salesData.ProductList" :stripe="true" class="w-100">
@@ -90,6 +91,9 @@ export default {
             },
             searchBtn: 0,
             pickerOptions: {
+                disabledDate(time) {
+                    return time.getTime() > Date.now()
+                },
                 shortcuts: [{
                     text: '最近一周',
                     onClick(picker) {

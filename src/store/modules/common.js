@@ -1,7 +1,7 @@
 /**
  * 全局数据
  */
-import api from '../../api/commonApi'
+import api from '../../api/api'
 import * as types from '../mutation'
 
 
@@ -36,7 +36,7 @@ const getters = {
      * 获取盒子列表
      */
     getBoxList ({ commit }, param) {
-        api.getBoxList(param, function (response) {
+        api.apiCommunication('/Box/BoxList', param, function (response) {
             commit(types.GET_BOXLIST_SUCCESS, { response })
         })
     },
@@ -44,7 +44,7 @@ const getters = {
      * 获取省份列表
      */
     getProvinceList ({ commit }, param) {
-        api.getProvinceList(param, function (response) {
+        api.apiCommunication('/City/ProvinceList', param, function (response) {
             commit(types.GET_PROVINCELIST_SUCCESS, { response })
         })
     },
@@ -52,7 +52,7 @@ const getters = {
      * 获取城市列表
      */
     getCityList ({ commit }, param) {
-        api.getCityList(param, function (response) {
+        api.apiCommunication('/City/CityList', param, function (response) {
             commit(types.GET_CITYLIST_SUCCESS, { response })
         })
     },
@@ -60,7 +60,7 @@ const getters = {
      * 获取区镇列表
      */
     getAreaList ({ commit }, param) {
-        api.getAreaList(param, function (response) {
+        api.apiCommunication('/City/AreaList', param, function (response) {
             commit(types.GET_AREALIST_SUCCESS, { response })
         })
     },
@@ -68,7 +68,7 @@ const getters = {
      * 获取小区列表
      */
     getCommunityList ({ commit }, param) {
-        api.getCommunityList(param, function (response) {
+        api.apiCommunication('/City/CommunityList', param, function (response) {
             commit(types.GET_COMMUNITYLIST_SUCCESS, { response })
         })
     },
@@ -82,7 +82,7 @@ const getters = {
      * 获取大类列表
      */
     getProductBigClass ({ commit }) {
-        api.getProductBigClass(function (response) {
+        api.apiCommunication('/Material/ProductBigClass', {}, function (response) {
             commit(types.GET_PRODUCTBIGCLASSLIST_SUCCESS, { response })
         })
     },
@@ -90,7 +90,7 @@ const getters = {
      * 获取中类列表
      */
     getProductMediumClass ({ commit }, param) {
-        api.getProductMediumClass(param, function (response) {
+        api.apiCommunication('/Material/ProductMediumClass', param, function (response) {
             commit(types.GET_PRODUCTMEDIUMCLASSLIST_SUCCESS, { response })
         })
     },
@@ -98,7 +98,7 @@ const getters = {
      * 获取小类列表
      */
     getProductSmallClass ({ commit }, param) {
-        api.getProductSmallClass(param, function (response) {
+        api.apiCommunication('/Material/ProductSmallClass', param, function (response) {
             commit(types.GET_PRODUCTSMALLCLASSLIST_SUCCESS, { response })
         })
     },
@@ -106,7 +106,7 @@ const getters = {
      * 获取字典列表
      */
     getDictionarySearchList ({ commit }, param) {
-        api.getDictionarySearchList(param, function (response) {
+        api.apiCommunication('/Material/DictionarySearchList', param, function (response) {
             commit(types.GET_DICTIONARYSEARCHLIST_SUCCESS, { response })
         })
     },
@@ -120,7 +120,7 @@ const getters = {
      * 获取供应商列表
      */
     getProductSupplier ({ commit }) {
-        api.getProductSupplier(function (response) {
+        api.apiCommunication('/Product/ProductSelectSupplier', {}, function (response) {
             commit(types.GET_PRODUCTSUPPLIER_SUCCESS, { response })
         })
     }

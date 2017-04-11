@@ -45,7 +45,7 @@
 
 <script>
 // 新增区镇
-import api from '../../api/boxmentApi.js'
+import api from '../../api/api.js'
 import topbar from '../common/topbar.vue'
 import cancel from '../common/cancel.vue'
 
@@ -99,7 +99,7 @@ export default {
                     let param = this.form
                     param.status = this.switchStatus === true ? 1 : 0
 
-                    api.createArea(param, function (response) {
+                    api.apiCommunication('/City/CreateArea', param, function (response) {
                         if (response.status === '200') {
                             that.$message({
                                 message: '新建成功！',

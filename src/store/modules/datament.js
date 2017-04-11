@@ -1,7 +1,7 @@
 /**
  * 资料管理
  */
-import api from '../../api/datamentApi'
+import api from '../../api/api'
 import * as types from '../mutation'
 
 
@@ -45,7 +45,7 @@ const actions = {
      * 获取供货商列表
      */
     getSupplierList ({ commit }, param) {
-        api.getSupplierList(param, function (response) {
+        api.apiCommunication('/Material/SupplierList', param, function (response) {
             commit(types.GET_SUPPLIERLIST_SUCCESS, { response })
         })
     },
@@ -53,7 +53,7 @@ const actions = {
      * 获取某个供货商详情
      */
     getSupplierInfo ({ commit }, param) {
-        api.getSupplierInfo(param, function (response) {
+        api.apiCommunication('/Material/SupplierInfo', param, function (response) {
             commit(types.GET_SUPPLIERINFO_SUCCESS, { response })
         })
     },
@@ -61,7 +61,7 @@ const actions = {
      * 获取商品分类数据列表
      */
     getProductClassList ({ commit }, param) {
-        api.getProductClassList(param, function (response) {
+        api.apiCommunication('/Material/ProductClassList', param, function (response) {
             switch (param.type) {
                 case 1:
                     // 大类
@@ -85,7 +85,7 @@ const actions = {
      */
     getClass ({ commit }, param) {
         var _param = (param.type === 1) ? {} : param
-        api.getClass(_param, function (response) {
+        api.apiCommunication('/Material/getClass', _param, function (response) {
             if(param.type === 1){
                 commit(types.GET_NBIGCLASS_SUCCESS, { response })
             } else {
@@ -97,7 +97,7 @@ const actions = {
      * 获取商品字典类型列表
      */
     getDictionaryTypeList ({ commit }, param) {
-        api.getDictionaryTypeList(param, function (response) {
+        api.apiCommunication('/Material/DictionaryTypeList', param, function (response) {
             commit(types.GET_DICTIONARYTYPELIST_SUCCESS, { response })
         })
     },
@@ -105,7 +105,7 @@ const actions = {
      * 获取商品字典列表
      */
     getDictionaryList ({ commit }, param) {
-        api.getDictionaryList(param, function (response) {
+        api.apiCommunication('/Material/DictionaryList', param, function (response) {
             commit(types.GET_DICTIONARYLIST_SUCCESS, { response })
         })
     },
@@ -113,7 +113,7 @@ const actions = {
      * 获取商品列表
      */
     getProductList ({ commit }, param) {
-        api.getProductList(param, function (response) {
+        api.apiCommunication('/Product/ProductList', param, function (response) {
             commit(types.GET_PRODUCTLIST_SUCCESS, { response })
         })
     }

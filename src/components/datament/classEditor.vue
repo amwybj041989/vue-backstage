@@ -58,7 +58,7 @@
 
 <script>
 // 编辑/新增商品分类
-import api from '../../api/datamentApi.js'
+import api from '../../api/api.js'
 import cancel from '../common/cancel.vue'
 import topbar from '../common/topbar.vue'
 
@@ -141,7 +141,7 @@ export default {
                     param.id = this.id
                     param.status = this.switchStatus === true ? 1 : 0
 
-                    api.updateProductClass(param, function (response) {
+                    api.apiCommunication('/Material/UpdateProductClass', param, function (response) {
                         if (response.status === '200') {
                             that.$message({
                                 message: '更新成功！',
@@ -162,7 +162,7 @@ export default {
         getClassInfo(param) {
             // 获取分类详情
             let that = this
-            api.getProductClassInfo(param, function (response) {
+            api.apiCommunication('/Material/getProductClassInfo', param, function (response) {
                 if (response.status === '200') {
                     let _data = response.data
                     that.form.parentId1 = _data.parentId1

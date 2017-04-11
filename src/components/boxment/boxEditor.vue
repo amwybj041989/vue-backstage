@@ -6,7 +6,7 @@
             <div class="form-left">
                 <el-form ref="form" :rules="rules" label-position="right" :model="form" label-width="150px">
                     <el-form-item label="唯一编号" prop="box_no">
-                        <el-input v-model="form.box_no" placeholder="请填写盒子box_no，如“A1001”"></el-input>
+                        <el-input v-model="form.box_no" placeholder="请填写盒子box_no，如“A1001”" :disabled="true"></el-input>
                     </el-form-item>
                     <el-form-item label="门禁编号">
                         <el-input v-model="form.access_number" placeholder="请填写盒子门禁编号"></el-input>
@@ -78,7 +78,7 @@
 
 <script>
 // 新建盒子
-import api from '../../api/boxmentApi.js'
+import api from '../../api/api.js'
 import topbar from '../common/topbar.vue'
 import cancel from '../common/cancel.vue'
 import '../../static/style/boxment/boxEditor.scss'
@@ -148,7 +148,7 @@ export default {
                         owner: this.ownerStatue ? 1 : 0
                     }
                     let that = this
-                    api.updateBox(param, function (response) {
+                    api.apiCommunication('/Box/UpdateBox', param, function (response) {
                         if (response.status === '200') {
                             that.$message({
                                 message: '修改成功！',
@@ -169,7 +169,7 @@ export default {
         getBoxInfo() {
             // 获取盒子详情
             let that = this
-            api.getBoxInfo({ id: that.id }, function (response) {
+            api.apiCommunication('/Box/getBoxInfo', { id: that.id }, function (response) {
                 if (response.status === '200') {
                     let _data = response.data
                     that.form.box_no = _data.box_no

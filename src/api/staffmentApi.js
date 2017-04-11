@@ -13,14 +13,19 @@ export default {
      */
     getStafftalist(param, callback) {
         var params = setParams(param)
-        axios.post(API_HOST + '/Tallyman/TallymanList', querystring.stringify(params)).then(function(response) {
-            if (response.status === 200) {
+        axios.post(API_HOST + '/Tallyman/TallymanList', querystring.stringify(params))
+            .then(function(response) {
                 callback(response.data)
-            } else {
-                MessageBox.alert('获取数据失败，请刷新页面或者重新登录', '系统通知', { confirmButtonText: '确定', type: 'error' })
-            }
-        }).catch(function(error) {
-            console.log(error)
-        })
+            })
+    },
+    /**
+     * 新建理货员
+     */
+    createTallyman(param, callback) {
+        var params = setParams(param)
+        axios.post(API_HOST + '/Tallyman/CreateTally', querystring.stringify(params))
+            .then(function(response) {
+                callback(response.data)
+            })
     },
 }

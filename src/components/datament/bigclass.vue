@@ -46,7 +46,7 @@
 
 <script>
 // 商品大类管理
-import api from '../../api/datamentApi.js'
+import api from '../../api/api.js'
 import '../../static/style/datament/productClass.scss'
 
 export default {
@@ -82,7 +82,7 @@ export default {
                 let param = {
                     id: id
                 }
-                api.deleteProductClass(param, function (response) {
+                api.apiCommunication('/Material/deleteProductClass', param, function (response) {
                     if (response.status === '200') {
                         that.$message({
                             message: '删除成功！',

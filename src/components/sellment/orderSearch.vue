@@ -20,8 +20,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item>
-                        <el-date-picker v-model="toolbarFrom.time" type="daterange" align="right" placeholder="选择查询/导出时间范围" :picker-options="pickerOptions">
-                        </el-date-picker>
+                        <el-date-picker v-model="toolbarFrom.time" type="daterange" align="right" placeholder="选择查询/导出时间范围" :picker-options="pickerOptions"></el-date-picker>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="searchToolbar">查询</el-button>
@@ -103,7 +102,6 @@
 
 <script type="text/javascript">
 // 订单数据查询页
-import api from '../../api/sellmentApi.js'
 import { API_HOST } from '../../config/config.js'
 import '../../static/style/sellment/orderSearch.scss'
 

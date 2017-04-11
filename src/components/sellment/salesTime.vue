@@ -12,7 +12,7 @@
  * 销售时间段分析
  */
 import echarts from 'echarts'
-import api from '../../api/sellmentApi.js'
+import api from '../../api/api.js'
 import '../../static/style/sellment/echarts.scss'
 
 export default {
@@ -82,7 +82,7 @@ export default {
     },
     mounted() {
         let that = this
-        api.getSalesTime(function (response) {
+        api.apiCommunication('/Sales/getTimeData', {}, function (response) {
             if (response.status === '404') {
                 that.echartsDisplay = false
                 return false

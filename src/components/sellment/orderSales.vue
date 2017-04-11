@@ -20,7 +20,7 @@
  * 销售额／订单量曲线图
  */
 import echarts from 'echarts'
-import api from '../../api/sellmentApi.js'
+import api from '../../api/api.js'
 import '../../static/style/sellment/echarts.scss'
 
 export default {
@@ -200,7 +200,7 @@ export default {
         getSalesAmount(day) {
             let that = this,
                 param = { days: day }
-            api.getSalesAmount(param, function (response) {
+            api.apiCommunication('/Sales/getSalesAmount', param, function (response) {
                 let _data = response.data,
                     _xAxis = [],
                     _sales = [],

@@ -51,7 +51,7 @@
 
 <script>
 // 编辑/新增商品分类
-import api from '../../api/datamentApi.js'
+import api from '../../api/api.js'
 import topbar from '../common/topbar.vue'
 import cancel from '../common/cancel.vue'
 
@@ -134,7 +134,7 @@ export default {
                     let param = this.form
                     param.status = this.switchStatus === true ? 1 : 0
 
-                    api.createProductClass(param, function (response) {
+                    api.apiCommunication('/Material/CreateProductClass', param, function (response) {
                         if (response.status === '200') {
                             that.$message({
                                 message: '新建成功！',

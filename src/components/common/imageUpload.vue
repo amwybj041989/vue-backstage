@@ -10,28 +10,40 @@
 
 <script>
 // 单图片上传组件
-import { API_HOST } from '../../config/config.js'
 import '../../static/style/common/imageUpload.scss'
 
 export default {
     props: ['imageUrl'],
     data() {
         return {
-            actionUrl: API_HOST + '/Upload/CreateImg'
+            actionUrl: 'http://img.bingofresh.com/admin/Upload.php'
         }
     },
     methods: {
         beforeAvatarUpload(file) {
             // 上传文件前的钩子
-            console.log("正在上传");
+            const isJPG = (file.type === 'image/jpeg' || file.type === 'image/png')
+            const isLt2M = file.size / 1024 / 1024 < 2
+
+            if (!isJPG) {
+              this.$message.error('上传的图片只能是 JPG/PNG 格式!')
+            }
+            if (!isLt2M) {
+              this.$message.error('上传的图片大小不能超过 2MB!')
+            }
+            return isJPG && isLt2M
         },
-        handleAvatarScucess(res, file) {
+        handleAvatarScucess(response, file) {
             // 图片上传成功钩子，使用自定义事件给父组件传数据
-            this.$emit('increment',res.data)
+            if(response.status === 404) {
+                this.$alert(response.data, '系统通知', { confirmButtonText: '确定', type: 'error' })
+                return false
+            }
+            this.$emit('increment',response.data)
         },
         handleAvatarError(err, file) {
             // 图片上传失败钩子
-            that.$alert('图片上传失败，请确认图片格式大小正确后重试', '系统通知', { confirmButtonText: '确定', type: 'error' })
+            this.$alert('图片上传失败，请确认图片格式大小正确后重试', '系统通知', { confirmButtonText: '确定', type: 'error' })
         }
     }
 }

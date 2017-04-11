@@ -52,7 +52,7 @@
 
 <script>
 // 编辑供货商
-import api from '../../api/datamentApi.js'
+import api from '../../api/api.js'
 import topbar from '../common/topbar.vue'
 import cancel from '../common/cancel.vue'
 import imageUpload from '../common/imageUpload.vue'
@@ -102,7 +102,7 @@ export default {
                 param = {
                     id: this.supplierId
                 }
-            api.getSupplierInfo(param, function (response) {
+            api.apiCommunication('/Material/SupplierInfo', param, function (response) {
                 if (response.status === '200') {
                     let _data = response.data
                     that.form.company = _data.company
@@ -133,7 +133,7 @@ export default {
                     param.img = this.imageUrl
 
                     if(this.supplierId !== 'new') {
-                        api.updateSupplier(param, function (response) {
+                        api.apiCommunication('/Material/UpdateSupplier', param, function (response) {
                             if (response.status === '200') {
                                 that.$message({
                                     message: '更新成功！',
@@ -146,7 +146,7 @@ export default {
                             }
                         })
                     } else {
-                        api.createSupplier(param, function (response) {
+                        api.apiCommunication('/Material/CreateSupplier', param, function (response) {
                             if (response.status === '200') {
                                 that.$message({
                                     message: '新建成功！',

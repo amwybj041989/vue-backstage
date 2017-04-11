@@ -1,7 +1,7 @@
 /**
  * 销售数据概览数据管理
  */
-import api from '../../api/sellmentApi'
+import api from '../../api/api'
 import * as types from '../mutation'
 
 const state = {
@@ -23,7 +23,7 @@ const getters = {
     getDashboardData ({ commit }) {
         // loading 开始
         // commit(types.COM_LOADING_STATUS,true)
-        api.getDashboardData(function (response) {
+        api.apiCommunication('/Sales/SalesData', {}, function (response) {
             // console.log(response);
             // 获取成功，提交mutations处理数据
             commit(types.GET_DASHBOARD_DATA_SUCCESS, { response })
@@ -35,7 +35,7 @@ const getters = {
      * 获取订单列表
      */
     getOrderList ({ commit }, param) {
-        api.getOrderList(param, function (response) {
+        api.apiCommunication('/Order/OrderList', param, function (response) {
             commit(types.GET_ORDERLIST_SUCCESS, { response })
         })
     },
@@ -43,7 +43,7 @@ const getters = {
      * 获取商品销售统计
      */
     getProductSales ({ commit }, param) {
-        api.getProductSales(param, function (response) {
+        api.apiCommunication('/Order/ProductSalesData', param, function (response) {
             commit(types.GET_PRODUCTSALESDATA_SUCCESS, { response })
         })
     }

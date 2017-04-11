@@ -74,7 +74,7 @@
 
 <script type="text/javascript">
 // 供货商列表
-import api from '../../api/datamentApi.js'
+import api from '../../api/api.js'
 import '../../static/style/datament/supplierList.scss'
 
 export default {
@@ -123,7 +123,7 @@ export default {
                 let param = {
                     id: id
                 }
-                api.deleteSupplier(param, function (response) {
+                api.apiCommunication('/Material/DeleteSupplier', param, function (response) {
                     if (response.status === '200') {
                         that.$message({
                             message: '删除成功！',

@@ -77,7 +77,7 @@
 
 <script>
 // 新建盒子
-import api from '../../api/boxmentApi.js'
+import api from '../../api/api.js'
 import topbar from '../common/topbar.vue'
 import cancel from '../common/cancel.vue'
 import '../../static/style/boxment/boxEditor.scss'
@@ -143,7 +143,7 @@ export default {
                         owner: this.ownerStatue ? 1 : 0
                     }
                     let that = this
-                    api.createBox(param, function (response) {
+                    api.apiCommunication('/Box/CreateBox', param, function (response) {
                         if (response.status === '200') {
                             that.$message({
                                 message: '新建成功！',

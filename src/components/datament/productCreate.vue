@@ -151,7 +151,7 @@
 
 <script>
 // 新建商品
-import api from '../../api/datamentApi.js'
+import api from '../../api/api.js'
 import topbar from '../common/topbar.vue'
 import cancel from '../common/cancel.vue'
 import imageUpload from '../common/imageUpload.vue'
@@ -233,9 +233,8 @@ export default {
                     param.status = this.switchStatus === true ? 1 : 0
                     param.supplier = JSON.stringify(this.supplier)
                     param.img = this.imageUrl
-                    console.log(param);
 
-                    api.CreateProduct(param, function (response) {
+                    api.apiCommunication('/Product/CreateProduct', param, function (response) {
                         if (response.status === '200') {
                             that.$message({
                                 message: '新建成功！',
